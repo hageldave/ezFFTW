@@ -3,9 +3,9 @@ package com.github.hageldave.fftw.ezfftw;
 public class Writers {
 
 	static interface RealValuedWriter {
-		public void setValueAt(double value, int... coordinates);
+		void setValueAt(double value, int... coordinates);
 
-		public default ComplexValuedWriter addImaginaryComponent(RealValuedWriter imaginaryWriter){
+		default ComplexValuedWriter addImaginaryComponent(RealValuedWriter imaginaryWriter){
 			RealValuedWriter self = this;
 			return (value, imaginary, coordinates) -> {
 				if(imaginary)
@@ -17,7 +17,12 @@ public class Writers {
 	}
 
 	static interface ComplexValuedWriter {
-		public void setValueAt(double value, boolean imaginary, int... coordinates);
+		void setValueAt(double value, boolean imaginary, int... coordinates);
+		
+		default ComplexValuedWriter swapRealImaginary(){
+			ComplexValuedWriter self = this;
+			return (value, imaginary, coordinates) -> self.setValueAt(value, !imaginary, coordinates);
+		}
 	}
 
 	static class RowMajorArrayWriter2D implements RealValuedWriter {
