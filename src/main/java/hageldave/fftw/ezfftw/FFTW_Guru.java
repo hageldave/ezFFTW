@@ -3,7 +3,6 @@ package hageldave.fftw.ezfftw;
 import static hageldave.fftw.ezfftw.FFTW_Initializer.initFFTW;
 
 import java.util.Objects;
-import java.util.function.Supplier;
 
 import org.bytedeco.javacpp.DoublePointer;
 import org.bytedeco.javacpp.fftw3;
@@ -11,10 +10,10 @@ import org.bytedeco.javacpp.fftw3.fftw_iodim64;
 import org.bytedeco.javacpp.fftw3.fftw_iodim64_do_not_use_me;
 import org.bytedeco.javacpp.fftw3.fftw_plan;
 
-import hageldave.fftw.ezfftw.Samplers.ComplexValuedSampler;
-import hageldave.fftw.ezfftw.Samplers.RealValuedSampler;
-import hageldave.fftw.ezfftw.Writers.ComplexValuedWriter;
-import hageldave.fftw.ezfftw.Writers.RealValuedWriter;
+import hageldave.fftw.ezfftw.samplers.ComplexValuedSampler;
+import hageldave.fftw.ezfftw.samplers.RealValuedSampler;
+import hageldave.fftw.ezfftw.writers.ComplexValuedWriter;
+import hageldave.fftw.ezfftw.writers.RealValuedWriter;
 
 public class FFTW_Guru {
 
@@ -24,13 +23,10 @@ public class FFTW_Guru {
 		/* parameter sanity check */
 		Objects.requireNonNull(realIn, ()->"Cannot use null as realIn parameter.");
 		Objects.requireNonNull(complexOut, ()->"Cannot use null as complexOut parameter.");
-		assertPositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
-		for(int i = 0; i < dimensions.length; i++){
-			final int i_ = i;
-			assertPositive(dimensions[i], ()->"All dimensions need to be positive, but dimension number "+i_+" is "+dimensions[i_]+".");
-		}
+		Utils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
+		Utils.requirePosititveDimensions(dimensions);
 		/* start things now */
-		long numElements = numElementsFromDimensions(dimensions);
+		long numElements = Utils.numElementsFromDimensions(dimensions);
 		/* declare native resources first */
 		fftw_iodim64_do_not_use_me array = null;
 		fftw_iodim64 dims = null;
@@ -66,10 +62,10 @@ public class FFTW_Guru {
 			{
 				/* fill native data array (inlined fillNativeArrayFromSampler)*/
 				long index = 0;
-				int[] currentIndices = new int[dimensions.length];
-				while(currentIndices[dimensions.length-1] < dimensions[dimensions.length-1]){
-					iR.put(index, realIn.getValueAt(currentIndices));
-					increment(0, currentIndices, dimensions);
+				int[] coordinates = new int[dimensions.length];
+				while(coordinates[dimensions.length-1] < dimensions[dimensions.length-1]){
+					iR.put(index, realIn.getValueAt(coordinates));
+					Utils.incrementCoords(coordinates, dimensions);
 					index++;
 				}
 			}
@@ -83,13 +79,13 @@ public class FFTW_Guru {
 			{
 				/* get data from native arrays (inlined/adapted fillNativeArrayFromSampler)*/
 				long index = 0;
-				int[] currentIndices = new int[dimensions.length];
-				while(currentIndices[dimensions.length-1] < dimensions[dimensions.length-1]){
+				int[] coordinates = new int[dimensions.length];
+				while(coordinates[dimensions.length-1] < dimensions[dimensions.length-1]){
 					double rVal = oR.get(index);
 					double iVal = oI.get(index);
-					complexOut.setValueAt(rVal, false, currentIndices);
-					complexOut.setValueAt(iVal, true, currentIndices);
-					increment(0, currentIndices, dimensions);
+					complexOut.setValueAt(rVal, false, coordinates);
+					complexOut.setValueAt(iVal, true, coordinates);
+					Utils.incrementCoords(coordinates, dimensions);
 					index++;
 				}
 			}
@@ -116,13 +112,10 @@ public class FFTW_Guru {
 		/* parameter sanity check */
 		Objects.requireNonNull(complexIn, ()->"Cannot use null as realIn parameter.");
 		Objects.requireNonNull(complexOut, ()->"Cannot use null as complexOut parameter.");
-		assertPositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
-		for(int i = 0; i < dimensions.length; i++){
-			final int i_ = i;
-			assertPositive(dimensions[i], ()->"All dimensions need to be positive, but dimension number "+i_+" is "+dimensions[i_]+".");
-		}
+		Utils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
+		Utils.requirePosititveDimensions(dimensions);
 		/* start things now */
-		long numElements = numElementsFromDimensions(dimensions);
+		long numElements = Utils.numElementsFromDimensions(dimensions);
 		/* declare native resources first */
 		fftw_iodim64_do_not_use_me array = null;
 		fftw_iodim64 dims = null;
@@ -160,11 +153,11 @@ public class FFTW_Guru {
 			{
 				/* fill native data array (inlined fillNativeArrayFromSampler)*/
 				long index = 0;
-				int[] currentIndices = new int[dimensions.length];
-				while(currentIndices[dimensions.length-1] < dimensions[dimensions.length-1]){
-					iR.put(index, complexIn.getValueAt(false,currentIndices));
-					iI.put(index, complexIn.getValueAt(true, currentIndices));
-					increment(0, currentIndices, dimensions);
+				int[] coordinates = new int[dimensions.length];
+				while(coordinates[dimensions.length-1] < dimensions[dimensions.length-1]){
+					iR.put(index, complexIn.getValueAt(false,coordinates));
+					iI.put(index, complexIn.getValueAt(true, coordinates));
+					Utils.incrementCoords(coordinates, dimensions);
 					index++;
 				}
 			}
@@ -178,13 +171,13 @@ public class FFTW_Guru {
 			{
 				/* get data from native arrays (inlined/adapted fillNativeArrayFromSampler)*/
 				long index = 0;
-				int[] currentIndices = new int[dimensions.length];
-				while(currentIndices[dimensions.length-1] < dimensions[dimensions.length-1]){
+				int[] coordinates = new int[dimensions.length];
+				while(coordinates[dimensions.length-1] < dimensions[dimensions.length-1]){
 					double rVal = oR.get(index);
 					double iVal = oI.get(index);
-					complexOut.setValueAt(rVal, false, currentIndices);
-					complexOut.setValueAt(iVal, true, currentIndices);
-					increment(0, currentIndices, dimensions);
+					complexOut.setValueAt(rVal, false, coordinates);
+					complexOut.setValueAt(iVal, true, coordinates);
+					Utils.incrementCoords(coordinates, dimensions);
 					index++;
 				}
 			}
@@ -211,13 +204,10 @@ public class FFTW_Guru {
 		/* parameter sanity check */
 		Objects.requireNonNull(complexIn, ()->"Cannot use null as realIn parameter.");
 		Objects.requireNonNull(realOut, ()->"Cannot use null as complexOut parameter.");
-		assertPositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
-		for(int i = 0; i < dimensions.length; i++){
-			final int i_ = i;
-			assertPositive(dimensions[i], ()->"All dimensions need to be positive, but dimension number "+i_+" is "+dimensions[i_]+".");
-		}
+		Utils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
+		Utils.requirePosititveDimensions(dimensions);
 		/* start things now */
-		long numElements = numElementsFromDimensions(dimensions);
+		long numElements = Utils.numElementsFromDimensions(dimensions);
 		/* declare native resources first */
 		fftw_iodim64_do_not_use_me array = null;
 		fftw_iodim64 dims = null;
@@ -253,11 +243,11 @@ public class FFTW_Guru {
 			{
 				/* fill native data array (inlined fillNativeArrayFromSampler)*/
 				long index = 0;
-				int[] currentIndices = new int[dimensions.length];
-				while(currentIndices[dimensions.length-1] < dimensions[dimensions.length-1]){
-					iR.put(index, complexIn.getValueAt(false,currentIndices));
-					iI.put(index, complexIn.getValueAt(true, currentIndices));
-					increment(0, currentIndices, dimensions);
+				int[] coordinates = new int[dimensions.length];
+				while(coordinates[dimensions.length-1] < dimensions[dimensions.length-1]){
+					iR.put(index, complexIn.getValueAt(false,coordinates));
+					iI.put(index, complexIn.getValueAt(true, coordinates));
+					Utils.incrementCoords(coordinates, dimensions);
 					index++;
 				}
 			}
@@ -271,11 +261,11 @@ public class FFTW_Guru {
 			{
 				/* get data from native arrays (inlined/adapted fillNativeArrayFromSampler)*/
 				long index = 0;
-				int[] currentIndices = new int[dimensions.length];
-				while(currentIndices[dimensions.length-1] < dimensions[dimensions.length-1]){
+				int[] coordinates = new int[dimensions.length];
+				while(coordinates[dimensions.length-1] < dimensions[dimensions.length-1]){
 					double val = oR.get(index);
-					realOut.setValueAt(val, currentIndices);
-					increment(0, currentIndices, dimensions);
+					realOut.setValueAt(val, coordinates);
+					Utils.incrementCoords(coordinates, dimensions);
 					index++;
 				}
 			}
@@ -300,39 +290,14 @@ public class FFTW_Guru {
 	@SuppressWarnings("unused")
 	private static void fillNativeArrayFromSampler(DoublePointer p, RealValuedSampler sampler, int[] dimensions){
 		long index = 0;
-		int[] currentIndices = new int[dimensions.length];
-		while(currentIndices[dimensions.length-1] < dimensions[dimensions.length-1]){
-			double val = sampler.getValueAt(currentIndices);
+		int[] coordinates = new int[dimensions.length];
+		while(coordinates[dimensions.length-1] < dimensions[dimensions.length-1]){
+			double val = sampler.getValueAt(coordinates);
 			p.put(index++, val);
-			increment(0, currentIndices, dimensions);
+			Utils.incrementCoords(coordinates, dimensions);
 		}
 	}
 
-	private static void increment(int i, int[] index, int[] dims){
-		index[i]++;
-		if(index[i] >= dims[i]){
-			index[i] -= dims[i];
-			if(i < dims.length-1)
-				increment(i+1,index,dims);
-			else
-				index[i] = dims[i]; // highest possible number, dont overflow to signalize end
-		}
-	}
-	
-	public static long numElementsFromDimensions(int[] dimensions){
-		long numElements = dimensions.length == 0 ? 0:1;
-		for(int d:dimensions){
-			numElements *= d;
-		}
-		return numElements;
-	}
-
-
-	private static void assertPositive(int n, Supplier<String> errmsg){
-		if(n < 1){
-			throw new IllegalArgumentException(errmsg.get());
-		}
-	}
 
 
 
