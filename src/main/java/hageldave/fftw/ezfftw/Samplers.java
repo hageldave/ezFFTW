@@ -1,4 +1,4 @@
-package com.github.hageldave.fftw.ezfftw;
+package hageldave.fftw.ezfftw;
 
 public class Samplers {
 

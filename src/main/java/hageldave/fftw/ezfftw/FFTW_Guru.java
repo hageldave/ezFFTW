@@ -1,6 +1,6 @@
-package com.github.hageldave.fftw.ezfftw;
+package hageldave.fftw.ezfftw;
 
-import static com.github.hageldave.fftw.ezfftw.FFTW_Initializer.initFFTW;
+import static hageldave.fftw.ezfftw.FFTW_Initializer.initFFTW;
 
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -11,10 +11,10 @@ import org.bytedeco.javacpp.fftw3.fftw_iodim64;
 import org.bytedeco.javacpp.fftw3.fftw_iodim64_do_not_use_me;
 import org.bytedeco.javacpp.fftw3.fftw_plan;
 
-import com.github.hageldave.fftw.ezfftw.Samplers.ComplexValuedSampler;
-import com.github.hageldave.fftw.ezfftw.Samplers.RealValuedSampler;
-import com.github.hageldave.fftw.ezfftw.Writers.ComplexValuedWriter;
-import com.github.hageldave.fftw.ezfftw.Writers.RealValuedWriter;
+import hageldave.fftw.ezfftw.Samplers.ComplexValuedSampler;
+import hageldave.fftw.ezfftw.Samplers.RealValuedSampler;
+import hageldave.fftw.ezfftw.Writers.ComplexValuedWriter;
+import hageldave.fftw.ezfftw.Writers.RealValuedWriter;
 
 public class FFTW_Guru {
 

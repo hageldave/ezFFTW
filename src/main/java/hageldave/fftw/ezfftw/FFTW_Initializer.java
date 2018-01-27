@@ -1,4 +1,4 @@
-package com.github.hageldave.fftw.ezfftw;
+package hageldave.fftw.ezfftw;
 
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.javacpp.fftw3;

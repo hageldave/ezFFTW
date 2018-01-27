@@ -1,13 +1,13 @@
-package com.github.hageldave.fftw.ezfftw;
+package hageldave.fftw.ezfftw;
 
 import java.util.Objects;
 
-import com.github.hageldave.fftw.ezfftw.Samplers.ComplexValuedSampler;
-import com.github.hageldave.fftw.ezfftw.Samplers.RealValuedSampler;
-import com.github.hageldave.fftw.ezfftw.Samplers.RowMajorArraySampler2D;
-import com.github.hageldave.fftw.ezfftw.Writers.ComplexValuedWriter;
-import com.github.hageldave.fftw.ezfftw.Writers.RealValuedWriter;
-import com.github.hageldave.fftw.ezfftw.Writers.RowMajorArrayWriter2D;
+import hageldave.fftw.ezfftw.Samplers.ComplexValuedSampler;
+import hageldave.fftw.ezfftw.Samplers.RealValuedSampler;
+import hageldave.fftw.ezfftw.Samplers.RowMajorArraySampler2D;
+import hageldave.fftw.ezfftw.Writers.ComplexValuedWriter;
+import hageldave.fftw.ezfftw.Writers.RealValuedWriter;
+import hageldave.fftw.ezfftw.Writers.RowMajorArrayWriter2D;
 
 //import hageldave.imagingkit.core.Img;
 //import hageldave.imagingkit.core.io.ImageLoader;
