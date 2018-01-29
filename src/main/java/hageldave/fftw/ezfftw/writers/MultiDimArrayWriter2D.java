@@ -9,7 +9,7 @@ public class MultiDimArrayWriter2D implements RealValuedWriter {
 	}
 
 	@Override
-	public void setValueAt(double value, int... coordinates) {
-		array[coordinates[0]][coordinates[1]] = value;
+	public void setValueAt(double value, long... coordinates) {
+		array[(int)coordinates[0]][(int)coordinates[1]] = value;
 	}
 }

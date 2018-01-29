@@ -5,9 +5,17 @@ import java.util.function.Supplier;
 
 public class Utils {
 
-	public static int indexFromCoordinates(int[] coordinates, int[] dimensions) {
-		int index = 0;
-		int stride = 1;
+	/**
+	 * Calculates the row major index for the specified coordinates and dimensions.
+	 * Example: given dimensions [16,8,4] and coordinates [3,0,2] this will
+	 * return 3+0*16+2*16*8 = 259.
+	 * @param coordinates for which index is to be calculated
+	 * @param dimensions for the space of coordinates
+	 * @return row major index for given coordinates and dimensions
+	 */
+	public static long indexFromCoordinates(long[] coordinates, long[] dimensions) {
+		long index = 0;
+		long stride = 1;
 		for(int i = 0; i < dimensions.length; i++){
 			index += coordinates[i]*stride;
 			stride *= dimensions[i];
@@ -15,11 +23,26 @@ public class Utils {
 		return index;
 	}
 	
-	public static void incrementCoords(int[] coordinates, int[] dims){
-		incrementCoords(0, coordinates, dims);
+	/**
+	 * Increments the specified coordinates by 1. This increments the least significant
+	 * coordinate first and cascades increments to next coordinate on overflow.
+	 * Overflow in this case means that a coordinate gets larger than its specified 
+	 * corresponding dimension. For dimensions [2,2,2,2] this is like incrementing a
+	 * binary number of 4 bits.
+	 * When the most significant coordinate would overflow, the coordinates will not
+	 * become 0 again but instead the most significant coordinate will be
+	 * equal to its corresponding dimension to signalize the maximum coordinate.
+	 * This way the you can check for the last increment when coords[n]==dims[n]
+	 * with n = dims.length.
+	 * @param coordinates to increment by one
+	 * @param dimensions for the space of coordinates
+	 */
+	public static void incrementCoords(long[] coordinates, long[] dimensions){
+		incrementCoords(0, coordinates, dimensions);
 	}
 	
-	private static void incrementCoords(int i, int[] coordinates, int[] dims){
+	
+	private static void incrementCoords(int i, long[] coordinates, long[] dims){
 		coordinates[i]++;
 		if(coordinates[i] >= dims[i]){
 			coordinates[i] -= dims[i];
@@ -30,9 +53,16 @@ public class Utils {
 		}
 	}
 	
-	public static long numElementsFromDimensions(int[] dimensions){
+	/**
+	 * Calculates the number of elements from specified dimensions.
+	 * Example: given dimensions [16,8,4] this will result in 
+	 * 16*8*4 = 512 elements.
+	 * @param dimensions from which num elements will be calculated
+	 * @return number of elements from specified dimensions
+	 */
+	public static long numElementsFromDimensions(long[] dimensions){
 		long numElements = dimensions.length == 0 ? 0:1;
-		for(int d:dimensions){
+		for(long d:dimensions){
 			numElements *= d;
 		}
 		return numElements;
@@ -56,16 +86,28 @@ public class Utils {
 		}
 	}
 	
-	public static void requirePosititveDimensions(int... dimensions){
+	/**
+	 * Checks if specified number is greater than zero and throws an
+	 * {@link IllegalArgumentException} with the message from the
+	 * specified supplier if not.
+	 * @param n number to check
+	 * @param errmsg message to put in exception
+	 */
+	public static void requirePositive(long n, Supplier<String> errmsg){
+		if(n < 1){
+			throw new IllegalArgumentException(errmsg.get());
+		}
+	}
+
+	/**
+	 * Checks whether all specified dimensions are positive. Throws an
+	 * {@link IllegalArgumentException} if not.
+	 * @param dimensions to check
+	 */
+	public static void requirePosititveDimensions(long... dimensions){
 		for(int i = 0; i < dimensions.length; i++){
 			final int i_ = i;
 			requirePositive(dimensions[i], ()->"All dimensions need to be positive, but dimension number "+i_+" is "+dimensions[i_]+".");
-		}
-	}
-	
-	public static void requirePositive(int n, Supplier<String> errmsg){
-		if(n < 1){
-			throw new IllegalArgumentException(errmsg.get());
 		}
 	}
 }

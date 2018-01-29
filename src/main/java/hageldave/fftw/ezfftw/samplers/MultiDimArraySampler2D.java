@@ -9,7 +9,8 @@ public class MultiDimArraySampler2D implements RealValuedSampler {
 	}
 
 	@Override
-	public double getValueAt(int... coordinates) {
-		return array[coordinates[0]][coordinates[1]];
+	public double getValueAt(long... coordinates) {
+		return array[(int)coordinates[0]][(int)coordinates[1]];
+		
 	}
 }

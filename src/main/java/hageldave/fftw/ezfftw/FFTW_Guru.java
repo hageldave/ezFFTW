@@ -18,7 +18,7 @@ import hageldave.fftw.ezfftw.writers.RealValuedWriter;
 public class FFTW_Guru {
 
 
-	public static void execute_split_r2c(RealValuedSampler realIn, ComplexValuedWriter complexOut, int... dimensions){
+	public static void execute_split_r2c(RealValuedSampler realIn, ComplexValuedWriter complexOut, long... dimensions){
 		initFFTW();
 		/* parameter sanity check */
 		Objects.requireNonNull(realIn, ()->"Cannot use null as realIn parameter.");
@@ -62,7 +62,7 @@ public class FFTW_Guru {
 			{
 				/* fill native data array (inlined fillNativeArrayFromSampler)*/
 				long index = 0;
-				int[] coordinates = new int[dimensions.length];
+				long[] coordinates = new long[dimensions.length];
 				while(coordinates[dimensions.length-1] < dimensions[dimensions.length-1]){
 					iR.put(index, realIn.getValueAt(coordinates));
 					Utils.incrementCoords(coordinates, dimensions);
@@ -79,7 +79,7 @@ public class FFTW_Guru {
 			{
 				/* get data from native arrays (inlined/adapted fillNativeArrayFromSampler)*/
 				long index = 0;
-				int[] coordinates = new int[dimensions.length];
+				long[] coordinates = new long[dimensions.length];
 				while(coordinates[dimensions.length-1] < dimensions[dimensions.length-1]){
 					double rVal = oR.get(index);
 					double iVal = oI.get(index);
@@ -107,7 +107,7 @@ public class FFTW_Guru {
 	}
 
 
-	public static void execute_split_c2c(ComplexValuedSampler complexIn, ComplexValuedWriter complexOut, int... dimensions){
+	public static void execute_split_c2c(ComplexValuedSampler complexIn, ComplexValuedWriter complexOut, long... dimensions){
 		initFFTW();
 		/* parameter sanity check */
 		Objects.requireNonNull(complexIn, ()->"Cannot use null as realIn parameter.");
@@ -153,7 +153,7 @@ public class FFTW_Guru {
 			{
 				/* fill native data array (inlined fillNativeArrayFromSampler)*/
 				long index = 0;
-				int[] coordinates = new int[dimensions.length];
+				long[] coordinates = new long[dimensions.length];
 				while(coordinates[dimensions.length-1] < dimensions[dimensions.length-1]){
 					iR.put(index, complexIn.getValueAt(false,coordinates));
 					iI.put(index, complexIn.getValueAt(true, coordinates));
@@ -171,7 +171,7 @@ public class FFTW_Guru {
 			{
 				/* get data from native arrays (inlined/adapted fillNativeArrayFromSampler)*/
 				long index = 0;
-				int[] coordinates = new int[dimensions.length];
+				long[] coordinates = new long[dimensions.length];
 				while(coordinates[dimensions.length-1] < dimensions[dimensions.length-1]){
 					double rVal = oR.get(index);
 					double iVal = oI.get(index);
@@ -199,7 +199,7 @@ public class FFTW_Guru {
 		}
 	}
 	
-	public static void execute_split_c2r(ComplexValuedSampler complexIn, RealValuedWriter realOut, int... dimensions){
+	public static void execute_split_c2r(ComplexValuedSampler complexIn, RealValuedWriter realOut, long... dimensions){
 		initFFTW();
 		/* parameter sanity check */
 		Objects.requireNonNull(complexIn, ()->"Cannot use null as realIn parameter.");
@@ -243,7 +243,7 @@ public class FFTW_Guru {
 			{
 				/* fill native data array (inlined fillNativeArrayFromSampler)*/
 				long index = 0;
-				int[] coordinates = new int[dimensions.length];
+				long[] coordinates = new long[dimensions.length];
 				while(coordinates[dimensions.length-1] < dimensions[dimensions.length-1]){
 					iR.put(index, complexIn.getValueAt(false,coordinates));
 					iI.put(index, complexIn.getValueAt(true, coordinates));
@@ -261,7 +261,7 @@ public class FFTW_Guru {
 			{
 				/* get data from native arrays (inlined/adapted fillNativeArrayFromSampler)*/
 				long index = 0;
-				int[] coordinates = new int[dimensions.length];
+				long[] coordinates = new long[dimensions.length];
 				while(coordinates[dimensions.length-1] < dimensions[dimensions.length-1]){
 					double val = oR.get(index);
 					realOut.setValueAt(val, coordinates);
@@ -288,9 +288,9 @@ public class FFTW_Guru {
 
 
 	@SuppressWarnings("unused")
-	private static void fillNativeArrayFromSampler(DoublePointer p, RealValuedSampler sampler, int[] dimensions){
+	private static void fillNativeArrayFromSampler(DoublePointer p, RealValuedSampler sampler, long[] dimensions){
 		long index = 0;
-		int[] coordinates = new int[dimensions.length];
+		long[] coordinates = new long[dimensions.length];
 		while(coordinates[dimensions.length-1] < dimensions[dimensions.length-1]){
 			double val = sampler.getValueAt(coordinates);
 			p.put(index++, val);

@@ -1,7 +1,7 @@
 package hageldave.fftw.ezfftw.writers;
 
 public interface ComplexValuedWriter {
-	void setValueAt(double value, boolean imaginary, int... coordinates);
+	void setValueAt(double value, boolean imaginary, long... coordinates);
 	
 	default ComplexValuedWriter swapRealImaginary(){
 		ComplexValuedWriter self = this;

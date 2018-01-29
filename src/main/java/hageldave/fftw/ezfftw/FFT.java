@@ -9,23 +9,23 @@ import hageldave.fftw.ezfftw.writers.RowMajorArrayWriter;
 
 public class FFT {
 
-	public static void fft(RealValuedSampler realIn, ComplexValuedWriter complexOut, int... dimensions) {
+	public static void fft(RealValuedSampler realIn, ComplexValuedWriter complexOut, long... dimensions) {
 		FFTW_Guru.execute_split_r2c(realIn, complexOut, dimensions);
 	}
 
-	public static void fft(ComplexValuedSampler complexIn, ComplexValuedWriter complexOut, int... dimensions) {
+	public static void fft(ComplexValuedSampler complexIn, ComplexValuedWriter complexOut, long... dimensions) {
 		FFTW_Guru.execute_split_c2c(complexIn, complexOut, dimensions);
 	}
 
-	public static void ifft(ComplexValuedSampler complexIn, ComplexValuedWriter complexOut, int... dimensions) {
+	public static void ifft(ComplexValuedSampler complexIn, ComplexValuedWriter complexOut, long... dimensions) {
 		FFTW_Guru.execute_split_c2c(complexIn.swapRealImaginary(), complexOut.swapRealImaginary(), dimensions);
 	}
 
-	public static void ifft(ComplexValuedSampler complexIn, RealValuedWriter realOut, int... dimensions) {
+	public static void ifft(ComplexValuedSampler complexIn, RealValuedWriter realOut, long... dimensions) {
 		FFTW_Guru.execute_split_c2r(complexIn, realOut, dimensions);
 	}
 
-	public static void fft(double[] realIn, double[] realOut, double[] imagOut, int... dimensions) {
+	public static void fft(double[] realIn, double[] realOut, double[] imagOut, long... dimensions) {
 		/* sanity checks */
 		Utils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
 		Utils.requirePosititveDimensions(dimensions);
@@ -40,7 +40,7 @@ public class FFT {
 		fft(rIn, rOut.addImaginaryComponent(iOut), dimensions);
 	}
 	
-	public static void fft(double[] realIn, double[] imagIn, double[] realOut, double[] imagOut, int... dimensions) {
+	public static void fft(double[] realIn, double[] imagIn, double[] realOut, double[] imagOut, long... dimensions) {
 		/* sanity checks */
 		Utils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
 		Utils.requirePosititveDimensions(dimensions);
@@ -57,7 +57,7 @@ public class FFT {
 		fft(rIn.addImaginaryComponent(iIn), rOut.addImaginaryComponent(iOut), dimensions);
 	}
 	
-	public static void ifft(double[] realIn, double[] imagIn, double[] realOut, double[] imagOut, int... dimensions) {
+	public static void ifft(double[] realIn, double[] imagIn, double[] realOut, double[] imagOut, long... dimensions) {
 		/* sanity checks */
 		Utils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
 		Utils.requirePosititveDimensions(dimensions);
@@ -74,7 +74,7 @@ public class FFT {
 		ifft(rIn.addImaginaryComponent(iIn), rOut.addImaginaryComponent(iOut), dimensions);
 	}
 	
-	public static void ifft(double[] realIn, double[] imagIn, double[] realOut, int... dimensions) {
+	public static void ifft(double[] realIn, double[] imagIn, double[] realOut, long... dimensions) {
 		/* sanity checks */
 		Utils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
 		Utils.requirePosititveDimensions(dimensions);
@@ -88,7 +88,6 @@ public class FFT {
 		RowMajorArrayWriter rOut = new RowMajorArrayWriter(realOut, dimensions);
 		ifft(rIn.addImaginaryComponent(iIn), rOut, dimensions);
 	}
-	
 
 }
 

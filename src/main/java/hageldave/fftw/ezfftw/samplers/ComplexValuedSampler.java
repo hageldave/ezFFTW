@@ -1,7 +1,7 @@
 package hageldave.fftw.ezfftw.samplers;
 
 public interface ComplexValuedSampler {
-	double getValueAt(boolean imaginary, int...coordinates);
+	double getValueAt(boolean imaginary, long...coordinates);
 	
 	default ComplexValuedSampler swapRealImaginary(){
 		ComplexValuedSampler self = this;

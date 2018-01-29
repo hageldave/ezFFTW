@@ -5,16 +5,16 @@ import hageldave.fftw.ezfftw.Utils;
 public class RowMajorArrayWriter implements RealValuedWriter {
 
 	public final double[] array;
-	private final int[] dimensions;
+	private final long[] dimensions;
 
-	public RowMajorArrayWriter(double[] array, int[] dimensions) {
+	public RowMajorArrayWriter(double[] array, long... dimensions) {
 		this.array = array;
 		this.dimensions = dimensions;
 	}
 
 	@Override
-	public void setValueAt(double val, int... coordinates) {
-		array[Utils.indexFromCoordinates(coordinates, dimensions)] = val;
+	public void setValueAt(double val, long... coordinates) {
+		array[(int)Utils.indexFromCoordinates(coordinates, dimensions)] = val;
 	}
 	
 }
