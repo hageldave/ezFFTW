@@ -4,20 +4,43 @@ import static hageldave.fftw.ezfftw.FFTW_Initializer.initFFTW;
 
 import java.util.Objects;
 
-import org.bytedeco.javacpp.DoublePointer;
 import org.bytedeco.javacpp.fftw3;
 import org.bytedeco.javacpp.fftw3.fftw_iodim64;
 import org.bytedeco.javacpp.fftw3.fftw_iodim64_do_not_use_me;
 import org.bytedeco.javacpp.fftw3.fftw_plan;
 
-import hageldave.fftw.ezfftw.samplers.ComplexValuedSampler;
-import hageldave.fftw.ezfftw.samplers.RealValuedSampler;
-import hageldave.fftw.ezfftw.writers.ComplexValuedWriter;
-import hageldave.fftw.ezfftw.writers.RealValuedWriter;
 
+/**
+ * Class for accessing the FFTW Guru interface. This class offers methods for
+ * the following DFTs:
+ * <ul>
+ * <li>split r2c - real to complex DFT with separated real/imaginary output</li>
+ * <li>split c2r - complex to real DFT with separated real/imaginary input</li>
+ * <li>split c2c - complex to complex DFT with separated real/imaginary in/output</li>
+ * </ul>
+ * Split DFTs use seperate arrays for real and imaginary parts of complex numbers in contrast
+ * to the interleaved real/imaginary format.
+ *
+ * @author hageldave
+ * @see <a href="http://www.fftw.org/fftw3_doc/Guru-Interface.html">FFTW Guru Interface documentation (www.fftw.org)</a>
+ */
 public class FFTW_Guru {
 
-
+	/**
+	 * Performs a split real to complex DFT using the FFTW_ESTIMATE planner flag which
+	 * chooses a DFT algorithm based on a simple heuristic.
+	 *
+	 * @param realIn real valued input array
+	 * @param realOut real part of complex valued output array
+	 * @param imagOut imaginary part of complex valued output array
+	 * @param dimensions of the input (assuming input in row major order)
+	 * e.g. {1024, 768} for a 2D signal of width=1024 and height=768
+	 * @throws NullPointerException when one of the specified array arguments is null.
+	 * @throws IllegalArgumentException </br>
+	 * when no dimensions were specified,</br>
+	 * when one of the specified dimensions is not positive,</br>
+	 * when the number of elements determined from the dimensions does not match the lengths of the specified arrays.
+	 */
 	public static void execute_split_r2c(
 			NativeDoubleArray realIn,
 			NativeDoubleArray realOut,

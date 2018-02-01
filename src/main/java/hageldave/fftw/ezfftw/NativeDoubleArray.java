@@ -57,6 +57,7 @@ public class NativeDoubleArray implements AutoCloseable {
 	 * Throws an {@link IllegalArgumentException} when length is not
 	 * positive (length zero is not allowed as well).
 	 * @param length number of elements in array
+	 * @throws IllegalArgumentException when length is not positive
 	 */
 	public NativeDoubleArray(long length) {
 		FFTW_Initializer.initFFTW();
