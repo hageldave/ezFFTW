@@ -10,4 +10,5 @@ public interface RealValuedSampler {
 			else return self.getValueAt(coordinates);
 		};
 	}
+
 }
