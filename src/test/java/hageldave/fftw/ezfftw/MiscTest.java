@@ -4,6 +4,9 @@ import java.util.Arrays;
 
 import org.bytedeco.javacpp.DoublePointer;
 
+import hageldave.ezfftw.FFT;
+import hageldave.ezfftw.FFTW_Guru;
+import hageldave.ezfftw.NativeDoubleArray;
 import hageldave.imagingkit.core.Img;
 import hageldave.imagingkit.core.io.ImageLoader;
 import hageldave.imagingkit.core.scientific.ColorImg;

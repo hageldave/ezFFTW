@@ -1,4 +1,4 @@
-package hageldave.fftw.ezfftw;
+package hageldave.ezfftw;
 
 import org.bytedeco.javacpp.DoublePointer;
 

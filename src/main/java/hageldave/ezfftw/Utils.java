@@ -1,10 +1,10 @@
-package hageldave.fftw.ezfftw;
+package hageldave.ezfftw;
 
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import hageldave.fftw.ezfftw.samplers.RealValuedSampler;
-import hageldave.fftw.ezfftw.writers.RealValuedWriter;
+import hageldave.ezfftw.samplers.RealValuedSampler;
+import hageldave.ezfftw.writers.RealValuedWriter;
 
 public class Utils {
 

@@ -1,4 +1,4 @@
-package hageldave.fftw.ezfftw.samplers;
+package hageldave.ezfftw.samplers;
 
 public interface RealValuedSampler {
 	double getValueAt(long... coordinates);

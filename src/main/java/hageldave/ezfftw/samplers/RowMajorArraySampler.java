@@ -1,6 +1,6 @@
-package hageldave.fftw.ezfftw.samplers;
+package hageldave.ezfftw.samplers;
 
-import hageldave.fftw.ezfftw.Utils;
+import hageldave.ezfftw.Utils;
 
 public class RowMajorArraySampler implements RealValuedSampler {
 

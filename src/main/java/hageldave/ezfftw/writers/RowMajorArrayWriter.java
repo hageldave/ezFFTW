@@ -1,6 +1,6 @@
-package hageldave.fftw.ezfftw.writers;
+package hageldave.ezfftw.writers;
 
-import hageldave.fftw.ezfftw.Utils;
+import hageldave.ezfftw.Utils;
 
 public class RowMajorArrayWriter implements RealValuedWriter {
 

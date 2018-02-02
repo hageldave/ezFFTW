@@ -1,11 +1,11 @@
-package hageldave.fftw.ezfftw;
+package hageldave.ezfftw;
 
-import hageldave.fftw.ezfftw.samplers.ComplexValuedSampler;
-import hageldave.fftw.ezfftw.samplers.RealValuedSampler;
-import hageldave.fftw.ezfftw.samplers.RowMajorArraySampler;
-import hageldave.fftw.ezfftw.writers.ComplexValuedWriter;
-import hageldave.fftw.ezfftw.writers.RealValuedWriter;
-import hageldave.fftw.ezfftw.writers.RowMajorArrayWriter;
+import hageldave.ezfftw.samplers.ComplexValuedSampler;
+import hageldave.ezfftw.samplers.RealValuedSampler;
+import hageldave.ezfftw.samplers.RowMajorArraySampler;
+import hageldave.ezfftw.writers.ComplexValuedWriter;
+import hageldave.ezfftw.writers.RealValuedWriter;
+import hageldave.ezfftw.writers.RowMajorArrayWriter;
 
 public class FFT {
 

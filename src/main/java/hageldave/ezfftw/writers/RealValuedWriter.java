@@ -1,4 +1,4 @@
-package hageldave.fftw.ezfftw.writers;
+package hageldave.ezfftw.writers;
 
 public interface RealValuedWriter {
 	void setValueAt(double value, long... coordinates);

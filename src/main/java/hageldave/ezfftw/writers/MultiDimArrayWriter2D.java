@@ -1,4 +1,4 @@
-package hageldave.fftw.ezfftw.writers;
+package hageldave.ezfftw.writers;
 
 public class MultiDimArrayWriter2D implements RealValuedWriter {
 

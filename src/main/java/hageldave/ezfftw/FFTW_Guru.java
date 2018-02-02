@@ -1,6 +1,6 @@
-package hageldave.fftw.ezfftw;
+package hageldave.ezfftw;
 
-import static hageldave.fftw.ezfftw.FFTW_Initializer.initFFTW;
+import static hageldave.ezfftw.FFTW_Initializer.initFFTW;
 
 import java.util.Objects;
 
