@@ -1,11 +1,13 @@
 package hageldave.ezfftw;
 
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 import hageldave.ezfftw.samplers.ComplexValuedSampler;
 import hageldave.ezfftw.samplers.RealValuedSampler;
-import hageldave.ezfftw.samplers.RowMajorArraySampler;
 import hageldave.ezfftw.writers.ComplexValuedWriter;
 import hageldave.ezfftw.writers.RealValuedWriter;
-import hageldave.ezfftw.writers.RowMajorArrayWriter;
 
 public class FFT {
 
@@ -169,8 +171,30 @@ public class FFT {
 			a1.get(0, realOut); // real part
 		}
 	}
-
-
+	
+	public static void fft(
+			Supplier<NativeDoubleArray> realIn, 
+			BiConsumer<NativeDoubleArray,NativeDoubleArray> complexOut, 
+			long... dimensions)
+	{
+		/* sanity checks */
+		Utils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
+		Utils.requirePosititveDimensions(dimensions);
+		long numElements = Utils.numElementsFromDimensions(dimensions);
+		try(
+			/* allocate native resources */
+			NativeDoubleArray a1 = realIn.get();
+			NativeDoubleArray a2 = new NativeDoubleArray(numElements);
+		){
+			Utils.requireEqual(a1.length, a2.length, ()->
+					"The array returned by realIn supplier does not have the length determined from dimensions. "
+					+ "From dimensions:" + numElements + " array:" + a1.length);
+			/* put values from sampler into array */
+			/* execute FFT */
+			FFTW_Guru.execute_split_r2c(a1, a1, a2, dimensions);
+			complexOut.accept(a1, a2);
+		}
+	}
 
 }
 
