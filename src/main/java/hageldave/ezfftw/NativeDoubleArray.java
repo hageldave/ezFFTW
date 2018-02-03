@@ -196,7 +196,7 @@ public class NativeDoubleArray implements AutoCloseable {
 	public DoublePointer getPointer() {
 		return pointer.position(0);
 	}
-
+	
 	@Override
 	public void close() {
 		pointer.close();

@@ -1,12 +1,10 @@
 package hageldave.fftw.ezfftw;
 
-import java.util.Arrays;
-
-import org.bytedeco.javacpp.DoublePointer;
-
 import hageldave.ezfftw.FFT;
 import hageldave.ezfftw.FFTW_Guru;
 import hageldave.ezfftw.NativeDoubleArray;
+import hageldave.ezfftw.samplers.RowMajorArraySampler;
+import hageldave.ezfftw.writers.RowMajorArrayWriter;
 import hageldave.imagingkit.core.Img;
 import hageldave.imagingkit.core.io.ImageLoader;
 import hageldave.imagingkit.core.scientific.ColorImg;
@@ -16,7 +14,7 @@ import hageldave.imagingkit.fourier.ComplexImg;
 public class MiscTest {
 
 	public static void main(String[] args) {
-		testImg();
+		test();
 	}
 
 	static void test() {
@@ -33,17 +31,18 @@ public class MiscTest {
 		{
 			long t = System.currentTimeMillis();
 			FFT.fft(in, rout, iout, w,h);
+			System.out.println("direct:"+(System.currentTimeMillis()-t));
+		}
+		
+		{
+			RowMajorArraySampler srin = new RowMajorArraySampler(in, w,h);
+			RowMajorArrayWriter wrout = new RowMajorArrayWriter(rout, w,h);
+			RowMajorArrayWriter wiout = new RowMajorArrayWriter(iout, w,h);
+			long t = System.currentTimeMillis();
+			FFT.fft(srin, wrout.addImaginaryComponent(wiout), w,h);
 			System.out.println("generic:"+(System.currentTimeMillis()-t));
 		}
-
-
-
-		//		{
-		//			long t = System.currentTimeMillis();
-		//			FFTW_Guru.execute_split_r2c_rowmajor(in, rout, iout, w,h);
-		//
-		//			System.out.println(" direct:"+(System.currentTimeMillis()-t));
-		//		}
+		
 	}
 
 	static void testImg(){
