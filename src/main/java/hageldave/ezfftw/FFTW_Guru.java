@@ -11,8 +11,11 @@ import org.bytedeco.javacpp.fftw3.fftw_plan;
 
 
 /**
- * Class for accessing the FFTW Guru interface. This class offers methods for
- * the following DFTs:
+ * Class for executing transforms through the FFTW Guru interface.
+ * The provided methods offer a simplified/limited interface to the original
+ * Guru methods, handling all the boilerplate code for creating the dimension
+ * structs and arrays required.
+ * This class provides methods for the following DFTs:
  * <ul>
  * <li>split r2c - real to complex DFT with separated real/imaginary output</li>
  * <li>split c2r - complex to real DFT with separated real/imaginary input</li>
