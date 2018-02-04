@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import org.bytedeco.javacpp.fftw3;
 import org.bytedeco.javacpp.fftw3.fftw_iodim64;
-import org.bytedeco.javacpp.fftw3.fftw_iodim64_do_not_use_me;
 import org.bytedeco.javacpp.fftw3.fftw_plan;
 
 
@@ -68,19 +67,19 @@ public class FFTW_Guru {
 				()->"provided imaginary output does not have the same number of elements as determined from dimensions. "
 						+ "Should be " + numElements + " but only has " + imagOut.length);
 		/* declare native resources first */
-		fftw_iodim64_do_not_use_me array = null;
+		fftw_iodim64 array = null;
 		fftw_iodim64 dims = null;
-		fftw_iodim64_do_not_use_me[] individualDims = new fftw_iodim64_do_not_use_me[dimensions.length];
-		fftw_iodim64_do_not_use_me lastDim = null;
+		fftw_iodim64[] individualDims = new fftw_iodim64[dimensions.length];
+		fftw_iodim64 lastDim = null;
 		fftw_plan plan = null;
 		try {
 			/* allocate native resources */
-			array = new fftw_iodim64_do_not_use_me(dimensions.length+1);
+			array = new fftw_iodim64(dimensions.length+1);
 			dims = new fftw_iodim64(array);
 			for(int i = 0; i < dimensions.length; i++){
-				individualDims[i] = new fftw_iodim64_do_not_use_me();
+				individualDims[i] = new fftw_iodim64();
 			}
-			lastDim = new fftw_iodim64_do_not_use_me();
+			lastDim = new fftw_iodim64();
 			/* fill native resources */
 			long stride = 1;
 			for(int i = 0; i < dimensions.length; i++){
@@ -144,19 +143,19 @@ public class FFTW_Guru {
 				()->"provided imaginary output does not have the same number of elements as determined from dimensions. "
 						+ "Should be " + numElements + " but only has " + imagOut.length);
 		/* declare native resources first */
-		fftw_iodim64_do_not_use_me array = null;
+		fftw_iodim64 array = null;
 		fftw_iodim64 dims = null;
-		fftw_iodim64_do_not_use_me[] individualDims = new fftw_iodim64_do_not_use_me[dimensions.length];
-		fftw_iodim64_do_not_use_me lastDim = null;
+		fftw_iodim64[] individualDims = new fftw_iodim64[dimensions.length];
+		fftw_iodim64 lastDim = null;
 		fftw_plan plan = null;
 		try {
 			/* allocate native resources */
-			array = new fftw_iodim64_do_not_use_me(dimensions.length+1);
+			array = new fftw_iodim64(dimensions.length+1);
 			dims = new fftw_iodim64(array);
 			for(int i = 0; i < dimensions.length; i++){
-				individualDims[i] = new fftw_iodim64_do_not_use_me();
+				individualDims[i] = new fftw_iodim64();
 			}
-			lastDim = new fftw_iodim64_do_not_use_me();
+			lastDim = new fftw_iodim64();
 			/* fill native resources */
 			long stride = 1;
 			for(int i = 0; i < dimensions.length; i++){
@@ -216,19 +215,19 @@ public class FFTW_Guru {
 				()->"provided real output does not have the same number of elements as determined from dimensions. "
 						+ "Should be " + numElements + " but only has " + realOut.length);
 		/* declare native resources first */
-		fftw_iodim64_do_not_use_me array = null;
+		fftw_iodim64 array = null;
 		fftw_iodim64 dims = null;
-		fftw_iodim64_do_not_use_me[] individualDims = new fftw_iodim64_do_not_use_me[dimensions.length];
-		fftw_iodim64_do_not_use_me lastDim = null;
+		fftw_iodim64[] individualDims = new fftw_iodim64[dimensions.length];
+		fftw_iodim64 lastDim = null;
 		fftw_plan plan = null;
 		try {
 			/* allocate native resources */
-			array = new fftw_iodim64_do_not_use_me(dimensions.length+1);
+			array = new fftw_iodim64(dimensions.length+1);
 			dims = new fftw_iodim64(array);
 			for(int i = 0; i < dimensions.length; i++){
-				individualDims[i] = new fftw_iodim64_do_not_use_me();
+				individualDims[i] = new fftw_iodim64();
 			}
-			lastDim = new fftw_iodim64_do_not_use_me();
+			lastDim = new fftw_iodim64();
 			/* fill native resources */
 			long stride = 1;
 			for(int i = 0; i < dimensions.length; i++){
