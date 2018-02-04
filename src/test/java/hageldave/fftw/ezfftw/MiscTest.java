@@ -9,15 +9,14 @@ import hageldave.imagingkit.core.Img;
 import hageldave.imagingkit.core.io.ImageLoader;
 import hageldave.imagingkit.core.scientific.ColorImg;
 import hageldave.imagingkit.core.util.ImageFrame;
-import hageldave.imagingkit.fourier.ComplexImg;
 
 public class MiscTest {
 
 	public static void main(String[] args) {
-		test();
+		busa();
 	}
 
-	static void test() {
+	static void wusa() {
 		long w = 2048*2-1;
 		long h = 2048*2+1;
 		double[] in = new double[(int)(w*h)];
@@ -45,25 +44,26 @@ public class MiscTest {
 		
 	}
 
-	static void testImg(){
+	static void busa(){
 		Img gauss = ImageLoader.loadImgFromURL("https://d37wxxhohlp07s.cloudfront.net/s3_images/754946/20b826df-c159-46a3-99f9-42403d5be59e_inline.gif");
 		ColorImg img = new ColorImg(gauss, false);
 		ImageFrame.display(img.getRemoteBufferedImage());
 		//			ComplexImg fft = fft2D_real2complexImg(img.getDataR(), img.getWidth(),img.getHeight());
-		ComplexImg fft = new ComplexImg(img.getWidth(),img.getHeight());
+		ColorImg fft = new ColorImg(img.getWidth(),img.getHeight(),false);
 		{
-			FFT.fft(img.getDataR(), fft.getDataReal(), fft.getDataImag(), img.getWidth(),img.getHeight());
+			FFT.fft(img.getDataR(), fft.getDataR(), fft.getDataG(), img.getWidth(),img.getHeight());
 		}
-		ComplexImg copy = fft.copy();
-		copy.shiftCornerToCenter().enableSynchronizePowerSpectrum(true).getDelegate().forEach(px->px.setValue(2, Math.log(px.getValue(2))));
-		ImageFrame.display(copy.getDelegate().scaleChannelToUnitRange(2).getChannelImage(2).toBufferedImage());
+		ColorImg copy = fft.copy();
+		copy.forEach(px->px.setB_fromDouble(px.r_asDouble()*px.r_asDouble()+px.g_asDouble()*px.g_asDouble()));
+		copy.forEach(px->px.setValue(2, Math.log(px.getValue(2))));
+		ImageFrame.display(copy.scaleChannelToUnitRange(2).getChannelImage(2).toBufferedImage());
 		//			ifft2D_complexImg2complexImg(fft, fft);
 		{
 
-			FFT.ifft(fft.getDataReal(), fft.getDataImag(), fft.getDataReal(), img.getWidth(),img.getHeight());
+			FFT.ifft(fft.getDataR(), fft.getDataG(), fft.getDataR(), img.getWidth(),img.getHeight());
 		}
-		fft.forEach(px->px.setReal(px.real()/(fft.getWidth()*fft.getHeight())));
-		ImageFrame.display(fft.getDelegate().getChannelImage(0)./*scaleChannelToUnitRange(0).*/toBufferedImage());
+		fft.forEach(px->px.setR_fromDouble(px.r_asDouble()/(fft.getWidth()*fft.getHeight())));
+		ImageFrame.display(fft.getChannelImage(0)./*scaleChannelToUnitRange(0).*/toBufferedImage());
 
 	}
 
