@@ -5,7 +5,7 @@ sudo: false
 jdk:
   - oraclejdk8
 
-script: mvn -P travis -X -pl :ezfftw clean test
+script: mvn -P travis -X -pl :ezfftw clean test jacoco:report
 
 after_success:
-- mvn -pl :ezfftw -DrepoToken=$COVERALLS_TOKEN jacoco:report coveralls:report
+- mvn -pl :ezfftw -DrepoToken=$COVERALLS_TOKEN coveralls:report
