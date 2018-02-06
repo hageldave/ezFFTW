@@ -30,7 +30,30 @@ public class FFTW_Guru {
 
 	/**
 	 * Performs a split real to complex DFT using the FFTW_ESTIMATE planner flag which
-	 * chooses a DFT algorithm based on a simple heuristic.
+	 * chooses a DFT algorithm based on a simple heuristic. This method is usually used as
+	 * the forward transform (DFT of a real signal).
+	 * <p>
+	 * The first array argument is the real valued data to be transformed,
+	 * the second and third argument are the real and imaginary valued data that result
+	 * from the transform.
+	 * </br>
+	 * The dimension argument specifies how many dimensions the data has and what the extent
+	 * of each dimension is (e.g. {1024,768} for 2 dimensions of width=1024 and height=768).
+	 * </br>
+	 * The data is assumed to be in row major order (for dimensions {m,n} this means that the
+	 * first m elements correspond to the first row of the 2-dimensional data, the last row
+	 * starts at element (n-1)*m).
+	 * <p>
+	 * The resulting complex valued DFT has the origin at the element at index 0.
+	 * Thus the DC (0hz) component of the DFT is the first element in the real output array
+	 * and is the sum of all values of the input array.
+	 * <p>
+	 * The corresponding counter part to this method for computing the inverse DFT is
+	 * {@link #execute_split_c2r(NativeDoubleArray, NativeDoubleArray, NativeDoubleArray, long...)}.
+	 * Please note that FFTW was designed so that the inverse fourier transform of a fourier
+	 * transform (or vice versa) would restore the original signal scaled by the number
+	 * of elements </br>( <tt>idft(dft(x)) = x*x.length</tt> ).
+	 * See also <a href="http://fftw.org/faq/section3.html#whyscaled">FFTW FAQ</a>.
 	 *
 	 * @param realIn real valued input array
 	 * @param realOut real part of complex valued output array
@@ -114,6 +137,7 @@ public class FFTW_Guru {
 	}
 
 
+
 	public static void execute_split_c2c(
 			NativeDoubleArray realIn,
 			NativeDoubleArray imagIn,
@@ -191,6 +215,43 @@ public class FFTW_Guru {
 
 	}
 
+	/**
+	 * Performs a split complex to real DFT using the FFTW_ESTIMATE planner flag which
+	 * chooses a DFT algorithm based on a simple heuristic. This method is usually used as
+	 * the backward transform (inverse DFT of a complex signal that originated from DFT of a real signal).
+	 * <p>
+	 * The first and second array argument are the real and imaginary valued data to be transformed,
+	 * the third argument is the real valued data that results from the transform.
+	 * </br>
+	 * The dimension argument specifies how many dimensions the data has and what the extent
+	 * of each dimension is (e.g. {1024,768} for 2 dimensions of width=1024 and height=768).
+	 * </br>
+	 * The data is assumed to be in row major order (for dimensions {m,n} this means that the
+	 * first m elements correspond to the first row of the 2-dimensional data, the last row
+	 * starts at element (n-1)*m).
+	 * <p>
+	 * The resulting complex valued DFT has the origin at the element at index 0.
+	 * Thus the DC (0hz) component of the DFT is the first element in the real output array
+	 * and is the sum of all values of the input array.
+	 * <p>
+	 * The corresponding counter part to this method for computing the forward transform (DFT) is
+	 * {@link #execute_split_r2c(NativeDoubleArray, NativeDoubleArray, NativeDoubleArray, long...)}.
+	 * Please note that FFTW was designed so that the inverse fourier transform of a fourier
+	 * transform (or vice versa) would restore the original signal scaled by the number
+	 * of elements </br>( <tt>dft(idft(xR,xI)) = xR*xR.length, xI*xR.length</tt> ).
+	 * See also <a href="http://fftw.org/faq/section3.html#whyscaled">FFTW FAQ</a>.
+	 *
+	 * @param realIn real part of complex valued input array
+	 * @param imagIn imaginary part of complex valued input array
+	 * @param realOut real valued output array
+	 * @param dimensions of the input (assuming input in row major order)
+	 * e.g. {1024, 768} for a 2D signal of width=1024 and height=768
+	 * @throws NullPointerException when one of the specified array arguments is null.
+	 * @throws IllegalArgumentException </br>
+	 * when no dimensions were specified,</br>
+	 * when one of the specified dimensions is not positive,</br>
+	 * when the number of elements determined from the dimensions does not match the lengths of the specified arrays.
+	 */
 	public static void execute_split_c2r(
 			NativeDoubleArray realIn,
 			NativeDoubleArray imagIn,

@@ -62,6 +62,16 @@ public class FFTW_GuruTest {
 				assertEquals(0, a2.get(i), 0);
 			}
 		}
+
+		try(
+				NativeDoubleArray a1 = new NativeDoubleArray(4);
+				NativeDoubleArray a2 = new NativeDoubleArray(4);
+				)
+		{
+			a1.set(-1.0, 1.0, 1.0, -1.0); // sum=0
+			FFTW_Guru.execute_split_r2c(a1, a1, a2, 2,2);
+			assertEquals(0, a1.get(0),0);
+		}
 	}
 
 	@Test
