@@ -124,6 +124,17 @@ public class NativeDoubleArray implements AutoCloseable {
 	}
 
 	/**
+	 * Sets all elements of this array to the specified value
+	 * @param v value for all elements
+	 * @return this for chaining
+	 */
+	public NativeDoubleArray fill(double v){
+		for(long i = 0; i < this.length; i++)
+			set(i, v);
+		return this;
+	}
+
+	/**
 	 * Returns the value at specified index.
 	 * <pre>
 	 * {@code return nativeArray[i]; }
@@ -196,7 +207,7 @@ public class NativeDoubleArray implements AutoCloseable {
 	public DoublePointer getPointer() {
 		return pointer.position(0);
 	}
-	
+
 	@Override
 	public void close() {
 		pointer.close();

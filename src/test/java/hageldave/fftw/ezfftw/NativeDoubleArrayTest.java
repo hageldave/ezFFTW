@@ -49,7 +49,7 @@ public class NativeDoubleArrayTest {
 			assertEquals(arr[1+1], arr_[1], 0);
 			assertEquals(arr[5], arr_[2], 0);
 			assertEquals(arr[6], arr_[3], 0);
-			
+
 			// change some entries in array
 			a.set(4, 0,0,0);
 			for(int i = 0; i < 4; i++){
@@ -60,7 +60,16 @@ public class NativeDoubleArrayTest {
 			assertEquals(0, a.get(6), 0);
 			assertEquals(arr[7], a.get(7), 0);
 		}
-		
+
+		try(NativeDoubleArray a = new NativeDoubleArray(10);){
+			a.fill(0);
+			for(long i = 0; i < a.length; i++)
+				assertEquals(0, a.get(i), 0);
+			a.fill(1);
+			for(long i = 0; i < a.length; i++)
+				assertEquals(1, a.get(i), 0);
+		}
+
 		try(NativeDoubleArray a = new NativeDoubleArray(0)){
 			fail();
 		} catch (Exception e) {
