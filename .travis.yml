@@ -8,4 +8,4 @@ jdk:
 script: mvn -P travis -X -pl :ezfftw clean test jacoco:report
 
 after_success:
-- mvn -pl :ezfftw -DrepoToken=$COVERALLS_TOKEN coveralls:report
+- mvn -pl -P coveralls :ezfftw -DrepoToken=$COVERALLS_TOKEN coveralls:report
