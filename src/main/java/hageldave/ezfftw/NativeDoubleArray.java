@@ -229,7 +229,7 @@ public class NativeDoubleArray implements AutoCloseable {
 		// So much it won't fit in a single java array.
 		// 2048^3 > 2^32 --> 2048^3 * 8bytes = 64GB of memory
 		double[][][] my3DArray = new double[2048][2048][2048];
-		NativeDoubleArray natArray = new NativeDoubleArray(2048L*2048L*200L);
+		NativeDoubleArray natArray = new NativeDoubleArray(2048L*2048L*2048L);
 		// lets populate natArray
 		for(long i = 0; i < natArray.length; i++){
 			double value = i*1.0/natArray.length;

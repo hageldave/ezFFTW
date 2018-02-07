@@ -1,4 +1,4 @@
-package hageldave.fftw.ezfftw;
+package hageldave.ezfftw;
 
 import hageldave.ezfftw.FFT;
 import hageldave.ezfftw.FFTW_Guru;
