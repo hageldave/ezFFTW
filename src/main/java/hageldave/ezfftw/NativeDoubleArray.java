@@ -29,7 +29,7 @@ import org.bytedeco.javacpp.DoublePointer;
  * NativeDoubleArray natArray = new NativeDoubleArray(2048L*2048L*2048L);
  * // lets populate natArray
  * for(long i = 0; i < natArray.length; i++){
- *    double value = i*1.0/natArray.length;
+ *    double value = ((double)i)/natArray.length;
  *    natArray.set(i, value);
  * }
  * // lets read everything to my3DArray
@@ -232,7 +232,7 @@ public class NativeDoubleArray implements AutoCloseable {
 		NativeDoubleArray natArray = new NativeDoubleArray(2048L*2048L*2048L);
 		// lets populate natArray
 		for(long i = 0; i < natArray.length; i++){
-			double value = i*1.0/natArray.length;
+			double value = ((double)i)/natArray.length;
 			natArray.set(i, value);
 		}
 		// lets read everything to my3DArray
