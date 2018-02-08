@@ -5,8 +5,11 @@ sudo: false
 jdk:
   - oraclejdk8
 
-script: 
-- bash ./travis_script.sh
+before_install:
+- bash ./remove_float_code.sh
+- bash ./generate_float_code.sh
+
+script: mvn -P travis -X -pl :ezfftw clean test jacoco:report
 
 after_success:
 - mvn -P coveralls -pl :ezfftw -DrepoToken=$COVERALLS_TOKEN coveralls:report
