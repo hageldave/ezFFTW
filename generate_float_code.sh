@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 echo "script: script for generating the float part of the project"
 echo "script: what javac?"
 javac -version

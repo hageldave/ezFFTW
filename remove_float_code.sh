@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 echo "script: script for removeing the float part of the project"
 echo "script: removing src/main/../fp"
 rm -r src/main/java/hageldave/ezfftw/fp
