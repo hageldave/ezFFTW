@@ -3,10 +3,11 @@ package hageldave.ezfftw.dp;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import hageldave.ezfftw.JunitUtils;
 import hageldave.ezfftw.dp.FFTW_Guru;
 import hageldave.ezfftw.dp.NativeRealArray;
 
-public class FFTW_Guru_DTest {
+public class FFTW_GuruTest {
 
 	@Test
 	public void testFunctionality() {

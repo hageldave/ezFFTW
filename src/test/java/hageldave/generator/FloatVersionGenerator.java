@@ -41,12 +41,14 @@ public class FloatVersionGenerator {
 		}){
 			genFloatClass(new File(mainpath_dp,classfile), new File(mainpath_fp, classfile));
 		}
-//		File fftw_guru = new File(mainpath,"FFTW_Guru_D.java");
-//		File fftw_guru_f = new File(mainpath,"FFTW_Guru_F.java");
-//		genFloatClass(fftw_guru, fftw_guru_f);
-//		File fftw_guru_test = new File(testpath,"FFTW_Guru_DTest.java");
-//		File fftw_guru_f_test = new File(testpath,"FFTW_Guru_FTest.java");
-//		genFloatClass(fftw_guru_test, fftw_guru_f_test);
+
+		for(String classfile : new String[]{
+				"FFTW_GuruTest.java",
+				"NativeRealArrayTest.java",
+				"PrecisionDependentUtilsTest.java",
+		}){
+			genFloatClass(new File(testpath_dp,classfile), new File(testpath_fp, classfile));
+		}
 	}
 
 	static void genFloatClass(File doubleClass, File floatClass){

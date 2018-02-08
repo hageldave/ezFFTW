@@ -180,8 +180,8 @@ public class FFT {
 	}
 
 	public static void fft(
-			Supplier<NativeRealArray> realIn, 
-			BiConsumer<NativeRealArray,NativeRealArray> complexOut, 
+			Supplier<NativeRealArray> realIn,
+			BiConsumer<NativeRealArray,NativeRealArray> complexOut,
 			long... dimensions)
 	{
 		/* sanity checks */
@@ -205,7 +205,7 @@ public class FFT {
 	public static void fft(
 			Supplier<NativeRealArray> realIn,
 			Supplier<NativeRealArray> imagIn,
-			BiConsumer<NativeRealArray,NativeRealArray> complexOut, 
+			BiConsumer<NativeRealArray,NativeRealArray> complexOut,
 			long... dimensions)
 	{
 		/* sanity checks */
@@ -228,11 +228,11 @@ public class FFT {
 			complexOut.accept(a1, a2);
 		}
 	}
-	
+
 	public static void ifft(
 			Supplier<NativeRealArray> realIn,
 			Supplier<NativeRealArray> imagIn,
-			BiConsumer<NativeRealArray,NativeRealArray> complexOut, 
+			BiConsumer<NativeRealArray,NativeRealArray> complexOut,
 			long... dimensions)
 	{
 		/* sanity checks */
@@ -255,11 +255,11 @@ public class FFT {
 			complexOut.accept(a1, a2);
 		}
 	}
-	
+
 	public static void ifft(
 			Supplier<NativeRealArray> realIn,
 			Supplier<NativeRealArray> imagIn,
-			Consumer<NativeRealArray> complexOut, 
+			Consumer<NativeRealArray> complexOut,
 			long... dimensions)
 	{
 		/* sanity checks */
