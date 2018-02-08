@@ -1,18 +1,18 @@
-package hageldave.ezfftw;
+package hageldave.ezfftw.dp;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import hageldave.ezfftw.FFTW_Guru;
-import hageldave.ezfftw.NativeDoubleArray;
+import hageldave.ezfftw.dp.FFTW_Guru;
+import hageldave.ezfftw.dp.NativeRealArray;
 
-public class FFTW_GuruTest {
+public class FFTW_Guru_DTest {
 
 	@Test
 	public void testFunctionality() {
 		try	(
-				NativeDoubleArray a1 = new NativeDoubleArray(64);
-				NativeDoubleArray a2 = new NativeDoubleArray(64);
+				NativeRealArray a1 = new NativeRealArray(64);
+				NativeRealArray a2 = new NativeRealArray(64);
 				)
 		{
 			a1.fill(0);
@@ -64,8 +64,8 @@ public class FFTW_GuruTest {
 		}
 
 		try(
-				NativeDoubleArray a1 = new NativeDoubleArray(4);
-				NativeDoubleArray a2 = new NativeDoubleArray(4);
+				NativeRealArray a1 = new NativeRealArray(4);
+				NativeRealArray a2 = new NativeRealArray(4);
 				)
 		{
 			a1.set(-1.0, 1.0, 1.0, -1.0); // sum=0
@@ -77,9 +77,9 @@ public class FFTW_GuruTest {
 	@Test
 	public void testExceptions() {
 		try(
-				NativeDoubleArray a1 = new NativeDoubleArray(4);
-				NativeDoubleArray a2 = new NativeDoubleArray(4);
-				NativeDoubleArray a3 = new NativeDoubleArray(5);
+				NativeRealArray a1 = new NativeRealArray(4);
+				NativeRealArray a2 = new NativeRealArray(4);
+				NativeRealArray a3 = new NativeRealArray(5);
 				)
 		{
 			// nullpointer for null argument arrays

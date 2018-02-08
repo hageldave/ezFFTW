@@ -1,4 +1,4 @@
-package hageldave.ezfftw.samplers;
+package hageldave.ezfftw.dp.samplers;
 
 public class MultiDimArraySampler2D implements RealValuedSampler {
 

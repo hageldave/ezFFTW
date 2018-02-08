@@ -1,4 +1,4 @@
-package hageldave.ezfftw.samplers;
+package hageldave.ezfftw.dp.samplers;
 
 public interface ComplexValuedSampler {
 	double getValueAt(boolean imaginary, long...coordinates);

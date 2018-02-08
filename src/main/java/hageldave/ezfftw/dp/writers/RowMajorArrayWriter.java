@@ -1,6 +1,6 @@
-package hageldave.ezfftw.writers;
+package hageldave.ezfftw.dp.writers;
 
-import hageldave.ezfftw.Utils;
+import hageldave.ezfftw.GeneralUtils;
 
 public class RowMajorArrayWriter implements RealValuedWriter {
 
@@ -14,7 +14,7 @@ public class RowMajorArrayWriter implements RealValuedWriter {
 
 	@Override
 	public void setValueAt(double val, long... coordinates) {
-		array[(int)Utils.indexFromCoordinates(coordinates, dimensions)] = val;
+		array[(int)GeneralUtils.indexFromCoordinates(coordinates, dimensions)] = val;
 	}
 	
 }

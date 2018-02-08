@@ -1,12 +1,14 @@
-package hageldave.ezfftw;
+package hageldave.ezfftw.dp;
 
 import static hageldave.ezfftw.FFTW_Initializer.initFFTW;
 
 import java.util.Objects;
 
 import org.bytedeco.javacpp.fftw3;
-import org.bytedeco.javacpp.fftw3.fftw_iodim64;
+import org.bytedeco.javacpp.fftw3.fftw_iodim64; //#FLOATGEN_KEEPLINE
 import org.bytedeco.javacpp.fftw3.fftw_plan;
+
+import hageldave.ezfftw.GeneralUtils;
 
 
 /**
@@ -49,7 +51,7 @@ public class FFTW_Guru {
 	 * and is the sum of all values of the input array.
 	 * <p>
 	 * The corresponding counter part to this method for computing the inverse DFT is
-	 * {@link #execute_split_c2r(NativeDoubleArray, NativeDoubleArray, NativeDoubleArray, long...)}.
+	 * {@link #execute_split_c2r(NativeRealArray, NativeRealArray, NativeRealArray, long...)}.
 	 * Please note that FFTW was designed so that the inverse fourier transform of a fourier
 	 * transform (or vice versa) would restore the original signal scaled by the number
 	 * of elements </br>( <tt>idft(dft(x)) = x*x.length</tt> ).
@@ -67,9 +69,9 @@ public class FFTW_Guru {
 	 * when the number of elements determined from the dimensions does not match the lengths of the specified arrays.
 	 */
 	public static void execute_split_r2c(
-			NativeDoubleArray realIn,
-			NativeDoubleArray realOut,
-			NativeDoubleArray imagOut,
+			NativeRealArray realIn,
+			NativeRealArray realOut,
+			NativeRealArray imagOut,
 			long... dimensions)
 	{
 		initFFTW();
@@ -77,32 +79,32 @@ public class FFTW_Guru {
 		Objects.requireNonNull(realIn, ()->"Cannot use null as realIn parameter.");
 		Objects.requireNonNull(realOut, ()->"Cannot use null as realOut parameter.");
 		Objects.requireNonNull(imagOut, ()->"Cannot use null as imagOut parameter.");
-		Utils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
-		Utils.requirePosititveDimensions(dimensions);
-		long numElements = Utils.numElementsFromDimensions(dimensions);
-		Utils.requireEqual(numElements, realIn.length,
+		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
+		GeneralUtils.requirePosititveDimensions(dimensions);
+		long numElements = GeneralUtils.numElementsFromDimensions(dimensions);
+		GeneralUtils.requireEqual(numElements, realIn.length,
 				()->"provided real input does not have the same number of elements as determined from dimensions. "
 						+ "Should be " + numElements + " but only has " + realIn.length);
-		Utils.requireEqual(numElements, realOut.length,
+		GeneralUtils.requireEqual(numElements, realOut.length,
 				()->"provided real output does not have the same number of elements as determined from dimensions. "
 						+ "Should be " + numElements + " but only has " + realOut.length);
-		Utils.requireEqual(numElements, imagOut.length,
+		GeneralUtils.requireEqual(numElements, imagOut.length,
 				()->"provided imaginary output does not have the same number of elements as determined from dimensions. "
 						+ "Should be " + numElements + " but only has " + imagOut.length);
 		/* declare native resources first */
-		fftw_iodim64 array = null;
+		fftw_iodim64 array = null; //#FLOATGEN_IGNORE
 		fftw_iodim64 dims = null;
-		fftw_iodim64[] individualDims = new fftw_iodim64[dimensions.length];
-		fftw_iodim64 lastDim = null;
+		fftw_iodim64[] individualDims = new fftw_iodim64[dimensions.length]; //#FLOATGEN_IGNORE
+		fftw_iodim64 lastDim = null; //#FLOATGEN_IGNORE
 		fftw_plan plan = null;
 		try {
 			/* allocate native resources */
-			array = new fftw_iodim64(dimensions.length+1);
+			array = new fftw_iodim64(dimensions.length+1); //#FLOATGEN_IGNORE
 			dims = new fftw_iodim64(array);
 			for(int i = 0; i < dimensions.length; i++){
-				individualDims[i] = new fftw_iodim64();
+				individualDims[i] = new fftw_iodim64(); //#FLOATGEN_IGNORE
 			}
-			lastDim = new fftw_iodim64();
+			lastDim = new fftw_iodim64(); //#FLOATGEN_IGNORE
 			/* fill native resources */
 			long stride = 1;
 			for(int i = 0; i < dimensions.length; i++){
@@ -139,10 +141,10 @@ public class FFTW_Guru {
 
 
 	public static void execute_split_c2c(
-			NativeDoubleArray realIn,
-			NativeDoubleArray imagIn,
-			NativeDoubleArray realOut,
-			NativeDoubleArray imagOut,
+			NativeRealArray realIn,
+			NativeRealArray imagIn,
+			NativeRealArray realOut,
+			NativeRealArray imagOut,
 			long... dimensions)
 	{
 		initFFTW();
@@ -151,35 +153,35 @@ public class FFTW_Guru {
 		Objects.requireNonNull(imagIn, ()->"Cannot use null as imagIn parameter.");
 		Objects.requireNonNull(realOut, ()->"Cannot use null as realOut parameter.");
 		Objects.requireNonNull(imagOut, ()->"Cannot use null as imagOut parameter.");
-		Utils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
-		Utils.requirePosititveDimensions(dimensions);
-		long numElements = Utils.numElementsFromDimensions(dimensions);
-		Utils.requireEqual(numElements, realIn.length,
+		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
+		GeneralUtils.requirePosititveDimensions(dimensions);
+		long numElements = GeneralUtils.numElementsFromDimensions(dimensions);
+		GeneralUtils.requireEqual(numElements, realIn.length,
 				()->"provided real input does not have the same number of elements as determined from dimensions. "
 						+ "Should be " + numElements + " but only has " + realIn.length);
-		Utils.requireEqual(numElements, imagIn.length,
+		GeneralUtils.requireEqual(numElements, imagIn.length,
 				()->"provided imaginary input does not have the same number of elements as determined from dimensions. "
 						+ "Should be " + numElements + " but only has " + imagIn.length);
-		Utils.requireEqual(numElements, realOut.length,
+		GeneralUtils.requireEqual(numElements, realOut.length,
 				()->"provided real output does not have the same number of elements as determined from dimensions. "
 						+ "Should be " + numElements + " but only has " + realOut.length);
-		Utils.requireEqual(numElements, imagOut.length,
+		GeneralUtils.requireEqual(numElements, imagOut.length,
 				()->"provided imaginary output does not have the same number of elements as determined from dimensions. "
 						+ "Should be " + numElements + " but only has " + imagOut.length);
 		/* declare native resources first */
-		fftw_iodim64 array = null;
+		fftw_iodim64 array = null; //#FLOATGEN_IGNORE
 		fftw_iodim64 dims = null;
-		fftw_iodim64[] individualDims = new fftw_iodim64[dimensions.length];
-		fftw_iodim64 lastDim = null;
+		fftw_iodim64[] individualDims = new fftw_iodim64[dimensions.length]; //#FLOATGEN_IGNORE
+		fftw_iodim64 lastDim = null; //#FLOATGEN_IGNORE
 		fftw_plan plan = null;
 		try {
 			/* allocate native resources */
-			array = new fftw_iodim64(dimensions.length+1);
+			array = new fftw_iodim64(dimensions.length+1); //#FLOATGEN_IGNORE
 			dims = new fftw_iodim64(array);
 			for(int i = 0; i < dimensions.length; i++){
-				individualDims[i] = new fftw_iodim64();
+				individualDims[i] = new fftw_iodim64(); //#FLOATGEN_IGNORE
 			}
-			lastDim = new fftw_iodim64();
+			lastDim = new fftw_iodim64(); //#FLOATGEN_IGNORE
 			/* fill native resources */
 			long stride = 1;
 			for(int i = 0; i < dimensions.length; i++){
@@ -235,7 +237,7 @@ public class FFTW_Guru {
 	 * and is the sum of all values of the input array.
 	 * <p>
 	 * The corresponding counter part to this method for computing the forward transform (DFT) is
-	 * {@link #execute_split_r2c(NativeDoubleArray, NativeDoubleArray, NativeDoubleArray, long...)}.
+	 * {@link #execute_split_r2c(NativeRealArray, NativeRealArray, NativeRealArray, long...)}.
 	 * Please note that FFTW was designed so that the inverse fourier transform of a fourier
 	 * transform (or vice versa) would restore the original signal scaled by the number
 	 * of elements </br>( <tt>dft(idft(xR,xI)) = xR*xR.length, xI*xR.length</tt> ).
@@ -253,9 +255,9 @@ public class FFTW_Guru {
 	 * when the number of elements determined from the dimensions does not match the lengths of the specified arrays.
 	 */
 	public static void execute_split_c2r(
-			NativeDoubleArray realIn,
-			NativeDoubleArray imagIn,
-			NativeDoubleArray realOut,
+			NativeRealArray realIn,
+			NativeRealArray imagIn,
+			NativeRealArray realOut,
 			long... dimensions)
 	{
 		initFFTW();
@@ -263,32 +265,32 @@ public class FFTW_Guru {
 		Objects.requireNonNull(realIn, ()->"Cannot use null as realIn parameter.");
 		Objects.requireNonNull(imagIn, ()->"Cannot use null as realOut parameter.");
 		Objects.requireNonNull(realOut, ()->"Cannot use null as imagOut parameter.");
-		Utils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
-		Utils.requirePosititveDimensions(dimensions);
-		long numElements = Utils.numElementsFromDimensions(dimensions);
-		Utils.requireEqual(numElements, realIn.length,
+		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
+		GeneralUtils.requirePosititveDimensions(dimensions);
+		long numElements = GeneralUtils.numElementsFromDimensions(dimensions);
+		GeneralUtils.requireEqual(numElements, realIn.length,
 				()->"provided real input does not have the same number of elements as determined from dimensions. "
 						+ "Should be " + numElements + " but only has " + realIn.length);
-		Utils.requireEqual(numElements, imagIn.length,
+		GeneralUtils.requireEqual(numElements, imagIn.length,
 				()->"provided imaginary input does not have the same number of elements as determined from dimensions. "
 						+ "Should be " + numElements + " but only has " + imagIn.length);
-		Utils.requireEqual(numElements, realOut.length,
+		GeneralUtils.requireEqual(numElements, realOut.length,
 				()->"provided real output does not have the same number of elements as determined from dimensions. "
 						+ "Should be " + numElements + " but only has " + realOut.length);
 		/* declare native resources first */
-		fftw_iodim64 array = null;
+		fftw_iodim64 array = null; //#FLOATGEN_IGNORE
 		fftw_iodim64 dims = null;
-		fftw_iodim64[] individualDims = new fftw_iodim64[dimensions.length];
-		fftw_iodim64 lastDim = null;
+		fftw_iodim64[] individualDims = new fftw_iodim64[dimensions.length]; //#FLOATGEN_IGNORE
+		fftw_iodim64 lastDim = null; //#FLOATGEN_IGNORE
 		fftw_plan plan = null;
 		try {
 			/* allocate native resources */
-			array = new fftw_iodim64(dimensions.length+1);
+			array = new fftw_iodim64(dimensions.length+1); //#FLOATGEN_IGNORE
 			dims = new fftw_iodim64(array);
 			for(int i = 0; i < dimensions.length; i++){
-				individualDims[i] = new fftw_iodim64();
+				individualDims[i] = new fftw_iodim64(); //#FLOATGEN_IGNORE
 			}
-			lastDim = new fftw_iodim64();
+			lastDim = new fftw_iodim64(); //#FLOATGEN_IGNORE
 			/* fill native resources */
 			long stride = 1;
 			for(int i = 0; i < dimensions.length; i++){

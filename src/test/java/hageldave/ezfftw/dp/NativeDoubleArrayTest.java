@@ -1,16 +1,16 @@
-package hageldave.ezfftw;
+package hageldave.ezfftw.dp;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import hageldave.ezfftw.NativeDoubleArray;
+import hageldave.ezfftw.dp.NativeRealArray;
 
 public class NativeDoubleArrayTest {
 
 	@Test
 	public void test() {
 		// just a single entry
-		try(NativeDoubleArray a = new NativeDoubleArray(1);)
+		try(NativeRealArray a = new NativeRealArray(1);)
 		{
 			assertEquals(1, a.length);
 			a.set(0, 0);
@@ -20,7 +20,7 @@ public class NativeDoubleArrayTest {
 		}
 
 		// 10 entries
-		try(NativeDoubleArray a = new NativeDoubleArray(10);)
+		try(NativeRealArray a = new NativeRealArray(10);)
 		{
 			double[] arr = new double[]{0,1,2,3,4,5,6,7,8,9};
 			assertEquals(10, a.length);
@@ -61,7 +61,7 @@ public class NativeDoubleArrayTest {
 			assertEquals(arr[7], a.get(7), 0);
 		}
 
-		try(NativeDoubleArray a = new NativeDoubleArray(10);){
+		try(NativeRealArray a = new NativeRealArray(10);){
 			a.fill(0);
 			for(long i = 0; i < a.length; i++)
 				assertEquals(0, a.get(i), 0);
@@ -70,7 +70,7 @@ public class NativeDoubleArrayTest {
 				assertEquals(1, a.get(i), 0);
 		}
 
-		try(NativeDoubleArray a = new NativeDoubleArray(0)){
+		try(NativeRealArray a = new NativeRealArray(0)){
 			fail();
 		} catch (Exception e) {
 			assertEquals(IllegalArgumentException.class, e.getClass());

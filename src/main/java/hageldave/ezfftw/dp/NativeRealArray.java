@@ -1,10 +1,14 @@
-package hageldave.ezfftw;
+package hageldave.ezfftw.dp;
 
 import org.bytedeco.javacpp.DoublePointer;
 
+import hageldave.ezfftw.FFTW_Initializer;
+import hageldave.ezfftw.GeneralUtils;
+
 /**
- * The NativeDoubleArray class is a wrapper around a C/C++ array and is used
- * for the native fftw bindings which expect C/C++ double pointers (arrays).
+ * The NativeRealArray class (of the double precision package) is a wrapper
+ * around a C/C++ array and is used for the native fftw bindings which expect
+ * C/C++ double pointers (arrays).
  * For convenience, this class offers methods to read and write values from
  * and to the native array in a more java stylish way, hiding the somewhat
  * cumbersome use of the {@link DoublePointer} class.
@@ -46,7 +50,7 @@ import org.bytedeco.javacpp.DoublePointer;
  * @author hageldave
  *
  */
-public class NativeDoubleArray implements AutoCloseable {
+public class NativeRealArray implements AutoCloseable {
 
 	/** length of the array (number of elements) */
 	public final long length;
@@ -59,9 +63,9 @@ public class NativeDoubleArray implements AutoCloseable {
 	 * @param length number of elements in array
 	 * @throws IllegalArgumentException when length is not positive
 	 */
-	public NativeDoubleArray(long length) {
+	public NativeRealArray(long length) {
 		FFTW_Initializer.initFFTW();
-		Utils.requirePositive(length, ()->"Provided length is not positive");
+		GeneralUtils.requirePositive(length, ()->"Provided length is not positive");
 		this.pointer = new DoublePointer(length);
 		this.length = length;
 	}
@@ -75,7 +79,7 @@ public class NativeDoubleArray implements AutoCloseable {
 	 * @param v value
 	 * @return this for chaining
 	 */
-	public NativeDoubleArray set(long i, double v){
+	public NativeRealArray set(long i, double v){
 		pointer.position(0).put(i, v);
 		return this;
 	}
@@ -88,7 +92,7 @@ public class NativeDoubleArray implements AutoCloseable {
 	 * @param values to be set
 	 * @return this for chaining
 	 */
-	public NativeDoubleArray set(double... values){
+	public NativeRealArray set(double... values){
 		return set(0, values);
 	}
 
@@ -101,7 +105,7 @@ public class NativeDoubleArray implements AutoCloseable {
 	 * @param values to be set
 	 * @return this for chaining
 	 */
-	public NativeDoubleArray set(long i, double... values){
+	public NativeRealArray set(long i, double... values){
 		return set(i, values.length, 0, values);
 	}
 
@@ -118,7 +122,7 @@ public class NativeDoubleArray implements AutoCloseable {
 	 * @param values the array from which values will be copied
 	 * @return this for chaining
 	 */
-	public NativeDoubleArray set(long i, int length, int offset, double[] values){
+	public NativeRealArray set(long i, int length, int offset, double[] values){
 		pointer.position(i).put(values, offset, length);
 		return this;
 	}
@@ -128,7 +132,7 @@ public class NativeDoubleArray implements AutoCloseable {
 	 * @param v value for all elements
 	 * @return this for chaining
 	 */
-	public NativeDoubleArray fill(double v){
+	public NativeRealArray fill(double v){
 		for(long i = 0; i < this.length; i++)
 			set(i, v);
 		return this;
@@ -229,7 +233,7 @@ public class NativeDoubleArray implements AutoCloseable {
 		// So much it won't fit in a single java array.
 		// 2048^3 > 2^32 --> 2048^3 * 8bytes = 64GB of memory
 		double[][][] my3DArray = new double[2048][2048][2048];
-		NativeDoubleArray natArray = new NativeDoubleArray(2048L*2048L*2048L);
+		NativeRealArray natArray = new NativeRealArray(2048L*2048L*2048L);
 		// lets populate natArray
 		for(long i = 0; i < natArray.length; i++){
 			double value = ((double)i)/natArray.length;

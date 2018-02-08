@@ -1,4 +1,4 @@
-package hageldave.ezfftw;
+package hageldave.ezfftw.dp;
 
 import static org.junit.Assert.fail;
 

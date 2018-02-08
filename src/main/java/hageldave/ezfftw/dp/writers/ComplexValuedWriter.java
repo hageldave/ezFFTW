@@ -1,4 +1,4 @@
-package hageldave.ezfftw.writers;
+package hageldave.ezfftw.dp.writers;
 
 public interface ComplexValuedWriter {
 	void setValueAt(double value, boolean imaginary, long... coordinates);

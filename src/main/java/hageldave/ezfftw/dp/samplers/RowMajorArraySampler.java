@@ -1,6 +1,6 @@
-package hageldave.ezfftw.samplers;
+package hageldave.ezfftw.dp.samplers;
 
-import hageldave.ezfftw.Utils;
+import hageldave.ezfftw.GeneralUtils;
 
 public class RowMajorArraySampler implements RealValuedSampler {
 
@@ -14,6 +14,6 @@ public class RowMajorArraySampler implements RealValuedSampler {
 
 	@Override
 	public double getValueAt(long... coordinates) {
-		return array[(int)Utils.indexFromCoordinates(coordinates, dimensions)];
+		return array[(int)GeneralUtils.indexFromCoordinates(coordinates, dimensions)];
 	}
 }

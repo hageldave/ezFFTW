@@ -1,10 +1,10 @@
-package hageldave.ezfftw;
+package hageldave.ezfftw.dp;
 
-import hageldave.ezfftw.FFT;
-import hageldave.ezfftw.FFTW_Guru;
-import hageldave.ezfftw.NativeDoubleArray;
-import hageldave.ezfftw.samplers.RowMajorArraySampler;
-import hageldave.ezfftw.writers.RowMajorArrayWriter;
+import hageldave.ezfftw.dp.FFT;
+import hageldave.ezfftw.dp.FFTW_Guru;
+import hageldave.ezfftw.dp.NativeRealArray;
+import hageldave.ezfftw.dp.samplers.RowMajorArraySampler;
+import hageldave.ezfftw.dp.writers.RowMajorArrayWriter;
 import hageldave.imagingkit.core.Img;
 import hageldave.imagingkit.core.io.ImageLoader;
 import hageldave.imagingkit.core.scientific.ColorImg;
@@ -24,7 +24,7 @@ public class MiscTest {
 		double[] iout = new double[in.length];
 		for(int i = 0; i < in.length; i++) in[i] = Math.random();
 
-		FFTW_Guru.execute_split_r2c(new NativeDoubleArray(4), new NativeDoubleArray(4), new NativeDoubleArray(4), 2,2);
+		FFTW_Guru.execute_split_r2c(new NativeRealArray(4), new NativeRealArray(4), new NativeRealArray(4), 2,2);
 
 
 		{
