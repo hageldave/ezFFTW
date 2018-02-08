@@ -5,7 +5,7 @@ sudo: false
 jdk:
   - oraclejdk8
 
-script: travis_script.sh
+script: - sh travis_script.sh
 
 after_success:
 - mvn -P coveralls -pl :ezfftw -DrepoToken=$COVERALLS_TOKEN coveralls:report
