@@ -26,3 +26,8 @@ hs_err_pid*
 .classpath
 .project
 .settings
+
+# project specific
+# ignore all float precision packages because they are generated from script
+/src/main/java/hageldave/ezfftw/fp
+/src/test/java/hageldave/ezfftw/fp
