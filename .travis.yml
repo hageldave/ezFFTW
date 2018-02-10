@@ -7,8 +7,7 @@ before_install:
 - bash ./remove_float_code.sh || true
 - bash ./generate_float_code.sh
 
-script: 
--mvn -P travis -X -pl :ezfftw clean test jacoco:report
+script: mvn -P travis -X -pl :ezfftw clean test jacoco:report
 
 env:
   global:
