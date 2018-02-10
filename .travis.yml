@@ -1,15 +1,18 @@
 language: java
-
 sudo: false
-
 jdk:
-  - oraclejdk8
+- oraclejdk8
 
 before_install:
 - bash ./remove_float_code.sh || true
 - bash ./generate_float_code.sh
 
-script: mvn -P travis -X -pl :ezfftw clean test jacoco:report
+script: 
+-mvn -P travis -X -pl :ezfftw clean test jacoco:report
+
+env:
+  global:
+    secure: CLSKKPUQ7+arzCKG0BVpu+s8W5Txxkk7+Y0nA7hU6BDKc5hz2Djm4o2hUiuEkHoMLZ/+XpuJAq8Mqe3sHlWAdtOiUnb+h2k+ZVtxfhQUB2E16EQRDMujL5m/2SJqAGFGVCXCNAYIYhQ52438Ly8SbE8H79o6MU6ketHlOS14tx5Nyli2n1RAwSqHvO/7d/J+riBbBeXjyFGAMMAeJyctf0HtE0TzMZV10qH9xvh40XK2ztJdIvLg/dbXex00q3HtfyXbD5oLTbfCUFwajiABkvAZ8n0Bv1A0h6RKh4cBNTngzBp5S8+g7Y/sPp/sg9jT9EKxgjU+Buaa9srANh/r211UJWLihVq5rmRdU1RwghZbFbj9Kjh2RvHSdWnh822qtM0sP9zOlMUFryU/ARG6RNKFUPJjg9+l/jM8kCDrSM2sUcKIXBajmmVaaWZAFRuOFKMAjHURb9neMomHHoWST9Or1IsfKU/5wfJb7hPwtU51EicBcQrMvATL60P5FRNaGONd4DCk+L9+wEVBJvNAknV+V6m44MNQe8VATJAqMphuDq9upCoxLImUzQZyBP8QEuy7fDyE1+NEW9qB1VXF+pJPDEx17zsF2x/eFE+V5bZOxOpJIRNKgo/HSQ7SnNdD+44HyljJUsqLHWlhJ1TT/3qwK7fB4vaLmaLjbN6fmo0=
 
 after_success:
 - mvn -P coveralls -pl :ezfftw -DrepoToken=$COVERALLS_TOKEN coveralls:report
