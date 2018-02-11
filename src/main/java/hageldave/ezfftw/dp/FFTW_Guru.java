@@ -54,7 +54,7 @@ public class FFTW_Guru {
 	 * {@link #execute_split_c2r(NativeRealArray, NativeRealArray, NativeRealArray, long...)}.
 	 * Please note that FFTW was designed so that the inverse fourier transform of a fourier
 	 * transform (or vice versa) would restore the original signal scaled by the number
-	 * of elements </br>( <tt>idft(dft(x)) = x*x.length</tt> ).
+	 * of elements </br>( <tt>idft(dft(x)) = x*x.length</tt> ).</br>
 	 * See also <a href="http://fftw.org/faq/section3.html#whyscaled">FFTW FAQ</a>.
 	 *
 	 * @param realIn real valued input array
@@ -140,6 +140,47 @@ public class FFTW_Guru {
 
 
 
+	/**
+	 * Performs a split complex to complex DFT using the FFTW_ESTIMATE planner flag which
+	 * chooses a DFT algorithm based on a simple heuristic. This method can be used as
+	 * forward and backward transform (DFT and inverse DFT).
+	 * <p>
+	 * The first and second array argument are the real and imaginary valued data to be transformed,
+	 * the third and fourth argument are the real and imaginary valued data that result
+	 * from the transform.
+	 * </br>
+	 * The dimension argument specifies how many dimensions the data has and what the extent
+	 * of each dimension is (e.g. {1024,768} for 2 dimensions of width=1024 and height=768).
+	 * </br>
+	 * The data is assumed to be in row major order (for dimensions {m,n} this means that the
+	 * first m elements correspond to the first row of the 2-dimensional data, the last row
+	 * starts at element (n-1)*m).
+	 * <p>
+	 * The resulting complex valued DFT has the origin at the element at index 0.
+	 * Thus the DC (0hz) component of the DFT consists of the first element in the real and imaginary 
+	 * output array.
+	 * <p>
+	 * This method does not have a corresponding counter part for computing its inverse, instead
+	 * for computing the inverse real and imaginary parts have to be swapped in both, input and output</br>
+	 * ( <tt>(rOut, iOut) = idft(rIn, iIn)</tt> can be expressed as </br>
+	 * <tt>(iOut, rOut) = dft(iIn, rIn)</tt> ).</br>
+	 * Please note that FFTW was designed so that the inverse fourier transform of a fourier
+	 * transform (or vice versa) would restore the original signal scaled by the number
+	 * of elements </br>( <tt>idft(dft(real,imag)) = (real*real.length, imag*real.length)</tt> ).</br>
+	 * See also <a href="http://fftw.org/faq/section3.html#whyscaled">FFTW FAQ</a>.
+	 *
+	 * @param realIn real valued input array (or imaginary for inverse)
+	 * @param realIn imaginary valued input array (or real for inverse)
+	 * @param realOut real part of complex valued output array (or imaginary for inverse)
+	 * @param imagOut imaginary part of complex valued output array (or real for inverse)
+	 * @param dimensions of the input (assuming input in row major order)
+	 * e.g. {1024, 768} for a 2D signal of width=1024 and height=768
+	 * @throws NullPointerException when one of the specified array arguments is null.
+	 * @throws IllegalArgumentException </br>
+	 * when no dimensions were specified,</br>
+	 * when one of the specified dimensions is not positive,</br>
+	 * when the number of elements determined from the dimensions does not match the lengths of the specified arrays.
+	 */
 	public static void execute_split_c2c(
 			NativeRealArray realIn,
 			NativeRealArray imagIn,
@@ -232,15 +273,11 @@ public class FFTW_Guru {
 	 * first m elements correspond to the first row of the 2-dimensional data, the last row
 	 * starts at element (n-1)*m).
 	 * <p>
-	 * The resulting complex valued DFT has the origin at the element at index 0.
-	 * Thus the DC (0hz) component of the DFT is the first element in the real output array
-	 * and is the sum of all values of the input array.
-	 * <p>
 	 * The corresponding counter part to this method for computing the forward transform (DFT) is
 	 * {@link #execute_split_r2c(NativeRealArray, NativeRealArray, NativeRealArray, long...)}.
 	 * Please note that FFTW was designed so that the inverse fourier transform of a fourier
 	 * transform (or vice versa) would restore the original signal scaled by the number
-	 * of elements </br>( <tt>dft(idft(xR,xI)) = xR*xR.length, xI*xR.length</tt> ).
+	 * of elements </br>( <tt>dft(idft(xR,xI)) = xR*xR.length, xI*xR.length</tt> ).</br>
 	 * See also <a href="http://fftw.org/faq/section3.html#whyscaled">FFTW FAQ</a>.
 	 *
 	 * @param realIn real part of complex valued input array
