@@ -74,6 +74,10 @@ public class FloatVersionGenerator {
 					}
 					if(line.contains("class "+doubleclassname)){
 						line = line.replaceAll(doubleclassname, floatclassname);
+						line =  "/* THIS CLASS WAS AUTOMATICALLY GENERATED FROM" + System.lineSeparator() + 
+								" * ITS DOUBLE PRECISION VERSION, DO NOT MODIFY" + System.lineSeparator() +
+								" */" + System.lineSeparator() 
+								+ line;
 					} else {
 						line = line
 								.replace("DOUBLE PRECISION", "FLOAT (SINGLE) PRECISION")
