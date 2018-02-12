@@ -6,6 +6,8 @@ import java.util.function.Supplier;
 
 public class JunitUtils {
 
+	public static final double doubleTolerance = 1d/10000000;
+	public static final float floatTolerance =   1f/10000;
 
 	public static void testException(Runnable codeThatThrows, Class<? extends Throwable> exClass){
 		boolean wasThrown = true;

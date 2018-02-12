@@ -33,11 +33,9 @@ public class FloatVersionGenerator {
 				"samplers/RealValuedSampler.java",
 				"samplers/ComplexValuedSampler.java",
 				"samplers/RowMajorArraySampler.java",
-				"samplers/MultiDimArraySampler2D.java",
 				"writers/RealValuedWriter.java",
 				"writers/ComplexValuedWriter.java",
 				"writers/RowMajorArrayWriter.java",
-				"writers/MultiDimArrayWriter2D.java",
 		}){
 			genFloatClass(new File(mainpath_dp,classfile), new File(mainpath_fp, classfile));
 		}
@@ -46,6 +44,7 @@ public class FloatVersionGenerator {
 				"FFTW_GuruTest.java",
 				"NativeRealArrayTest.java",
 				"PrecisionDependentUtilsTest.java",
+				"FFTTest.java"
 		}){
 			genFloatClass(new File(testpath_dp,classfile), new File(testpath_fp, classfile));
 		}
@@ -77,12 +76,15 @@ public class FloatVersionGenerator {
 						line = line.replaceAll(doubleclassname, floatclassname);
 					} else {
 						line = line
+								.replace("DOUBLE PRECISION", "FLOAT (SINGLE) PRECISION")
+								.replace("double precision", "float (single) precision")
 								.replace("Double", "Float")
 								.replace("double", "float")
 								.replace("fftw_", "fftwf_")
 								.replace("_D", "_F")
 								.replace(".0", ".0f")
-								.replace("ezfftw.dp", "ezfftw.fp");
+								.replace("ezfftw.dp", "ezfftw.fp")
+								;
 					}
 				}
 				if(!keptLine.isEmpty()){

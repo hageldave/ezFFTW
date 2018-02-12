@@ -1,5 +1,6 @@
 package hageldave.ezfftw.dp.writers;
 
+/* --- DOUBLE PRECISION VERSION --- */
 public interface ComplexValuedWriter {
 	void setValueAt(double value, boolean imaginary, long... coordinates);
 

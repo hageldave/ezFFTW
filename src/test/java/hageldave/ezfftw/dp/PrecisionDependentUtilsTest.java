@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import hageldave.ezfftw.JunitUtils;
 
+/* --- DOUBLE PRECISION VERSION --- */
 public class PrecisionDependentUtilsTest {
 
 	@Test

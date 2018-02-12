@@ -2,6 +2,7 @@ package hageldave.ezfftw.dp.writers;
 
 import hageldave.ezfftw.GeneralUtils;
 
+/* --- DOUBLE PRECISION VERSION --- */
 public class RowMajorArrayWriter implements RealValuedWriter {
 
 	public final double[] array;

@@ -10,6 +10,7 @@ import hageldave.ezfftw.dp.samplers.RealValuedSampler;
 import hageldave.ezfftw.dp.writers.ComplexValuedWriter;
 import hageldave.ezfftw.dp.writers.RealValuedWriter;
 
+/* --- DOUBLE PRECISION VERSION --- */
 public class FFT {
 
 	public static void fft(RealValuedSampler realIn, ComplexValuedWriter complexOut, long... dimensions) {

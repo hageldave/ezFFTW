@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import hageldave.ezfftw.dp.NativeRealArray;
 
+/* --- DOUBLE PRECISION VERSION --- */
 public class NativeRealArrayTest {
 
 	@Test

@@ -28,6 +28,7 @@ import hageldave.ezfftw.GeneralUtils;
  * @author hageldave
  * @see <a href="http://www.fftw.org/fftw3_doc/Guru-Interface.html">FFTW Guru Interface documentation (www.fftw.org)</a>
  */
+/* --- DOUBLE PRECISION VERSION --- */
 public class FFTW_Guru {
 
 	/**

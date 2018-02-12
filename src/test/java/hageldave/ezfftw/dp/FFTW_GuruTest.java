@@ -7,6 +7,7 @@ import hageldave.ezfftw.JunitUtils;
 import hageldave.ezfftw.dp.FFTW_Guru;
 import hageldave.ezfftw.dp.NativeRealArray;
 
+/* --- DOUBLE PRECISION VERSION --- */
 public class FFTW_GuruTest {
 
 	@Test

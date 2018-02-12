@@ -50,6 +50,7 @@ import hageldave.ezfftw.GeneralUtils;
  * @author hageldave
  *
  */
+/* --- DOUBLE PRECISION VERSION --- */
 public class NativeRealArray implements AutoCloseable {
 
 	/** length of the array (number of elements) */

@@ -6,6 +6,7 @@ import hageldave.ezfftw.GeneralUtils;
 import hageldave.ezfftw.dp.samplers.RealValuedSampler;
 import hageldave.ezfftw.dp.writers.RealValuedWriter;
 
+/* --- DOUBLE PRECISION VERSION --- */
 public class PrecisionDependentUtils {
 
 	/**
