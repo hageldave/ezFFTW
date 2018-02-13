@@ -3,6 +3,7 @@ package hageldave.ezfftw.dp;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import hageldave.ezfftw.JunitUtils;
 import hageldave.ezfftw.dp.NativeRealArray;
 
 /* --- DOUBLE PRECISION VERSION --- */
@@ -75,6 +76,13 @@ public class NativeRealArrayTest {
 			fail();
 		} catch (Exception e) {
 			assertEquals(IllegalArgumentException.class, e.getClass());
+		}
+
+		{
+			NativeRealArray a = new NativeRealArray(1);
+			a.close();
+			// throws nullpointer exception instead of segfaulting
+			JunitUtils.testException(()->a.get(0), NullPointerException.class);
 		}
 	}
 

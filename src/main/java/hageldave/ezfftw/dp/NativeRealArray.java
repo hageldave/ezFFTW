@@ -17,6 +17,9 @@ import hageldave.ezfftw.GeneralUtils;
  * of try-with-resources statement for easy management of the native resources.
  * In case you are too lazy to manage memory in this way, the garbage collector
  * can eventually take care of this object and close it on finalization.
+ * Also to prevent SEGMENTATION FAULTS, the wrapped pointer object will be
+ * set to null after closing, resulting in {@link NullPointerException}s when
+ * accessing the closed array instead.
  * <p>
  * Note that native arrays are capable of storing way more data than java arrays
  * when used in a 64-bit environment. While java arrays are limited to
@@ -55,7 +58,7 @@ public class NativeRealArray implements AutoCloseable {
 
 	/** length of the array (number of elements) */
 	public final long length;
-	private final DoublePointer pointer;
+	private DoublePointer pointer;
 
 	/**
 	 * Creates a new NativeDoubleArray of specified length.
@@ -209,13 +212,18 @@ public class NativeRealArray implements AutoCloseable {
 	 * Returns the native DoublePointer of this array, pointing to the position 0.
 	 * @return pointer to this array.
 	 */
-	public DoublePointer getPointer() {
+	/*package visible*/
+	DoublePointer getPointer() {
 		return pointer.position(0);
 	}
 
 	@Override
 	public void close() {
-		pointer.close();
+		DoublePointer p = this.pointer;
+		this.pointer = null;
+		if(p != null){
+			p.close();
+		}
 	}
 
 	/**
