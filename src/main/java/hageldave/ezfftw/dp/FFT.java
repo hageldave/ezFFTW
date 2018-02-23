@@ -81,6 +81,37 @@ public class FFT {
 		ifft(r_input, i_input, r_output, dimensions);
 	}
 
+	
+	/**
+	 * Calls {@link #fft(Supplier, BiConsumer, long...)} with appropriate {@link NativeRealArray} {@link Supplier}
+	 * and {@link BiConsumer}.
+	 * <p>
+	 * Calculates a Fast Fourier Transform of the provided <tt>realIn</tt> array.
+	 * The supplied array is assumed to be in row major order and its dimensionality is specified by the 
+	 * <tt>dimensions</tt> argument.
+	 * The resulting transform will be written to the provided <tt>realOut</tt> and <tt>imagOut</tt> arrays
+	 * with separate real and imaginary part of the complex valued transform (in row major order).
+	 * <p>
+	 * The inverse counter part to this method is {@link #ifft(double[], double[], double[], long...)}.
+	 * Please note that the FFT and subsequent inverse FFT restores the original signal scaled by the number of
+	 * values in the input.
+	 * See also <a href="http://fftw.org/faq/section3.html#whyscaled">FFTW FAQ</a> on that topic.
+	 * 
+	 * @param realIn real valued input in row major order to be transformed
+	 * @param realOut real valued part of the resulting transform in row major order
+	 * @param imagOut imaginary valued part of the resulting transform in row major order
+	 * @param dimensions of the input (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
+	 * 
+	 * @throws IllegalArgumentException </br>
+	 * when no dimensions were provided </br>
+	 * when one of the dimensions is not positive </br>
+	 * when the length of the supplied arrays do not match the number of elements resulting from specified dimensions
+	 * @throws NullPointerException if any of the specified arrays is null.
+	 * 
+	 * @see #fft(RealValuedSampler, ComplexValuedWriter, long...)
+	 * @see #fft(Supplier, BiConsumer, long...)
+	 * @see #fft(double[], double[], double[], double[], long...)
+	 */
 	public static void fft(double[] realIn, double[] realOut, double[] imagOut, long... dimensions) {
 		/* sanity checks */
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
@@ -102,6 +133,38 @@ public class FFT {
 		fft(r_input, c_output, dimensions);
 	}
 
+	/**
+	 * Calls {@link #fft(Supplier, Supplier, BiConsumer, long...)} with appropriate {@link NativeRealArray} {@link Supplier}s
+	 * and {@link BiConsumer}.
+	 * <p>
+	 * Calculates a Fast Fourier Transform of the provided <tt>realIn</tt> and <tt>imagIn</tt> arrays.
+	 * The supplied arrays are assumed to be in row major order and their dimensionality is specified by the dimensions
+	 * argument.
+	 * Also the arrays represent the split complex format where real and imaginary parts are stored in separate arrays.
+	 * The resulting transform will be written to the provided <tt>realOut</tt> and <tt>imagOut</tt> arrays
+	 * with separate real and imaginary part of the complex valued transform (in row major order).
+	 * <p>
+	 * The inverse counter part to this method is {@link #ifft(double[], double[], double[], double[], long...)}.
+	 * Please note that the FFT and subsequent inverse FFT restores the original signal scaled by the number of
+	 * values in the input.
+	 * See also <a href="http://fftw.org/faq/section3.html#whyscaled">FFTW FAQ</a> on that topic.
+	 * 
+	 * @param realIn real valued part of the complex input in row major order to be transformed
+	 * @param imagIn imaginary valued part of the complex input in row major order to be transformed
+	 * @param realOut real valued part of the resulting transform in row major order
+	 * @param imagOut imaginary valued part of the resulting transform in row major order
+	 * @param dimensions of the input (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
+	 * 
+	 * @throws IllegalArgumentException </br>
+	 * when no dimensions were provided </br>
+	 * when one of the dimensions is not positive </br>
+	 * when the length of the supplied arrays do not match the number of elements resulting from specified dimensions
+	 * @throws NullPointerException if any of the specified arrays is null.
+	 * 
+	 * @see #fft(ComplexValuedSampler, ComplexValuedWriter, long...)
+	 * @see #fft(Supplier, Supplier, BiConsumer, long...)
+	 * @see #fft(double[], double[], double[], long...)
+	 */
 	public static void fft(double[] realIn, double[] imagIn, double[] realOut, double[] imagOut, long... dimensions) {
 		/* sanity checks */
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
@@ -129,6 +192,38 @@ public class FFT {
 		fft(r_input, i_input, c_output, dimensions);
 	}
 
+	/**
+	 * Calls {@link #ifft(Supplier, Supplier, BiConsumer, long...)} with appropriate {@link NativeRealArray} {@link Supplier}s
+	 * and {@link BiConsumer}.
+	 * <p>
+	 * Calculates an inverse Fast Fourier Transform of the provided <tt>realIn</tt> and <tt>imagIn</tt> arrays.
+	 * The supplied arrays are assumed to be in row major order and their dimensionality is specified by the dimensions
+	 * argument.
+	 * Also the arrays represent the split complex format where real and imaginary parts are stored in separate arrays.
+	 * The resulting transform will be written to the provided <tt>realOut</tt> and <tt>imagOut</tt> arrays
+	 * with separate real and imaginary part of the complex valued transform (in row major order).
+	 * <p>
+	 * The (forward) counter part to this method is {@link #fft(double[], double[], double[], double[], long...)}.
+	 * Please note that the FFT and subsequent inverse FFT restores the original signal scaled by the number of
+	 * values in the input.
+	 * See also <a href="http://fftw.org/faq/section3.html#whyscaled">FFTW FAQ</a> on that topic.
+	 * 
+	 * @param realIn real valued part of the complex input in row major order to be transformed
+	 * @param imagIn imaginary valued part of the complex input in row major order to be transformed
+	 * @param realOut real valued part of the resulting transform in row major order
+	 * @param imagOut imaginary valued part of the resulting transform in row major order
+	 * @param dimensions of the input (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
+	 * 
+	 * @throws IllegalArgumentException </br>
+	 * when no dimensions were provided </br>
+	 * when one of the dimensions is not positive </br>
+	 * when the length of the supplied arrays do not match the number of elements resulting from specified dimensions
+	 * @throws NullPointerException if any of the specified arrays is null.
+	 * 
+	 * @see #ifft(ComplexValuedSampler, ComplexValuedWriter, long...)
+	 * @see #ifft(Supplier, Supplier, BiConsumer, long...)
+	 * @see #ifft(double[], double[], double[], long...)
+	 */
 	public static void ifft(double[] realIn, double[] imagIn, double[] realOut, double[] imagOut, long... dimensions) {
 		/* sanity checks */
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
@@ -156,6 +251,36 @@ public class FFT {
 		ifft(r_input, i_input, c_output, dimensions);
 	}
 
+	/**
+	 * Calls {@link #ifft(Supplier, Supplier, Consumer, long...)} with appropriate {@link NativeRealArray} {@link Supplier}s
+	 * and {@link Consumer}.
+	 * <p>
+	 * Calculates an inverse Fast Fourier Transform of the provided <tt>realIn</tt> and <tt>imagOut</tt> arrays
+	 * (complex valued input split into real and imaginary part arrays).
+	 * The supplied arrays are assumed to be in row major order and their dimensionality is specified by the 
+	 * <tt>dimensions</tt> argument.
+	 * The resulting real valued transform will be written to the provided <tt>realOut</tt> array in row major order.
+	 * <p>
+	 * The (forward) counter part to this method is {@link #fft(double[], double[], double[], long...)}.
+	 * Please note that the FFT and subsequent inverse FFT restores the original signal scaled by the number of
+	 * values in the input.
+	 * See also <a href="http://fftw.org/faq/section3.html#whyscaled">FFTW FAQ</a> on that topic.
+	 * 
+	 * @param realIn real valued part of the complex input in row major order to be transformed
+	 * @param imagIn imaginary valued part of the complex input in row major order to be transformed
+	 * @param realOut real valued transform result in row major order
+	 * @param dimensions of the input (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
+	 * 
+	 * @throws IllegalArgumentException </br>
+	 * when no dimensions were provided </br>
+	 * when one of the dimensions is not positive </br>
+	 * when the length of the supplied arrays do not match the number of elements resulting from specified dimensions
+	 * @throws NullPointerException if any of the specified arrays is null.
+	 * 
+	 * @see #ifft(ComplexValuedSampler, RealValuedWriter, long...)
+	 * @see #ifft(Supplier, Supplier, Consumer, long...)
+	 * @see #ifft(double[], double[], double[], double[], long...)
+	 */
 	public static void ifft(double[] realIn, double[] imagIn, double[] realOut, long... dimensions) {
 		/* sanity checks */
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
@@ -206,6 +331,7 @@ public class FFT {
 	 *
 	 * @see #fft(double[], double[], double[], long...)
 	 * @see #fft(RealValuedSampler, ComplexValuedWriter, long...)
+	 * @see #fft(ComplexValuedSampler, ComplexValuedWriter, long...)
 	 */
 	public static void fft(
 			Supplier<NativeRealArray> realIn,
@@ -257,6 +383,7 @@ public class FFT {
 	 *
 	 * @see #fft(double[], double[], double[], double[], long...)
 	 * @see #fft(ComplexValuedSampler, ComplexValuedWriter, long...)
+	 * @see #fft(Supplier, BiConsumer, long...)
 	 */
 	public static void fft(
 			Supplier<NativeRealArray> realIn,
@@ -314,6 +441,7 @@ public class FFT {
 	 *
 	 * @see #ifft(double[], double[], double[], double[], long...)
 	 * @see #ifft(ComplexValuedSampler, ComplexValuedWriter, long...)
+	 * @see #ifft(Supplier, Supplier, Consumer, long...)
 	 */
 	public static void ifft(
 			Supplier<NativeRealArray> realIn,
@@ -368,8 +496,9 @@ public class FFT {
 	 * when one of the dimensions is not positive </br>
 	 * when the length of the supplied arrays do not match the number of elements resulting from specified dimensions
 	 *
-	 * @see #ifft(double[], double[], double[], double[], long...)
-	 * @see #ifft(ComplexValuedSampler, ComplexValuedWriter, long...)
+	 * @see #ifft(double[], double[], double[], long...)
+	 * @see #ifft(ComplexValuedSampler, RealValuedWriter, long...)
+	 * @see #ifft(Supplier, Supplier, BiConsumer, long...)
 	 */
 	public static void ifft(
 			Supplier<NativeRealArray> realIn,
