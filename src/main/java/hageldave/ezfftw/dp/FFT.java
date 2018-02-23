@@ -1,5 +1,6 @@
 package hageldave.ezfftw.dp;
 
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -13,11 +14,40 @@ import hageldave.ezfftw.dp.writers.RealValuedWriter;
 /* --- DOUBLE PRECISION VERSION --- */
 public class FFT {
 
-
+	/**
+	 * Calls {@link #fft(Supplier, BiConsumer, long...)} with appropriate {@link NativeRealArray} {@link Supplier}
+	 * and {@link BiConsumer}.
+	 * <p>
+	 * Calculates a Fast Fourier Transform of the real valued signal, provided by the <tt>realIn</tt> 
+	 * {@link RealValuedSampler}.
+	 * The sampler will be called for every discrete point in the domain specified by the <tt>dimensions</tt>
+	 * argument.
+	 * The resulting transform will be written via the provided <tt>complexOut</tt> {@link ComplexValuedWriter}.
+	 * <p>
+	 * The inverse counter part to this method is {@link #ifft(ComplexValuedSampler, RealValuedWriter, long...)}
+	 * Please note that the FFT and subsequent inverse FFT restores the original signal scaled by the number of
+	 * values in the input.
+	 * See also <a href="http://fftw.org/faq/section3.html#whyscaled">FFTW FAQ</a> on that topic.
+	 * 
+	 * @param realIn sampler for gaining the discrete real valued signal
+	 * @param complexOut writer for the discrete complex valued transform
+	 * @param dimensions of the sampled signal (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
+	 * 
+	 * @throws IllegalArgumentException </br>
+	 * when no dimensions were provided </br>
+	 * when one of the dimensions is not positive
+	 * @throws NullPointerException when the specified sampler or writer is null.
+	 * 
+	 * @see #fft(double[], double[], double[], long...)
+	 * @see #fft(Supplier, BiConsumer, long...)
+	 * @see #fft(ComplexValuedSampler, ComplexValuedWriter, long...)
+	 */
 	public static void fft(RealValuedSampler realIn, ComplexValuedWriter complexOut, long... dimensions) {
 		/* sanity checks */
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
 		GeneralUtils.requirePosititveDimensions(dimensions);
+		Objects.requireNonNull(realIn, ()->"Cannot use null as realIn sampler.");
+		Objects.requireNonNull(complexOut, ()->"Cannot use null as complexOut writer.");
 		/* setup argument lambdas */
 		long numElements = GeneralUtils.numElementsFromDimensions(dimensions);
 		Supplier<NativeRealArray> r_input = ()-> {
@@ -36,6 +66,8 @@ public class FFT {
 		/* sanity checks */
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
 		GeneralUtils.requirePosititveDimensions(dimensions);
+		Objects.requireNonNull(complexIn, ()->"Cannot use null as complexIn sampler.");
+		Objects.requireNonNull(complexOut, ()->"Cannot use null as complexOut writer.");
 		/* setup argument lambdas */
 		long numElements = GeneralUtils.numElementsFromDimensions(dimensions);
 		Supplier<NativeRealArray> r_input = ()-> {
@@ -63,6 +95,8 @@ public class FFT {
 		/* sanity checks */
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
 		GeneralUtils.requirePosititveDimensions(dimensions);
+		Objects.requireNonNull(complexIn, ()->"Cannot use null as complexIn sampler.");
+		Objects.requireNonNull(realOut, ()->"Cannot use null as realOut writer.");
 		/* setup argument lambdas */
 		long numElements = GeneralUtils.numElementsFromDimensions(dimensions);
 		Supplier<NativeRealArray> r_input = ()-> {
