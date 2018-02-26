@@ -11,6 +11,44 @@ import hageldave.ezfftw.dp.samplers.RealValuedSampler;
 import hageldave.ezfftw.dp.writers.ComplexValuedWriter;
 import hageldave.ezfftw.dp.writers.RealValuedWriter;
 
+/**
+ * The FFT class provides methods for executing Fast Fourier Transforms (FFT).
+ * There are mainly two different flavors of FFTs, real valued to complex valued and complex valued to complex valued.
+ * Each fft method has its own inverse counterpart (ifft).
+ * Also there are 3 different interfaces that can be chosen from.
+ * <ul>
+ * <li>double[] in/output arguments</li>
+ * <li>Sampler and writer arguments</li>
+ * <li>{@link NativeRealArray} Supplier and Consumer arguments</li>
+ * </ul>
+ * <p>
+ * Methods by flavor and interface:
+ * <ul>
+ * <li>Real to Complex / Complex to Real
+ *    <ul>
+ *    <li> {@link #fft(double[], double[], double[], long...)} and
+ *    <br> {@link #ifft(double[], double[], double[], long...)} </li>
+ *    <li> {@link #fft(RealValuedSampler, ComplexValuedWriter, long...)} and
+ *    <br> {@link #ifft(ComplexValuedSampler, RealValuedWriter, long...)} </li>
+ *    <li> {@link #fft(Supplier, BiConsumer, long...)} and
+ *    <br> {@link #ifft(Supplier, Supplier, Consumer, long...)} </li>
+ *    </ul>
+ * </li>
+ * <li>Complex to Complex
+ *    <ul>
+ *    <li> {@link #fft(double[], double[], double[], double[], long...)} and
+ *    <br> {@link #ifft(double[], double[], double[], double[], long...)} </li>
+ *    <li> {@link #fft(ComplexValuedSampler, ComplexValuedWriter, long...)} and
+ *    <br> {@link #ifft(ComplexValuedSampler, ComplexValuedWriter, long...)} </li>
+ *    <li> {@link #fft(Supplier, Supplier, BiConsumer, long...)} and
+ *    <br> {@link #ifft(Supplier, Supplier, BiConsumer, long...)} </li>
+ *    </ul>
+ * </li>
+ * </ul>
+ * 
+ * @author hageldave
+ *
+ */
 /* --- DOUBLE PRECISION VERSION --- */
 public class FFT {
 
@@ -62,6 +100,34 @@ public class FFT {
 		fft(r_input, c_output, dimensions);
 	}
 
+	/**
+	 * Calls {@link #fft(Supplier, Supplier, BiConsumer, long...)} with appropriate 
+	 * {@link NativeRealArray} {@link Supplier}s and {@link BiConsumer}.
+	 * <p>
+	 * Calculates a Fast Fourier Transform of the complex valued signal, provided by the <tt>complexIn</tt> 
+	 * {@link ComplexValuedSampler}.
+	 * The sampler will be called for every discrete point in the domain specified by the <tt>dimensions</tt>
+	 * argument.
+	 * The resulting transform will be written via the provided <tt>complexOut</tt> {@link ComplexValuedWriter}.
+	 * <p>
+	 * The inverse counter part to this method is {@link #ifft(ComplexValuedSampler, ComplexValuedWriter, long...)}
+	 * Please note that the FFT and subsequent inverse FFT restores the original signal scaled by the number of
+	 * values in the input.
+	 * See also <a href="http://fftw.org/faq/section3.html#whyscaled">FFTW FAQ</a> on that topic.
+	 * 
+	 * @param complexIn sampler for gaining the discrete complex valued signal
+	 * @param complexOut writer for the discrete complex valued transform
+	 * @param dimensions of the sampled signal (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
+	 * 
+	 * @throws IllegalArgumentException </br>
+	 * when no dimensions were provided </br>
+	 * when one of the dimensions is not positive
+	 * @throws NullPointerException when the specified sampler or writer is null.
+	 * 
+	 * @see #fft(double[], double[], double[], double[], long...)
+	 * @see #fft(Supplier, Supplier, BiConsumer, long...)
+	 * @see #fft(RealValuedSampler, ComplexValuedWriter, long...)
+	 */
 	public static void fft(ComplexValuedSampler complexIn, ComplexValuedWriter complexOut, long... dimensions) {
 		/* sanity checks */
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
@@ -87,10 +153,67 @@ public class FFT {
 		fft(r_input, i_input, c_output, dimensions);
 	}
 
+	
+	/**
+	 * Calls {@link #fft(ComplexValuedSampler, ComplexValuedWriter, long...)} with swapped real and imaginary
+	 * parts.
+	 * <p>
+	 * Calculates an inverse Fast Fourier Transform of the complex valued signal, provided by the <tt>complexIn</tt> 
+	 * {@link ComplexValuedSampler}.
+	 * The sampler will be called for every discrete point in the domain specified by the <tt>dimensions</tt>
+	 * argument.
+	 * The resulting transform will be written via the provided <tt>complexOut</tt> {@link ComplexValuedWriter}.
+	 * <p>
+	 * The (forward) counter part to this method is {@link #fft(ComplexValuedSampler, ComplexValuedWriter, long...)}
+	 * Please note that the FFT and subsequent inverse FFT restores the original signal scaled by the number of
+	 * values in the input.
+	 * See also <a href="http://fftw.org/faq/section3.html#whyscaled">FFTW FAQ</a> on that topic.
+	 * 
+	 * @param complexIn sampler for gaining the discrete complex valued signal
+	 * @param complexOut writer for the discrete complex valued transform
+	 * @param dimensions of the sampled signal (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
+	 * 
+	 * @throws IllegalArgumentException </br>
+	 * when no dimensions were provided </br>
+	 * when one of the dimensions is not positive
+	 * @throws NullPointerException when the specified sampler or writer is null.
+	 * 
+	 * @see #fft(double[], double[], double[], double[], long...)
+	 * @see #fft(Supplier, Supplier, BiConsumer, long...)
+	 * @see #fft(RealValuedSampler, ComplexValuedWriter, long...)
+	 */
 	public static void ifft(ComplexValuedSampler complexIn, ComplexValuedWriter complexOut, long... dimensions) {
 		fft(complexIn.swapRealImaginary(), complexOut.swapRealImaginary(), dimensions);
 	}
 
+	/**
+	 * Calls {@link #ifft(Supplier, Supplier, Consumer, long...)} with appropriate 
+	 * {@link NativeRealArray} {@link Supplier}s and {@link BiConsumer}.
+	 * <p>
+	 * Calculates an inverse Fast Fourier Transform of the complex valued signal, provided by the <tt>complexIn</tt> 
+	 * {@link ComplexValuedSampler}.
+	 * The sampler will be called for every discrete point in the domain specified by the <tt>dimensions</tt>
+	 * argument.
+	 * The resulting real valued transform will be written via the provided <tt>realOut</tt> {@link ComplexValuedWriter}.
+	 * <p>
+	 * The (forward) counter part to this method is {@link #fft(RealValuedSampler, ComplexValuedWriter, long...)}
+	 * Please note that the FFT and subsequent inverse FFT restores the original signal scaled by the number of
+	 * values in the input.
+	 * See also <a href="http://fftw.org/faq/section3.html#whyscaled">FFTW FAQ</a> on that topic.
+	 * 
+	 * @param complexIn sampler for gaining the discrete complex valued signal
+	 * @param realOut writer for the discrete real valued transform
+	 * @param dimensions of the sampled signal (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
+	 * 
+	 * @throws IllegalArgumentException </br>
+	 * when no dimensions were provided </br>
+	 * when one of the dimensions is not positive
+	 * @throws NullPointerException when the specified sampler or writer is null.
+	 * 
+	 * @see #ifft(double[], double[], double[], long...)
+	 * @see #ifft(Supplier, Supplier, Consumer, long...)
+	 * @see #ifft(ComplexValuedSampler, ComplexValuedWriter, long...)
+	 */
 	public static void ifft(ComplexValuedSampler complexIn, RealValuedWriter realOut, long... dimensions) {
 		/* sanity checks */
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
