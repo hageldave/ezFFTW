@@ -15,9 +15,9 @@ public class PrecisionDependentUtils {
 	 * @param array to be filled
 	 * @param sampler to read values from
 	 * @param dimensions to be used for sampling
-	 * @throws IllegalArgumentException </br>
-	 * when no dimensions are specified </br>
-	 * when a dimension is not positive </br>
+	 * @throws IllegalArgumentException <br>
+	 * when no dimensions are specified <br>
+	 * when a dimension is not positive <br>
 	 * when the number of elements determined from the dimensions is not equal to the length of the array.
 	 * @see #readNativeArrayToWriter(NativeRealArray, RealValuedWriter, long...)
 	 */
@@ -43,9 +43,9 @@ public class PrecisionDependentUtils {
 	 * @param array to read from
 	 * @param writer to write values to
 	 * @param dimensions to be used for writing
-	 * @throws IllegalArgumentException </br>
-	 * when no dimensions are specified </br>
-	 * when a dimension is not positive </br>
+	 * @throws IllegalArgumentException <br>
+	 * when no dimensions are specified <br>
+	 * when a dimension is not positive <br>
 	 * when the number of elements determined from the dimensions is not equal to the length of the array.
 	 * @see #fillNativeArrayFromSampler(NativeRealArray, RealValuedSampler, long...)
 	 */

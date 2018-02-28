@@ -70,7 +70,7 @@ public class FFTW_GuruTest {
 				NativeRealArray a2 = new NativeRealArray(4);
 				)
 		{
-			a1.set(-1.0, 1.0, 1.0, -1.0); // sum=0
+			a1.set(0L, -1.0, 1.0, 1.0, -1.0); // sum=0
 			FFTW_Guru.execute_split_r2c(a1, a1, a2, 2,2);
 			assertEquals(0, a1.get(0),0);
 		}

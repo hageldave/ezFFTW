@@ -85,5 +85,43 @@ public class NativeRealArrayTest {
 			JunitUtils.testException(()->a.get(0), NullPointerException.class);
 		}
 	}
+	
+	@Test
+	public void testExceptions() {
+		try(NativeRealArray array = new NativeRealArray(3L))
+		{
+			JunitUtils.testException(()->{
+				array.set(3L, 0.0);
+			}, ArrayIndexOutOfBoundsException.class);
+			JunitUtils.testException(()->{
+				array.set(new double[4]);
+			}, ArrayIndexOutOfBoundsException.class);
+			JunitUtils.testException(()->{
+				array.set(2L, 0.0, 0.0 );
+			}, ArrayIndexOutOfBoundsException.class);
+			JunitUtils.testException(()->{
+				array.set(2L, 2, 0, new double[2]);
+			}, ArrayIndexOutOfBoundsException.class);
+			JunitUtils.testException(()->{
+				array.set(1L, 2, 1, new double[2]);
+			}, IllegalArgumentException.class);
+			
+			JunitUtils.testException(()->{
+				array.get(3L);
+			}, ArrayIndexOutOfBoundsException.class);
+			JunitUtils.testException(()->{
+				array.get(1L, 3);
+			}, ArrayIndexOutOfBoundsException.class);
+			JunitUtils.testException(()->{
+				array.get(2L, new double[2]);
+			}, ArrayIndexOutOfBoundsException.class);
+			JunitUtils.testException(()->{
+				array.get(2L, 2, 0, new double[2]);
+			}, ArrayIndexOutOfBoundsException.class);
+			JunitUtils.testException(()->{
+				array.get(1L, 2, 1, new double[2]);
+			}, IllegalArgumentException.class);
+		}
+	}
 
 }

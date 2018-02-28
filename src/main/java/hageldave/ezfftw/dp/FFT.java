@@ -71,8 +71,8 @@ public class FFT {
 	 * @param complexOut writer for the discrete complex valued transform
 	 * @param dimensions of the sampled signal (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
 	 * 
-	 * @throws IllegalArgumentException </br>
-	 * when no dimensions were provided </br>
+	 * @throws IllegalArgumentException <br>
+	 * when no dimensions were provided <br>
 	 * when one of the dimensions is not positive
 	 * @throws NullPointerException when the specified sampler or writer is null.
 	 * 
@@ -119,8 +119,8 @@ public class FFT {
 	 * @param complexOut writer for the discrete complex valued transform
 	 * @param dimensions of the sampled signal (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
 	 * 
-	 * @throws IllegalArgumentException </br>
-	 * when no dimensions were provided </br>
+	 * @throws IllegalArgumentException <br>
+	 * when no dimensions were provided <br>
 	 * when one of the dimensions is not positive
 	 * @throws NullPointerException when the specified sampler or writer is null.
 	 * 
@@ -173,8 +173,8 @@ public class FFT {
 	 * @param complexOut writer for the discrete complex valued transform
 	 * @param dimensions of the sampled signal (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
 	 * 
-	 * @throws IllegalArgumentException </br>
-	 * when no dimensions were provided </br>
+	 * @throws IllegalArgumentException <br>
+	 * when no dimensions were provided <br>
 	 * when one of the dimensions is not positive
 	 * @throws NullPointerException when the specified sampler or writer is null.
 	 * 
@@ -205,8 +205,8 @@ public class FFT {
 	 * @param realOut writer for the discrete real valued transform
 	 * @param dimensions of the sampled signal (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
 	 * 
-	 * @throws IllegalArgumentException </br>
-	 * when no dimensions were provided </br>
+	 * @throws IllegalArgumentException <br>
+	 * when no dimensions were provided <br>
 	 * when one of the dimensions is not positive
 	 * @throws NullPointerException when the specified sampler or writer is null.
 	 * 
@@ -259,9 +259,9 @@ public class FFT {
 	 * @param imagOut imaginary valued part of the resulting transform in row major order
 	 * @param dimensions of the input (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
 	 * 
-	 * @throws IllegalArgumentException </br>
-	 * when no dimensions were provided </br>
-	 * when one of the dimensions is not positive </br>
+	 * @throws IllegalArgumentException <br>
+	 * when no dimensions were provided <br>
+	 * when one of the dimensions is not positive <br>
 	 * when the length of the supplied arrays do not match the number of elements resulting from specified dimensions
 	 * @throws NullPointerException if any of the specified arrays is null.
 	 * 
@@ -312,9 +312,9 @@ public class FFT {
 	 * @param imagOut imaginary valued part of the resulting transform in row major order
 	 * @param dimensions of the input (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
 	 * 
-	 * @throws IllegalArgumentException </br>
-	 * when no dimensions were provided </br>
-	 * when one of the dimensions is not positive </br>
+	 * @throws IllegalArgumentException <br>
+	 * when no dimensions were provided <br>
+	 * when one of the dimensions is not positive <br>
 	 * when the length of the supplied arrays do not match the number of elements resulting from specified dimensions
 	 * @throws NullPointerException if any of the specified arrays is null.
 	 * 
@@ -371,9 +371,9 @@ public class FFT {
 	 * @param imagOut imaginary valued part of the resulting transform in row major order
 	 * @param dimensions of the input (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
 	 * 
-	 * @throws IllegalArgumentException </br>
-	 * when no dimensions were provided </br>
-	 * when one of the dimensions is not positive </br>
+	 * @throws IllegalArgumentException <br>
+	 * when no dimensions were provided <br>
+	 * when one of the dimensions is not positive <br>
 	 * when the length of the supplied arrays do not match the number of elements resulting from specified dimensions
 	 * @throws NullPointerException if any of the specified arrays is null.
 	 * 
@@ -428,9 +428,9 @@ public class FFT {
 	 * @param realOut real valued transform result in row major order
 	 * @param dimensions of the input (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
 	 * 
-	 * @throws IllegalArgumentException </br>
-	 * when no dimensions were provided </br>
-	 * when one of the dimensions is not positive </br>
+	 * @throws IllegalArgumentException <br>
+	 * when no dimensions were provided <br>
+	 * when one of the dimensions is not positive <br>
 	 * when the length of the supplied arrays do not match the number of elements resulting from specified dimensions
 	 * @throws NullPointerException if any of the specified arrays is null.
 	 * 
@@ -481,9 +481,9 @@ public class FFT {
 	 * and row major order
 	 * @param dimensions of the input (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
 	 *
-	 * @throws IllegalArgumentException </br>
-	 * when no dimensions were provided </br>
-	 * when one of the dimensions is not positive </br>
+	 * @throws IllegalArgumentException <br>
+	 * when no dimensions were provided <br>
+	 * when one of the dimensions is not positive <br>
 	 * when the length of the supplied array does not match the number of elements resulting from specified dimensions
 	 *
 	 * @see #fft(double[], double[], double[], long...)
@@ -533,9 +533,9 @@ public class FFT {
 	 * and row major order
 	 * @param dimensions of the input (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
 	 *
-	 * @throws IllegalArgumentException </br>
-	 * when no dimensions were provided </br>
-	 * when one of the dimensions is not positive </br>
+	 * @throws IllegalArgumentException <br>
+	 * when no dimensions were provided <br>
+	 * when one of the dimensions is not positive <br>
 	 * when the length of the supplied arrays do not match the number of elements resulting from specified dimensions
 	 *
 	 * @see #fft(double[], double[], double[], double[], long...)
@@ -591,9 +591,9 @@ public class FFT {
 	 * and row major order
 	 * @param dimensions of the input (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
 	 *
-	 * @throws IllegalArgumentException </br>
-	 * when no dimensions were provided </br>
-	 * when one of the dimensions is not positive </br>
+	 * @throws IllegalArgumentException <br>
+	 * when no dimensions were provided <br>
+	 * when one of the dimensions is not positive <br>
 	 * when the length of the supplied arrays do not match the number of elements resulting from specified dimensions
 	 *
 	 * @see #ifft(double[], double[], double[], double[], long...)
@@ -648,9 +648,9 @@ public class FFT {
 	 * and row major order
 	 * @param dimensions of the input (e.g. {10,20,30} for 3 dimensions of width=10, height=20 and depth=30)
 	 *
-	 * @throws IllegalArgumentException </br>
-	 * when no dimensions were provided </br>
-	 * when one of the dimensions is not positive </br>
+	 * @throws IllegalArgumentException <br>
+	 * when no dimensions were provided <br>
+	 * when one of the dimensions is not positive <br>
 	 * when the length of the supplied arrays do not match the number of elements resulting from specified dimensions
 	 *
 	 * @see #ifft(double[], double[], double[], long...)

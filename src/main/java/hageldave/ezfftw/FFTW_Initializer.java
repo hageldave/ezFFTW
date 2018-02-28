@@ -5,6 +5,11 @@ import org.bytedeco.javacpp.Loader;
 import org.bytedeco.javacpp.fftw3;
 import org.bytedeco.javacpp.fftw3.fftw_plan;
 
+/**
+ * Class with sole purpose of loading the native libraries via
+ * {@link #initFFTW()}.
+ * @author hageldave
+ */
 public final class FFTW_Initializer {
 
 	private static boolean setupDone = false;
