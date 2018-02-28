@@ -8,6 +8,7 @@ import org.bytedeco.javacpp.fftw3;
 import org.bytedeco.javacpp.fftw3.fftw_iodim64; //#FLOATGEN_KEEPLINE
 import org.bytedeco.javacpp.fftw3.fftw_plan;
 
+import hageldave.ezfftw.Annotations.DoublePrecisionVersion;
 import hageldave.ezfftw.GeneralUtils;
 
 
@@ -28,7 +29,7 @@ import hageldave.ezfftw.GeneralUtils;
  * @author hageldave
  * @see <a href="http://www.fftw.org/fftw3_doc/Guru-Interface.html">FFTW Guru Interface documentation (www.fftw.org)</a>
  */
-/* --- DOUBLE PRECISION VERSION --- */
+@DoublePrecisionVersion
 public class FFTW_Guru {
 
 	/**
@@ -69,6 +70,7 @@ public class FFTW_Guru {
 	 * when one of the specified dimensions is not positive,<br>
 	 * when the number of elements determined from the dimensions does not match the lengths of the specified arrays.
 	 */
+	@DoublePrecisionVersion
 	public static void execute_split_r2c(
 			NativeRealArray realIn,
 			NativeRealArray realOut,
@@ -182,6 +184,7 @@ public class FFTW_Guru {
 	 * when one of the specified dimensions is not positive,<br>
 	 * when the number of elements determined from the dimensions does not match the lengths of the specified arrays.
 	 */
+	@DoublePrecisionVersion
 	public static void execute_split_c2c(
 			NativeRealArray realIn,
 			NativeRealArray imagIn,
@@ -292,6 +295,7 @@ public class FFTW_Guru {
 	 * when one of the specified dimensions is not positive,<br>
 	 * when the number of elements determined from the dimensions does not match the lengths of the specified arrays.
 	 */
+	@DoublePrecisionVersion
 	public static void execute_split_c2r(
 			NativeRealArray realIn,
 			NativeRealArray imagIn,

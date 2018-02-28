@@ -1,8 +1,9 @@
 package hageldave.ezfftw.dp.samplers;
 
 import hageldave.ezfftw.GeneralUtils;
+import hageldave.ezfftw.Annotations.DoublePrecisionVersion;
 
-/* --- DOUBLE PRECISION VERSION --- */
+@DoublePrecisionVersion
 public class RowMajorArraySampler implements RealValuedSampler {
 
 	public final double[] array;

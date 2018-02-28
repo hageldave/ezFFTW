@@ -3,10 +3,11 @@ package hageldave.ezfftw.dp;
 import java.util.Objects;
 
 import hageldave.ezfftw.GeneralUtils;
+import hageldave.ezfftw.Annotations.DoublePrecisionVersion;
 import hageldave.ezfftw.dp.samplers.RealValuedSampler;
 import hageldave.ezfftw.dp.writers.RealValuedWriter;
 
-/* --- DOUBLE PRECISION VERSION --- */
+@DoublePrecisionVersion
 public class PrecisionDependentUtils {
 
 	/**
@@ -21,6 +22,7 @@ public class PrecisionDependentUtils {
 	 * when the number of elements determined from the dimensions is not equal to the length of the array.
 	 * @see #readNativeArrayToWriter(NativeRealArray, RealValuedWriter, long...)
 	 */
+	@DoublePrecisionVersion
 	public static void fillNativeArrayFromSampler(NativeRealArray array, RealValuedSampler sampler, long... dimensions){
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
 		GeneralUtils.requirePosititveDimensions(dimensions);
@@ -49,6 +51,7 @@ public class PrecisionDependentUtils {
 	 * when the number of elements determined from the dimensions is not equal to the length of the array.
 	 * @see #fillNativeArrayFromSampler(NativeRealArray, RealValuedSampler, long...)
 	 */
+	@DoublePrecisionVersion
 	public static void readNativeArrayToWriter(NativeRealArray array, RealValuedWriter writer, long... dimensions){
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
 		GeneralUtils.requirePosititveDimensions(dimensions);
@@ -73,6 +76,7 @@ public class PrecisionDependentUtils {
 	 * @throws NullPointerException when array is null
 	 * @throws IllegalArgumentException when array length does not equal expected length
 	 */
+	@DoublePrecisionVersion
 	public static void sanityCheckArray(double[] array, long expectedLength, String arrayIdentifier) {
 		Objects.requireNonNull(array, ()->arrayIdentifier + " array cannot be null");
 		if(expectedLength != array.length) {

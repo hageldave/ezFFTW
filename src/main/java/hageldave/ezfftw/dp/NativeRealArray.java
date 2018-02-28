@@ -4,6 +4,7 @@ import org.bytedeco.javacpp.DoublePointer;
 
 import hageldave.ezfftw.FFTW_Initializer;
 import hageldave.ezfftw.GeneralUtils;
+import hageldave.ezfftw.Annotations.DoublePrecisionVersion;
 
 /**
  * The NativeRealArray class (of the double precision package) is a wrapper
@@ -56,7 +57,7 @@ import hageldave.ezfftw.GeneralUtils;
  * @author hageldave
  *
  */
-/* --- DOUBLE PRECISION VERSION --- */
+@DoublePrecisionVersion
 public class NativeRealArray implements AutoCloseable {
 
 	/** length of the array (number of elements) */

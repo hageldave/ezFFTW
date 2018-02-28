@@ -1,5 +1,7 @@
 package hageldave.ezfftw.dp.samplers;
 
+import hageldave.ezfftw.Annotations.DoublePrecisionVersion;
+
 /**
  * The ComplexValuedSampler interface is a single method interface which provides the
  * {@link #getValueAt(boolean, long...)} method for sampling an arbitrary dimensional
@@ -12,7 +14,7 @@ package hageldave.ezfftw.dp.samplers;
  * @author hageldave
  *
  */
-/* --- DOUBLE PRECISION VERSION --- */
+@DoublePrecisionVersion
 public interface ComplexValuedSampler {
 	
 	/**

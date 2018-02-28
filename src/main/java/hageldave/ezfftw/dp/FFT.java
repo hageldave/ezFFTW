@@ -5,6 +5,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import hageldave.ezfftw.Annotations.DoublePrecisionVersion;
 import hageldave.ezfftw.GeneralUtils;
 import hageldave.ezfftw.dp.samplers.ComplexValuedSampler;
 import hageldave.ezfftw.dp.samplers.RealValuedSampler;
@@ -49,7 +50,7 @@ import hageldave.ezfftw.dp.writers.RealValuedWriter;
  * @author hageldave
  *
  */
-/* --- DOUBLE PRECISION VERSION --- */
+@DoublePrecisionVersion
 public class FFT {
 
 	/**
@@ -80,6 +81,7 @@ public class FFT {
 	 * @see #fft(Supplier, BiConsumer, long...)
 	 * @see #fft(ComplexValuedSampler, ComplexValuedWriter, long...)
 	 */
+	@DoublePrecisionVersion
 	public static void fft(RealValuedSampler realIn, ComplexValuedWriter complexOut, long... dimensions) {
 		/* sanity checks */
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
@@ -128,6 +130,7 @@ public class FFT {
 	 * @see #fft(Supplier, Supplier, BiConsumer, long...)
 	 * @see #fft(RealValuedSampler, ComplexValuedWriter, long...)
 	 */
+	@DoublePrecisionVersion
 	public static void fft(ComplexValuedSampler complexIn, ComplexValuedWriter complexOut, long... dimensions) {
 		/* sanity checks */
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
@@ -182,6 +185,7 @@ public class FFT {
 	 * @see #fft(Supplier, Supplier, BiConsumer, long...)
 	 * @see #fft(RealValuedSampler, ComplexValuedWriter, long...)
 	 */
+	@DoublePrecisionVersion
 	public static void ifft(ComplexValuedSampler complexIn, ComplexValuedWriter complexOut, long... dimensions) {
 		fft(complexIn.swapRealImaginary(), complexOut.swapRealImaginary(), dimensions);
 	}
@@ -214,6 +218,7 @@ public class FFT {
 	 * @see #ifft(Supplier, Supplier, Consumer, long...)
 	 * @see #ifft(ComplexValuedSampler, ComplexValuedWriter, long...)
 	 */
+	@DoublePrecisionVersion
 	public static void ifft(ComplexValuedSampler complexIn, RealValuedWriter realOut, long... dimensions) {
 		/* sanity checks */
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
@@ -269,6 +274,7 @@ public class FFT {
 	 * @see #fft(Supplier, BiConsumer, long...)
 	 * @see #fft(double[], double[], double[], double[], long...)
 	 */
+	@DoublePrecisionVersion
 	public static void fft(double[] realIn, double[] realOut, double[] imagOut, long... dimensions) {
 		/* sanity checks */
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
@@ -322,6 +328,7 @@ public class FFT {
 	 * @see #fft(Supplier, Supplier, BiConsumer, long...)
 	 * @see #fft(double[], double[], double[], long...)
 	 */
+	@DoublePrecisionVersion
 	public static void fft(double[] realIn, double[] imagIn, double[] realOut, double[] imagOut, long... dimensions) {
 		/* sanity checks */
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
@@ -381,6 +388,7 @@ public class FFT {
 	 * @see #ifft(Supplier, Supplier, BiConsumer, long...)
 	 * @see #ifft(double[], double[], double[], long...)
 	 */
+	@DoublePrecisionVersion
 	public static void ifft(double[] realIn, double[] imagIn, double[] realOut, double[] imagOut, long... dimensions) {
 		/* sanity checks */
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
@@ -438,6 +446,7 @@ public class FFT {
 	 * @see #ifft(Supplier, Supplier, Consumer, long...)
 	 * @see #ifft(double[], double[], double[], double[], long...)
 	 */
+	@DoublePrecisionVersion
 	public static void ifft(double[] realIn, double[] imagIn, double[] realOut, long... dimensions) {
 		/* sanity checks */
 		GeneralUtils.requirePositive(dimensions.length, ()->"Provided dimensions are empty, need to pass at least one.");
@@ -490,6 +499,7 @@ public class FFT {
 	 * @see #fft(RealValuedSampler, ComplexValuedWriter, long...)
 	 * @see #fft(ComplexValuedSampler, ComplexValuedWriter, long...)
 	 */
+	@DoublePrecisionVersion
 	public static void fft(
 			Supplier<NativeRealArray> realIn,
 			BiConsumer<NativeRealArray,NativeRealArray> complexOut,
@@ -542,6 +552,7 @@ public class FFT {
 	 * @see #fft(ComplexValuedSampler, ComplexValuedWriter, long...)
 	 * @see #fft(Supplier, BiConsumer, long...)
 	 */
+	@DoublePrecisionVersion
 	public static void fft(
 			Supplier<NativeRealArray> realIn,
 			Supplier<NativeRealArray> imagIn,
@@ -600,6 +611,7 @@ public class FFT {
 	 * @see #ifft(ComplexValuedSampler, ComplexValuedWriter, long...)
 	 * @see #ifft(Supplier, Supplier, Consumer, long...)
 	 */
+	@DoublePrecisionVersion
 	public static void ifft(
 			Supplier<NativeRealArray> realIn,
 			Supplier<NativeRealArray> imagIn,
@@ -657,6 +669,7 @@ public class FFT {
 	 * @see #ifft(ComplexValuedSampler, RealValuedWriter, long...)
 	 * @see #ifft(Supplier, Supplier, BiConsumer, long...)
 	 */
+	@DoublePrecisionVersion
 	public static void ifft(
 			Supplier<NativeRealArray> realIn,
 			Supplier<NativeRealArray> imagIn,

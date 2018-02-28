@@ -1,6 +1,8 @@
 package hageldave.ezfftw.dp.samplers;
 
-/* --- DOUBLE PRECISION VERSION --- */
+import hageldave.ezfftw.Annotations.DoublePrecisionVersion;
+
+@DoublePrecisionVersion
 public interface RealValuedSampler {
 	double getValueAt(long... coordinates);
 
