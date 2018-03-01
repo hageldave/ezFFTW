@@ -1,12 +1,16 @@
 package hageldave.ezfftw;
 
+import java.awt.image.BufferedImage;
+
 import hageldave.ezfftw.dp.FFT;
 import hageldave.ezfftw.dp.FFTW_Guru;
 import hageldave.ezfftw.dp.NativeRealArray;
 import hageldave.ezfftw.dp.samplers.RowMajorArraySampler;
 import hageldave.ezfftw.dp.writers.RowMajorArrayWriter;
 import hageldave.imagingkit.core.Img;
+import hageldave.imagingkit.core.Pixel;
 import hageldave.imagingkit.core.io.ImageLoader;
+import hageldave.imagingkit.core.io.ImageSaver;
 import hageldave.imagingkit.core.scientific.ColorImg;
 import hageldave.imagingkit.core.util.ImageFrame;
 
@@ -32,7 +36,7 @@ public class MiscTest {
 			FFT.fft(in, rout, iout, w,h);
 			System.out.println("direct:"+(System.currentTimeMillis()-t));
 		}
-		
+
 		{
 			RowMajorArraySampler srin = new RowMajorArraySampler(in, w,h);
 			RowMajorArrayWriter wrout = new RowMajorArrayWriter(rout, w,h);
@@ -41,7 +45,7 @@ public class MiscTest {
 			FFT.fft(srin, wrout.addImaginaryComponent(wiout), w,h);
 			System.out.println("generic:"+(System.currentTimeMillis()-t));
 		}
-		
+
 	}
 
 	static void busa(){
@@ -57,7 +61,18 @@ public class MiscTest {
 		copy.forEach(px->px.setB_fromDouble(px.r_asDouble()*px.r_asDouble()+px.g_asDouble()*px.g_asDouble()));
 		copy.forEach(px->px.setValue(2, Math.log(px.getValue(2))));
 		ImageFrame.display(copy.scaleChannelToUnitRange(2).getChannelImage(2).toBufferedImage());
-		//			ifft2D_complexImg2complexImg(fft, fft);
+		copy.forEach(px->{
+			if(px.getValue(2) > 0.5)
+			{
+				if((px.getXnormalized() > 0.1 && px.getXnormalized() < 0.9)
+						|| (px.getYnormalized() > 0.1 && px.getYnormalized() < 0.9)) 
+				{
+					fft.getPixel(px.getX(), px.getY()).setR_fromDouble(0).setG_fromDouble(0);
+					px.setB_fromDouble(0);
+				}
+			}
+		});
+		ImageFrame.display(copy.scaleChannelToUnitRange(2).getChannelImage(2).toBufferedImage());
 		{
 
 			FFT.ifft(fft.getDataR(), fft.getDataG(), fft.getDataR(), img.getWidth(),img.getHeight());
