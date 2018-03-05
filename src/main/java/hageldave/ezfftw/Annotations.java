@@ -30,12 +30,6 @@ public final class Annotations {
 	 * @author hageldave
 	 */
 	@Documented
-	public @interface FloatPrecisionVersion {
-		String explanation() default 
-		"The native FFTW API offers double and float precision methods and datatypes (fftw and fftwf). \n" + 
-		"To offer both through ezfftw this API is split into two packages dp (double precision) and fp \n" +
-		"(float or single precision). \n" +
-		"The float precision package is generated from the double precision package.";
-	}
+	public @interface FloatPrecisionVersion {/* */}
 	
 }
