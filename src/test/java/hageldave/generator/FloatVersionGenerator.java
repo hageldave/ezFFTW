@@ -1,8 +1,12 @@
 package hageldave.generator;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class FloatVersionGenerator {
@@ -24,20 +28,10 @@ public class FloatVersionGenerator {
 			testpath_fp.mkdir();
 			System.out.println("Created dir " + testpath_fp.getPath());
 		}
-
-		for(String classfile : new String[]{
-				"NativeRealArray.java",
-				"PrecisionDependentUtils.java",
-				"FFTW_Guru.java",
-				"FFT.java",
-				"samplers/RealValuedSampler.java",
-				"samplers/ComplexValuedSampler.java",
-				"samplers/RowMajorArraySampler.java",
-				"writers/RealValuedWriter.java",
-				"writers/ComplexValuedWriter.java",
-				"writers/RowMajorArrayWriter.java",
-		}){
-			genFloatClass(new File(mainpath_dp,classfile), new File(mainpath_fp, classfile));
+		for(File classFile : listRecursiveFiles(mainpath_dp, (file)->file.getName().endsWith(".java"))){
+			int filepathindex = mainpath_dp.getAbsolutePath().length();
+			String classFileName = classFile.getAbsolutePath().substring(filepathindex);
+			genFloatClass(new File(mainpath_dp,classFileName), new File(mainpath_fp, classFileName));
 		}
 
 		for(String classfile : new String[]{
@@ -51,6 +45,7 @@ public class FloatVersionGenerator {
 	}
 
 	static void genFloatClass(File doubleClass, File floatClass){
+		System.out.println("Processing " + doubleClass.getAbsolutePath());
 		if(!floatClass.getParentFile().exists()){
 			floatClass.getParentFile().mkdirs();
 			System.out.println("Created dir " + floatClass.getParentFile().getPath());
@@ -103,4 +98,15 @@ public class FloatVersionGenerator {
 		System.out.println("Done creating " + floatClass.getPath());
 	}
 
+	static Collection<File> listRecursiveFiles(File baseDir, FileFilter filter) {
+		File[] files = baseDir.listFiles((file)->file.isFile() && filter.accept(file));
+		LinkedList<File> fileList = new LinkedList<>();
+		fileList.addAll(Arrays.asList(files));
+		// recurse down into folders
+		for(File dir : baseDir.listFiles((file)->file.isDirectory())){
+			fileList.addAll(listRecursiveFiles(dir, filter));
+		}
+		return fileList;
+	}
+	
 }
