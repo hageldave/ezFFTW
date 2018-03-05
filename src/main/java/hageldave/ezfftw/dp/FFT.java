@@ -187,7 +187,7 @@ public class FFT {
 	 */
 	@DoublePrecisionVersion
 	public static void ifft(ComplexValuedSampler complexIn, ComplexValuedWriter complexOut, long... dimensions) {
-		fft(complexIn.swapRealImaginary(), complexOut.swapRealImaginary(), dimensions);
+		fft(complexIn.getRealImaginarySwappedSampler(), complexOut.getRealImaginarySwappedWriter(), dimensions);
 	}
 
 	/**

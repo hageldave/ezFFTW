@@ -1,6 +1,7 @@
 package hageldave.ezfftw.dp.samplers;
 
 import hageldave.ezfftw.Annotations.DoublePrecisionVersion;
+import hageldave.ezfftw.dp.writers.ComplexValuedWriter;
 
 /**
  * The ComplexValuedSampler interface is a single method interface which provides the
@@ -8,11 +9,12 @@ import hageldave.ezfftw.Annotations.DoublePrecisionVersion;
  * complex domain.
  * <p>
  * It also offers default convenience methods for obtaining a sampler with swapped real
- * and imaginary parts {@link #swapRealImaginary()} <br>
+ * and imaginary parts {@link #getRealImaginarySwappedSampler()} <br>
  * and samplers for only real or imaginary parts {@link #getPartSampler(boolean)}.
  * 
  * @author hageldave
  *
+ * @see ComplexValuedWriter
  */
 @DoublePrecisionVersion
 public interface ComplexValuedSampler {
@@ -30,7 +32,7 @@ public interface ComplexValuedSampler {
 	 * (Will return imaginary when real is requested and vice versa)
 	 * @return sampler with swapped parts
 	 */
-	default ComplexValuedSampler swapRealImaginary(){
+	default ComplexValuedSampler getRealImaginarySwappedSampler(){
 		ComplexValuedSampler self = this;
 		return (imaginary, coordinates) -> self.getValueAt(!imaginary, coordinates);
 	}

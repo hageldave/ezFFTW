@@ -1,16 +1,11 @@
 package hageldave.ezfftw;
 
-import java.awt.image.BufferedImage;
-
 import hageldave.ezfftw.dp.FFT;
 import hageldave.ezfftw.dp.FFTW_Guru;
 import hageldave.ezfftw.dp.NativeRealArray;
-import hageldave.ezfftw.dp.samplers.RowMajorArraySampler;
-import hageldave.ezfftw.dp.writers.RowMajorArrayWriter;
+import hageldave.ezfftw.dp.samplers.RowMajorArrayAccessor;
 import hageldave.imagingkit.core.Img;
-import hageldave.imagingkit.core.Pixel;
 import hageldave.imagingkit.core.io.ImageLoader;
-import hageldave.imagingkit.core.io.ImageSaver;
 import hageldave.imagingkit.core.scientific.ColorImg;
 import hageldave.imagingkit.core.util.ImageFrame;
 
@@ -38,11 +33,11 @@ public class MiscTest {
 		}
 
 		{
-			RowMajorArraySampler srin = new RowMajorArraySampler(in, w,h);
-			RowMajorArrayWriter wrout = new RowMajorArrayWriter(rout, w,h);
-			RowMajorArrayWriter wiout = new RowMajorArrayWriter(iout, w,h);
+			RowMajorArrayAccessor srin = new RowMajorArrayAccessor(in, w,h);
+			RowMajorArrayAccessor wrout = new RowMajorArrayAccessor(rout, w,h);
+			RowMajorArrayAccessor wiout = new RowMajorArrayAccessor(iout, w,h);
 			long t = System.currentTimeMillis();
-			FFT.fft(srin, wrout.addImaginaryComponent(wiout), w,h);
+			FFT.fft(srin, wrout.combineToComplexWriter(wiout), w,h);
 			System.out.println("generic:"+(System.currentTimeMillis()-t));
 		}
 

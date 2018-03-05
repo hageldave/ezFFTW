@@ -1,14 +1,14 @@
 package hageldave.ezfftw.dp;
 
-import static org.junit.Assert.*;
-import static hageldave.ezfftw.JunitUtils.*;
+import static hageldave.ezfftw.JunitUtils.doubleTolerance;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.Arrays;
 
 import org.junit.Test;
 
-import hageldave.ezfftw.dp.samplers.RowMajorArraySampler;
-import hageldave.ezfftw.dp.writers.RowMajorArrayWriter;
+import hageldave.ezfftw.dp.samplers.RowMajorArrayAccessor;
 
 /* --- DOUBLE PRECISION VERSION --- */
 public class FFTTest {
@@ -60,10 +60,10 @@ public class FFTTest {
 		
 		{// sampler/writer arguments
 			
-			FFT.fft(	new RowMajorArraySampler(realIn, realIn.length), 
-						new RowMajorArrayWriter(realOut, realIn.length)
-						.addImaginaryComponent( 
-						new RowMajorArrayWriter(imagOut, realIn.length)), 
+			FFT.fft(	new RowMajorArrayAccessor(realIn, realIn.length), 
+						new RowMajorArrayAccessor(realOut, realIn.length)
+						.combineToComplexWriter( 
+						new RowMajorArrayAccessor(imagOut, realIn.length)), 
 						realIn.length);
 
 			// sum of sinus values has to be zero, but due to y offset by 1 is 1*length. (DC check)
@@ -83,10 +83,10 @@ public class FFTTest {
 			}
 
 			// back transform
-			FFT.ifft(	new RowMajorArraySampler(realOut, realIn.length)
-						.addImaginaryComponent(
-						new RowMajorArraySampler(imagOut, realIn.length)), 
-						new RowMajorArrayWriter(realInToCheck, realIn.length), 
+			FFT.ifft(	new RowMajorArrayAccessor(realOut, realIn.length)
+						.combineToComplexSampler(
+						new RowMajorArrayAccessor(imagOut, realIn.length)), 
+						new RowMajorArrayAccessor(realInToCheck, realIn.length), 
 						realIn.length);
 
 			// should restore original but scaled by number of elements

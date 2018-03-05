@@ -1,40 +1,37 @@
 package hageldave.ezfftw.dp.samplers;
 
-import hageldave.ezfftw.GeneralUtils;
-import hageldave.ezfftw.dp.PrecisionDependentUtils;
-import hageldave.ezfftw.dp.writers.RowMajorArrayWriter;
-
 import java.util.Arrays;
 
 import hageldave.ezfftw.Annotations.DoublePrecisionVersion;
+import hageldave.ezfftw.GeneralUtils;
+import hageldave.ezfftw.dp.PrecisionDependentUtils;
+import hageldave.ezfftw.dp.writers.RealValuedWriter;
 
 /**
- * The RowMajorArraySampler implements the {@link RealValuedSampler} interface
- * for sampling arbitrary dimensional data that is stored in a double[] in
- * row major order.
+ * The RowMajorArrayAccessor implements the {@link RealValuedSampler} and 
+ * {@link RealValuedWriter} interfaces for sampling and writing arbitrary 
+ * dimensional data that is stored in a double[] in row major order.
  * <p>
  * This class mainly exists to serve as an example implementation for the
- * RealValuedSampler interface.
+ * two interfaces interface.
  * <p>
  * Please note that for performance reasons, no checks are made to the fitness
- * of the coordinates passed to {@link #getValueAt(long...)}. When using this
- * class, it has to be made sure that only appropriate coordinates will be
+ * of the coordinates passed to {@link #getValueAt(long...)} or {@link #setValueAt(double, long...)}. 
+ * When using this class, it has to be made sure that only appropriate coordinates will be
  * used with it (correct dimensions here: {@link #getDimensions()}).
  * 
  * @author hageldave
- * 
- * @see RowMajorArrayWriter
  *
  */
 @DoublePrecisionVersion
-public class RowMajorArraySampler implements RealValuedSampler {
+public class RowMajorArrayAccessor implements RealValuedSampler, RealValuedWriter {
 
 	/** the values for sampling */
 	public final double[] array;
 	private final long[] dimensions;
 
 	/**
-	 * Creates a new RowMajorArraySampler that uses the specified double[] assuming
+	 * Creates a new {@link RowMajorArrayAccessor} that uses the specified double[] assuming
 	 * row major order and the specified dimensions.
 	 * 
 	 * @param array of values in row major order
@@ -46,7 +43,7 @@ public class RowMajorArraySampler implements RealValuedSampler {
 	 * when the length of the supplied arrays do not match the number of elements resulting from specified dimensions
 	 * @throws NullPointerException if any of the specified arrays is null.
 	 */
-	public RowMajorArraySampler(double[] array, long... dimensions) {
+	public RowMajorArrayAccessor(double[] array, long... dimensions) {
 		GeneralUtils.requirePositive(dimensions.length, ()->"No dimensions were specified, need to pass at least 1 dimension");
 		GeneralUtils.requirePosititveDimensions(dimensions);
 		long numElements = GeneralUtils.numElementsFromDimensions(dimensions);
@@ -66,10 +63,20 @@ public class RowMajorArraySampler implements RealValuedSampler {
 	}
 	
 	/**
-	 * Returns a copy of this RowMajorArraySamplers dimensions.
+	 * Calculates the row major index for the specified coordinates using the dimensions of this writer,
+	 * and sets the value.
+	 */
+	@Override
+	public void setValueAt(double val, long... coordinates) {
+		array[(int)GeneralUtils.indexFromCoordinates(coordinates, dimensions)] = val;
+	}
+
+	/**
+	 * Returns a copy of this RowMajorArrayAccessors dimensions.
 	 * @return dimensions
 	 */
 	public long[] getDimensions() {
 		return Arrays.copyOf(dimensions, dimensions.length);
 	}
+	
 }
