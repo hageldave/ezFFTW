@@ -8,8 +8,6 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import hageldave.ezfftw.dp.samplers.RowMajorArrayAccessor;
-
 /* --- DOUBLE PRECISION VERSION --- */
 public class FFTTest {
 

@@ -1,10 +1,10 @@
-package hageldave.ezfftw.dp.samplers;
+package hageldave.ezfftw.dp;
 
 import java.util.Arrays;
 
 import hageldave.ezfftw.Annotations.DoublePrecisionVersion;
 import hageldave.ezfftw.GeneralUtils;
-import hageldave.ezfftw.dp.PrecisionDependentUtils;
+import hageldave.ezfftw.dp.samplers.RealValuedSampler;
 import hageldave.ezfftw.dp.writers.RealValuedWriter;
 
 /**

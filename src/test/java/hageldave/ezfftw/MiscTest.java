@@ -3,7 +3,7 @@ package hageldave.ezfftw;
 import hageldave.ezfftw.dp.FFT;
 import hageldave.ezfftw.dp.FFTW_Guru;
 import hageldave.ezfftw.dp.NativeRealArray;
-import hageldave.ezfftw.dp.samplers.RowMajorArrayAccessor;
+import hageldave.ezfftw.dp.RowMajorArrayAccessor;
 import hageldave.imagingkit.core.Img;
 import hageldave.imagingkit.core.io.ImageLoader;
 import hageldave.imagingkit.core.scientific.ColorImg;
