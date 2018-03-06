@@ -41,7 +41,7 @@ public class RowMajorArrayAccessor implements RealValuedSampler, RealValuedWrite
 	 * when no dimensions were provided <br>
 	 * when one of the dimensions is not positive <br>
 	 * when the length of the supplied arrays do not match the number of elements resulting from specified dimensions
-	 * @throws NullPointerException if any of the specified arrays is null.
+	 * @throws NullPointerException if <tt>array</tt> is null.
 	 */
 	public RowMajorArrayAccessor(double[] array, long... dimensions) {
 		GeneralUtils.requirePositive(dimensions.length, ()->"No dimensions were specified, need to pass at least 1 dimension");
@@ -56,6 +56,7 @@ public class RowMajorArrayAccessor implements RealValuedSampler, RealValuedWrite
 	/**
 	 * Calculates the row major index for the specified coordinates using the dimensions of this sampler,
 	 * and gets the value.
+	 * First coordinate is least significant (most frequently changing when iterating over array elements).
 	 */
 	@Override
 	public double getValueAt(long... coordinates) {
@@ -65,6 +66,7 @@ public class RowMajorArrayAccessor implements RealValuedSampler, RealValuedWrite
 	/**
 	 * Calculates the row major index for the specified coordinates using the dimensions of this writer,
 	 * and sets the value.
+	 * First coordinate is least significant (most frequently changing when iterating over array elements).
 	 */
 	@Override
 	public void setValueAt(double val, long... coordinates) {
