@@ -34,14 +34,19 @@ public class FloatVersionGenerator {
 			genFloatClass(new File(mainpath_dp,classFileName), new File(mainpath_fp, classFileName));
 		}
 
-		for(String classfile : new String[]{
-				"FFTW_GuruTest.java",
-				"NativeRealArrayTest.java",
-				"PrecisionDependentUtilsTest.java",
-				"FFTTest.java"
-		}){
-			genFloatClass(new File(testpath_dp,classfile), new File(testpath_fp, classfile));
+		for(File classFile : listRecursiveFiles(testpath_dp, (file)->file.getName().endsWith(".java"))){
+			int filepathindex = testpath_dp.getAbsolutePath().length();
+			String classFileName = classFile.getAbsolutePath().substring(filepathindex);
+			genFloatClass(new File(testpath_dp,classFileName), new File(testpath_fp, classFileName));
 		}
+//		for(String classfile : new String[]{
+//				"FFTW_GuruTest.java",
+//				"NativeRealArrayTest.java",
+//				"PrecisionDependentUtilsTest.java",
+//				"FFTTest.java"
+//		}){
+//			genFloatClass(new File(testpath_dp,classfile), new File(testpath_fp, classfile));
+//		}
 	}
 
 	static void genFloatClass(File doubleClass, File floatClass){
@@ -67,12 +72,15 @@ public class FloatVersionGenerator {
 					if(line.contains(keeplineDirective)){
 						keptLine = line;
 					}
-					if(line.contains("class "+doubleclassname)){
-						line = line.replaceAll(doubleclassname, floatclassname);
-						line =  "/* THIS CLASS WAS AUTOMATICALLY GENERATED FROM" + System.lineSeparator() + 
+					if(line.contains("class "+doubleclassname) || line.contains("interface " + doubleclassname)){
+						String donotmodifynotice = 
+								"/* THIS CLASS WAS AUTOMATICALLY GENERATED FROM" + System.lineSeparator() + 
 								" * ITS DOUBLE PRECISION VERSION, DO NOT MODIFY" + System.lineSeparator() +
-								" */" + System.lineSeparator() 
-								+ line;
+								" */";
+						if(line.contains("{")){
+							line = line.replace("{", System.lineSeparator()+"{");
+						}
+						line = line.replaceAll(doubleclassname, floatclassname + System.lineSeparator() + donotmodifynotice);
 					} else {
 						line = line
 								.replace("DOUBLE PRECISION", "FLOAT (SINGLE) PRECISION")
