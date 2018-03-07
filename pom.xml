@@ -5,10 +5,15 @@
 	<groupId>com.github.hageldave.ezfftw</groupId>
 	<artifactId>ezfftw</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
-
-	<name>ezfftw</name>
-	<url>http://maven.apache.org</url>
+	<name>ezFFTW</name>
+	<url>https://github.com/hageldave/ezFFTW</url>
+	<description>
+		The ezFFTW artifact provides methods for executing Fast Fourier Transforms.
+		It wraps parts of the FFTW javacpp preset by bytedeco, which provides
+		native bindings to the FFTW library.
+		The purpose of this artifact is to provide an easy to use interface
+		for executing FFTs.
+	</description>
 
 	<licenses>
 		<license>
@@ -49,15 +54,21 @@
 			<artifactId>fftw-platform</artifactId>
 			<version>3.3.7-1.4</version>
 		</dependency>
-		<!-- only for testing things out, when ready these will be removed -->
-		<dependency>
-			<groupId>com.github.hageldave.imagingkit</groupId>
-			<artifactId>imagingkit-core</artifactId>
-			<version>2.0</version>
-		</dependency>
 	</dependencies>
 
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
 	<profiles>
+		<!-- Continuous Integration -->
 		<profile>
 			<id>travis</id>
 			<build>
@@ -78,6 +89,8 @@
 				</plugins>
 			</build>
 		</profile>
+		
+		<!-- Code Coverage Report (during CI) -->
 		<profile>
 			<id>coveralls</id>
 			<build>
@@ -90,5 +103,85 @@
 				</plugins>
 			</build>
 		</profile>
+		
+		<!-- Release Artifact to Nexus -->
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<!-- include source in jar -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>2.4</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- include javadocs in jar -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.10.3</version>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- gpg signing -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.5</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- nexus staging -->
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>1.6.3</version>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>ossrh</serverId>
+							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+							<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
+	
+	<scm>
+		<url>https://github.com/hageldave/ezFFTW.git</url>
+	</scm>
+	
+	<developers>
+		<developer>
+			<id>hageldave</id>
+			<name>David Haegele</name>
+			<email>haegele.david@gmail.com</email>
+		</developer>
+	</developers>
+	
 </project>
