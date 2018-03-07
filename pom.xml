@@ -4,7 +4,7 @@
 
 	<groupId>com.github.hageldave.ezfftw</groupId>
 	<artifactId>ezfftw</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.9</version>
 	<name>ezFFTW</name>
 	<url>https://github.com/hageldave/ezFFTW</url>
 	<description>
@@ -89,7 +89,7 @@
 				</plugins>
 			</build>
 		</profile>
-		
+
 		<!-- Code Coverage Report (during CI) -->
 		<profile>
 			<id>coveralls</id>
@@ -103,7 +103,7 @@
 				</plugins>
 			</build>
 		</profile>
-		
+
 		<!-- Release Artifact to Nexus -->
 		<profile>
 			<id>release</id>
@@ -171,11 +171,11 @@
 			</build>
 		</profile>
 	</profiles>
-	
+
 	<scm>
 		<url>https://github.com/hageldave/ezFFTW.git</url>
 	</scm>
-	
+
 	<developers>
 		<developer>
 			<id>hageldave</id>
@@ -183,5 +183,5 @@
 			<email>haegele.david@gmail.com</email>
 		</developer>
 	</developers>
-	
+
 </project>

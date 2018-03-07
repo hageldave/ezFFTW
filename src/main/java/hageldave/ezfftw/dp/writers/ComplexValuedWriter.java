@@ -23,7 +23,7 @@ import hageldave.ezfftw.dp.samplers.ComplexValuedSampler;
 
 /**
  * The ComplexValuedWriter interface is a single method interface which provides the
- * {@link #setValueAt(value, boolean, long...)} method for writing data of an 
+ * {@link #setValueAt(double, boolean, long...)} method for writing data of an 
  * arbitrary dimensional complex valued domain.
  * <p>
  * It also offers default convenience methods for obtaining a writer with swapped real

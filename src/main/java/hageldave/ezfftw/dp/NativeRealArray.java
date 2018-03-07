@@ -215,8 +215,8 @@ public class NativeRealArray implements AutoCloseable {
 	 * return javArray;
 	 * }
 	 * </pre>
-	 * @param i
-	 * @param length
+	 * @param i start index
+	 * @param length number of values to be read
 	 * @return array of values
 	 */
 	public double[] get(long i, int length){

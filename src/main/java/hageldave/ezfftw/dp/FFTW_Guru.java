@@ -191,7 +191,7 @@ public class FFTW_Guru {
 	 * See also <a href="http://fftw.org/faq/section3.html#whyscaled">FFTW FAQ</a>.
 	 *
 	 * @param realIn real valued input array (or imaginary for inverse)
-	 * @param realIn imaginary valued input array (or real for inverse)
+	 * @param imagIn imaginary valued input array (or real for inverse)
 	 * @param realOut real part of complex valued output array (or imaginary for inverse)
 	 * @param imagOut imaginary part of complex valued output array (or real for inverse)
 	 * @param dimensions of the input (assuming input in row major order)
