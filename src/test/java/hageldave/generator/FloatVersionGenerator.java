@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class FloatVersionGenerator {
 
+	static final String skipfileDirective = "//#FLOATGEN_SKIPFILE";
 	static final String ignoreDirective = "//#FLOATGEN_IGNORE";
 	static final String keeplineDirective = "//#FLOATGEN_KEEPLINE";
 
@@ -60,6 +61,8 @@ public class FloatVersionGenerator {
 		doubleclassname = doubleclassname.substring(0,doubleclassname.length()-5);
 		String floatclassname = floatClass.getName();
 		floatclassname = floatclassname.substring(0,floatclassname.length()-5);
+		
+		boolean skipFile = false;
 		try(
 				Scanner sc = new Scanner(doubleClass);
 				FileWriter wr = new FileWriter(floatClass);
@@ -68,6 +71,10 @@ public class FloatVersionGenerator {
 			while(sc.hasNextLine()){
 				String line = sc.nextLine();
 				String keptLine = "";
+				if(line.contains(skipfileDirective)){
+					skipFile = true;
+					break;
+				}
 				if(!line.contains(ignoreDirective)){
 					if(line.contains(keeplineDirective)){
 						keptLine = line;
@@ -103,7 +110,12 @@ public class FloatVersionGenerator {
 		} catch(IOException e){
 			e.printStackTrace();
 		}
-		System.out.println("Done creating " + floatClass.getPath());
+		if(skipFile){
+			floatClass.delete();
+			System.out.println("Skipped " + floatClass.getPath());
+		} else {
+			System.out.println("Done creating " + floatClass.getPath());
+		}
 	}
 
 	static Collection<File> listRecursiveFiles(File baseDir, FileFilter filter) {

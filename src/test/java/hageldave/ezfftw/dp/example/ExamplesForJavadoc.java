@@ -1,3 +1,4 @@
+//#FLOATGEN_SKIPFILE
 package hageldave.ezfftw.dp.example;
 
 import hageldave.ezfftw.dp.NativeRealArray;
