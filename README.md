@@ -73,7 +73,7 @@ static void bandPassImageFilter(InputStream input, OutputStream output, String o
         double y = ( ((coordinates[1]+height/2)%height)-height/2 );
         // get length (corresponds to frequency)
         double l = Math.sqrt(x*x+y*y);
-        // define band pass frequencies to be in ]40, 80[
+        // define band pass frequencies to be in ]50, 100[
         if(l > 50 && l < 100){
           return imaginary ? imagPart.getValueAt(coordinates[0],coordinates[1]) 
                   : realPart.getValueAt(coordinates[0],coordinates[1]);
