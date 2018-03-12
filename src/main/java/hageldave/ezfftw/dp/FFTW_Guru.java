@@ -250,12 +250,12 @@ public class FFTW_Guru {
 			for(int i = 0; i < dimensions.length; i++){
 				individualDims[i]
 						.n(dimensions[i]) 	// dimension size
-						.is((int)stride) 	// input stride
-						.os((int)stride);	// output stride
+						.is(stride) 	// input stride
+						.os(stride);	// output stride
 				array.position(i).put(individualDims[i]);
 				stride *= dimensions[i];
 			}
-			lastDim.n(1).is((int)stride).os((int)stride);
+			lastDim.n(1).is(stride).os(stride);
 			array.position(dimensions.length).put(lastDim);
 			/* make and execute plan */
 			plan = fftw3.fftw_plan_guru64_split_dft(
@@ -356,12 +356,12 @@ public class FFTW_Guru {
 			for(int i = 0; i < dimensions.length; i++){
 				individualDims[i]
 						.n(dimensions[i]) 	// dimension size
-						.is((int)stride) 	// input stride
-						.os((int)stride);	// output stride
+						.is(stride) 	// input stride
+						.os(stride);	// output stride
 				array.position(i).put(individualDims[i]);
 				stride *= dimensions[i];
 			}
-			lastDim.n(1).is((int)stride).os((int)stride);
+			lastDim.n(1).is(stride).os(stride);
 			array.position(dimensions.length).put(lastDim);
 			/* make and execute plan */
 			plan = fftw3.fftw_plan_guru64_split_dft_c2r(
