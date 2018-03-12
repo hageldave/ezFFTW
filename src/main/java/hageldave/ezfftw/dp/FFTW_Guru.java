@@ -1,16 +1,16 @@
 /*
  * ezFFTW - Copyright 2018 David Haegele
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -131,12 +131,12 @@ public class FFTW_Guru {
 			for(int i = 0; i < dimensions.length; i++){
 				individualDims[i]
 						.n(dimensions[i]) 	// dimension size
-						.is((int)stride) 	// input stride
-						.os((int)stride);	// output stride
+						.is(stride) 	// input stride
+						.os(stride);	// output stride
 				array.position(i).put(individualDims[i]);
 				stride *= dimensions[i];
 			}
-			lastDim.n(1).is((int)stride).os((int)stride);
+			lastDim.n(1).is(stride).os(stride);
 			array.position(dimensions.length).put(lastDim);
 			/* make and execute plan */
 			plan = fftw3.fftw_plan_guru64_split_dft_r2c(
@@ -178,7 +178,7 @@ public class FFTW_Guru {
 	 * starts at element (n-1)*m).
 	 * <p>
 	 * The resulting complex valued DFT has the origin at the element at index 0.
-	 * Thus the DC (0hz) component of the DFT consists of the first element in the real and imaginary 
+	 * Thus the DC (0hz) component of the DFT consists of the first element in the real and imaginary
 	 * output array.
 	 * <p>
 	 * This method does not have a corresponding counter part for computing its inverse, instead
