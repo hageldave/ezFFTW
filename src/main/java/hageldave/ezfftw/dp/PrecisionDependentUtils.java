@@ -25,6 +25,13 @@ import hageldave.ezfftw.Annotations.DoublePrecisionVersion;
 import hageldave.ezfftw.dp.samplers.RealValuedSampler;
 import hageldave.ezfftw.dp.writers.RealValuedWriter;
 
+/**
+ * Class that offers utility methods that are specific to double precision
+ * e.g. double[] or classes/interfaces of the dp package.
+ * 
+ * @author hageldave
+ *
+ */
 @DoublePrecisionVersion
 public class PrecisionDependentUtils {
 
