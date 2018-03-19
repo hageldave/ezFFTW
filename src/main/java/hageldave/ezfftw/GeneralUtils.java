@@ -119,7 +119,7 @@ public class GeneralUtils {
 	 * become 0 again but instead the most significant coordinate will be
 	 * equal to its corresponding dimension to signalize the maximum coordinate.
 	 * This way the you can check for the last increment when coords[n]==dims[n]
-	 * with n = dims.length.
+	 * with n = dims.length-1.
 	 * @param coordinates to increment by one
 	 * @param dimensions for the space of coordinates
 	 */
