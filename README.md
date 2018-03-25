@@ -101,3 +101,62 @@ static void bandPassImageFilter(InputStream input, OutputStream output, String o
   }
 }
 ```
+
+### Filtered Back Projection
+(from [examples/FilteredBackProjection.java](../master/src/test/java/hageldave/ezfftw/dp/example/FilteredBackProjection.java))
+```java
+static double[][] filteredBackProjection(double[][] radon, int outputResolution) {
+  /* apply ramp filter to radon transform - 1st step fourier transform
+   * (every line is one projection and has to be filtered separately)
+   */
+  try(//with resources
+      NativeRealArray projection = new NativeRealArray(radon[0].length);
+      NativeRealArray fft_r = new NativeRealArray(projection.length);
+      NativeRealArray fft_i = new NativeRealArray(projection.length);
+  ){
+    for(int i = 0; i < radon.length; i++){
+      projection.set(radon[i]);
+      FFTW_Guru.execute_split_r2c(projection, fft_r, fft_i, projection.length);
+      projection.get(0, radon[i]);
+      // 2nd step apply ramp filter ( multiply by abs(freq) with normalized freq )
+      long spectrumWidth = projection.length;
+      long highestFreq = spectrumWidth/2;
+      for(long k = 0; k < spectrumWidth; k++){
+        long freq = ((k+highestFreq)%spectrumWidth)-highestFreq;
+        double scaling = Math.abs(freq*1.0/highestFreq);
+        fft_r.set(k, fft_r.get(k)*scaling);
+        fft_i.set(k, fft_i.get(k)*scaling);
+      }
+      // 3rd step, inverse fft
+      FFTW_Guru.execute_split_c2r(fft_r, fft_i, projection, projection.length);
+      projection.get(0, radon[i]);
+    }
+  }
+  // now do back projection
+  double[][] output = new double[outputResolution][outputResolution];
+  double toRadians = Math.PI/radon.length;
+  int projectionWidth = radon[0].length;
+  for(int i = 0; i < outputResolution; i++){
+    double y = ((i*1.0/outputResolution)-0.5)*2;
+    for(int j = 0; j < outputResolution; j++){
+      double x = ((j*1.0/outputResolution)-0.5)*2;
+      double sum = 0;
+      int numSummands = 0;
+      // for each projection find radius where [x,y] was projected to
+      for(int p = 0; p < radon.length; p++){
+        double angle = p*toRadians;
+        double radius = x*Math.cos(angle)+y*Math.sin(angle);
+        int r = (int)((radius+1)/2*(projectionWidth-1));
+        if(r >=0 && r < projectionWidth){
+          sum += radon[p][r];
+          numSummands++;
+        }
+      }
+      if(numSummands > 0)
+        sum /= numSummands;
+      output[i][j] = sum;
+    }
+  }
+  return output;
+}
+```
