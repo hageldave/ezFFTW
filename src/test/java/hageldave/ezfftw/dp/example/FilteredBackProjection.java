@@ -15,7 +15,7 @@ public class FilteredBackProjection {
 
 	public static void main(String[] args) throws IOException {
 		DoubleBinaryOperator objectFn = (x,y)->{
-			if(x<0.1 && x>-0.1 && y<0.1 && y>-0.1){
+			if((x<0.1 && x>-0.1 && y<0.1 && y>-0.1) || (x<-0.2 && x>-0.3 && y<0.4 && y>0.3)){
 				return 0;
 			} else {
 				double circValue = ((x*2-0.3)*(x*2-0.3)+y*y*4);
@@ -68,11 +68,11 @@ public class FilteredBackProjection {
 		return projections;
 	}
 
-	private static double[][] filteredBackProjection(double[][] radon, int outputResolution) {
+	static double[][] filteredBackProjection(double[][] radon, int outputResolution) {
 		/* apply ramp filter to radon transform - 1st step fourier transform
 		 * (every line is one projection and has to be filtered separately)
 		 */
-		try(
+		try(//with resources
 				NativeRealArray projection = new NativeRealArray(radon[0].length);
 				NativeRealArray fft_r = new NativeRealArray(projection.length);
 				NativeRealArray fft_i = new NativeRealArray(projection.length);
