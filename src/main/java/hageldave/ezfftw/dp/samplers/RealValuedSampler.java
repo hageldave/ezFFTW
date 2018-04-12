@@ -42,6 +42,7 @@ public interface RealValuedSampler {
 	 * @param coordinates each value corresponds to one dimension
 	 * @return value at specified coords
 	 */
+	@DoublePrecisionVersion
 	double getValueAt(long... coordinates);
 
 	/**
@@ -51,6 +52,7 @@ public interface RealValuedSampler {
 	 * @param imaginarySampler responsible for returning the imaginary values
 	 * @return ComplexValuedSampler consisting of this and the argument sampler
 	 */
+	@DoublePrecisionVersion
 	default ComplexValuedSampler combineToComplexSampler(RealValuedSampler imaginarySampler){
 		RealValuedSampler self = this;
 		return (imaginary, coordinates) -> {

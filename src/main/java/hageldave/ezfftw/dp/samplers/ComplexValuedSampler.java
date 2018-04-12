@@ -43,6 +43,7 @@ public interface ComplexValuedSampler {
 	 * @param coordinates each value corresponds to one dimension
 	 * @return real or imaginary value at specified coords
 	 */
+	@DoublePrecisionVersion
 	double getValueAt(boolean imaginary, long...coordinates);
 
 	/**
@@ -50,6 +51,7 @@ public interface ComplexValuedSampler {
 	 * (Will return imaginary when real is requested and vice versa)
 	 * @return sampler with swapped parts
 	 */
+	@DoublePrecisionVersion
 	default ComplexValuedSampler getRealImaginarySwappedSampler(){
 		ComplexValuedSampler self = this;
 		return (imaginary, coordinates) -> self.getValueAt(!imaginary, coordinates);
@@ -61,6 +63,7 @@ public interface ComplexValuedSampler {
 	 * @param imaginary when true, imaginary part sampler is returned, else real part
 	 * @return sampler for requested part only
 	 */
+	@DoublePrecisionVersion
 	default RealValuedSampler getPartSampler(boolean imaginary){
 		ComplexValuedSampler self = this;
 		return (coordinates)->self.getValueAt(imaginary, coordinates);

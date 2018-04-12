@@ -42,6 +42,7 @@ public interface RealValuedWriter {
 	 * @param value to be set
 	 * @param coordinates each value corresponds to one dimension
 	 */
+	@DoublePrecisionVersion
 	void setValueAt(double value, long... coordinates);
 
 	/**
@@ -51,6 +52,7 @@ public interface RealValuedWriter {
 	 * @param imaginaryWriter responsible for writing imaginary values
 	 * @return {@link ComplexValuedWriter} consisting of this and the argument writer.
 	 */
+	@DoublePrecisionVersion
 	default ComplexValuedWriter combineToComplexWriter(RealValuedWriter imaginaryWriter){
 		RealValuedWriter self = this;
 		return (value, imaginary, coordinates) -> {

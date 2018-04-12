@@ -44,6 +44,7 @@ public interface ComplexValuedWriter {
 	 * @param imaginary if true, the value is imaginary, else, the value is real
 	 * @param coordinates each value corresponds to one dimension
 	 */
+	@DoublePrecisionVersion
 	void setValueAt(double value, boolean imaginary, long... coordinates);
 
 	/**
@@ -51,6 +52,7 @@ public interface ComplexValuedWriter {
 	 * (Will write imaginary when real is requested and vice versa)
 	 * @return writer with swapped parts
 	 */
+	@DoublePrecisionVersion
 	default ComplexValuedWriter getRealImaginarySwappedWriter(){
 		ComplexValuedWriter self = this;
 		return (value, imaginary, coordinates) -> self.setValueAt(value, !imaginary, coordinates);
@@ -62,6 +64,7 @@ public interface ComplexValuedWriter {
 	 * @param imaginary when true, imaginary part writer is returned, else real part
 	 * @return writer for requested part only
 	 */
+	@DoublePrecisionVersion
 	default RealValuedWriter getPartWriter(boolean imaginary){
 		ComplexValuedWriter self = this;
 		return (value, coordinates) -> self.setValueAt(value, imaginary, coordinates);

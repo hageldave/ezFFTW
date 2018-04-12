@@ -89,6 +89,7 @@ public class NativeRealArray implements AutoCloseable {
 	 * @param length number of elements in array
 	 * @throws IllegalArgumentException when length is not positive
 	 */
+	@DoublePrecisionVersion
 	public NativeRealArray(long length) {
 		FFTW_Initializer.initFFTW();
 		GeneralUtils.requirePositive(length, ()->"Provided length is not positive");
@@ -105,6 +106,7 @@ public class NativeRealArray implements AutoCloseable {
 	 * @param v value
 	 * @return this for chaining
 	 */
+	@DoublePrecisionVersion
 	public NativeRealArray set(long i, double v){
 		if(i >= this.length){
 			throw new ArrayIndexOutOfBoundsException(
@@ -122,6 +124,7 @@ public class NativeRealArray implements AutoCloseable {
 	 * @param values to be set
 	 * @return this for chaining
 	 */
+	@DoublePrecisionVersion
 	public NativeRealArray set(double[] values){
 		if(values.length > this.length){
 			throw new ArrayIndexOutOfBoundsException(
@@ -140,6 +143,7 @@ public class NativeRealArray implements AutoCloseable {
 	 * @param values to be set
 	 * @return this for chaining
 	 */
+	@DoublePrecisionVersion
 	public NativeRealArray set(long i, double... values){
 		if(i+values.length > this.length){
 			throw new ArrayIndexOutOfBoundsException(
@@ -164,6 +168,7 @@ public class NativeRealArray implements AutoCloseable {
 	 * 
 	 * @throws IllegalArgumentException when specified offset plus length exceeds the specified values array's length
 	 */
+	@DoublePrecisionVersion
 	public NativeRealArray set(long i, int length, int offset, double[] values){
 		if(offset+length > values.length){
 			throw new IllegalArgumentException(
@@ -184,6 +189,7 @@ public class NativeRealArray implements AutoCloseable {
 	 * @param v value for all elements
 	 * @return this for chaining
 	 */
+	@DoublePrecisionVersion
 	public NativeRealArray fill(double v){
 		for(long i = 0; i < this.length; i++)
 			set(i, v);
@@ -198,6 +204,7 @@ public class NativeRealArray implements AutoCloseable {
 	 * @param i index
 	 * @return value at i
 	 */
+	@DoublePrecisionVersion
 	public double get(long i){
 		if(i >= this.length){
 			throw new ArrayIndexOutOfBoundsException(
@@ -219,6 +226,7 @@ public class NativeRealArray implements AutoCloseable {
 	 * @param length number of values to be read
 	 * @return array of values
 	 */
+	@DoublePrecisionVersion
 	public double[] get(long i, int length){
 		if(i+length > this.length){
 			throw new ArrayIndexOutOfBoundsException(
@@ -240,6 +248,7 @@ public class NativeRealArray implements AutoCloseable {
 	 * @param destination array to put values into
 	 * @return destination (the argument array)
 	 */
+	@DoublePrecisionVersion
 	public double[] get(long i, double[] destination) {
 		if(i+destination.length > this.length){
 			throw new ArrayIndexOutOfBoundsException(
@@ -266,6 +275,7 @@ public class NativeRealArray implements AutoCloseable {
 	 * 
 	 * @throws IllegalArgumentException when specified offset plus length exceeds the destination array's length
 	 */
+	@DoublePrecisionVersion
 	public double[] get(long i, int length, int offset, double[] destination){
 		if(offset+length > destination.length){
 			throw new IllegalArgumentException(
@@ -286,6 +296,7 @@ public class NativeRealArray implements AutoCloseable {
 	 * @return pointer to this array.
 	 */
 	/*package visible*/
+	@DoublePrecisionVersion
 	DoublePointer getPointer() {
 		return pointer.position(0);
 	}
