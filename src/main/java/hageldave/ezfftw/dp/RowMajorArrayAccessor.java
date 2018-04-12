@@ -56,7 +56,6 @@ public class RowMajorArrayAccessor implements RealValuedSampler, RealValuedWrite
 	 * Elements are accessed in row major order.
 	 * The first (least significant) dimension thus defines the row length.
 	 * 
-	 * @param array of values in row major order
 	 * @param dimensions of the value array
 	 * 
 	 * @throws IllegalArgumentException <br>
