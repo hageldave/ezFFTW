@@ -31,7 +31,9 @@ import hageldave.ezfftw.dp.writers.RealValuedWriter;
  * dimensional data that is stored in a double[] in row major order.
  * <p>
  * This class mainly exists to serve as an example implementation for the
- * two interfaces interface.
+ * two interfaces. It may also come in handy when using the sampler/writer
+ * based methods of the {@link FFT} class, e.g. serving as a data structure
+ * to store the transform while only implementing a custom input sampler.
  * <p>
  * Please note that for performance reasons, no checks are made to the fitness
  * of the coordinates passed to {@link #getValueAt(long...)} or {@link #setValueAt(double, long...)}. 
@@ -49,8 +51,37 @@ public class RowMajorArrayAccessor implements RealValuedSampler, RealValuedWrite
 	private final long[] dimensions;
 
 	/**
+	 * Creates a new {@link RowMajorArrayAccessor} with a double[] that can
+	 * store as many elements as spanned by the specified dimensions.
+	 * Elements are accessed in row major order.
+	 * The first (least significant) dimension thus defines the row length.
+	 * 
+	 * @param array of values in row major order
+	 * @param dimensions of the value array
+	 * 
+	 * @throws IllegalArgumentException <br>
+	 * when no dimensions were provided <br>
+	 * when one of the dimensions is not positive <br>
+	 * when the resulting number of elements is larger than Integer.MAX_VALUE and thus cannot fit in a single java array.
+	 */
+	@DoublePrecisionVersion
+	public RowMajorArrayAccessor(long... dimensions) {
+		GeneralUtils.requirePositive(dimensions.length, ()->"No dimensions were specified, need to pass at least 1 dimension");
+		GeneralUtils.requirePosititveDimensions(dimensions);
+		long numElements = GeneralUtils.numElementsFromDimensions(dimensions);
+		if( numElements > ((long)Integer.MAX_VALUE) ){
+			throw new IllegalArgumentException(
+					"The specified dimensions result in a number of array elements too large for a 1D java array. Num elements:"
+					+ numElements);
+		}
+		this.array = new double[(int)numElements];
+		this.dimensions = dimensions.clone();
+	}
+	
+	/**
 	 * Creates a new {@link RowMajorArrayAccessor} that uses the specified double[] assuming
 	 * row major order and the specified dimensions.
+	 * The first (least significant) dimension thus defines the row length.
 	 * 
 	 * @param array of values in row major order
 	 * @param dimensions of the value array
@@ -69,7 +100,7 @@ public class RowMajorArrayAccessor implements RealValuedSampler, RealValuedWrite
 		PrecisionDependentUtils.sanityCheckArray(array, numElements, "double[]");
 		
 		this.array = array;
-		this.dimensions = dimensions;
+		this.dimensions = dimensions.clone();
 	}
 
 	/**

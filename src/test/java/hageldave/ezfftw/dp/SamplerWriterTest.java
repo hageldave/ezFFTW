@@ -38,7 +38,7 @@ public class SamplerWriterTest {
 		}
 		
 		
-		RowMajorArrayAccessor rmaai = new RowMajorArrayAccessor(new double[64], 4,4,4);
+		RowMajorArrayAccessor rmaai = new RowMajorArrayAccessor(4,4,4);
 		ComplexValuedSampler cmplxSampler = rmaa.combineToComplexSampler(rmaai);
 		ComplexValuedWriter cmplxWriter = rmaa.combineToComplexWriter(rmaai);
 		v = 0;
@@ -136,6 +136,21 @@ public class SamplerWriterTest {
 			// null array
 			new RowMajorArrayAccessor(null, 1);
 		}, NullPointerException.class);
+		
+		/* Constructor without array arg */
+		
+		JunitUtils.testException(()->{
+			// missing dimensions
+			new RowMajorArrayAccessor();
+		}, IllegalArgumentException.class);
+		JunitUtils.testException(()->{
+			// non positive dimension
+			new RowMajorArrayAccessor(-2, -2);
+		}, IllegalArgumentException.class);
+		JunitUtils.testException(()->{
+			// too many elements
+			new RowMajorArrayAccessor(Integer.MAX_VALUE, 2);
+		}, IllegalArgumentException.class);
 	}
 
 }

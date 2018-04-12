@@ -20,6 +20,10 @@ package hageldave.ezfftw;
 
 import java.lang.annotation.Documented;
 
+/**
+ * A place for annotation definitions.
+ * @author hageldave
+ */
 public final class Annotations {
 
 	/**
