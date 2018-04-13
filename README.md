@@ -9,9 +9,9 @@ A wrapper for the FFTW library built on top of bytedecos JavaCPP preset that hid
 Maven Dependency (Central Repository):
 ```xml
 <dependency>
-    <groupId>com.github.hageldave.ezfftw</groupId>
-    <artifactId>ezfftw</artifactId>
-    <version>0.0.9</version>
+	<groupId>com.github.hageldave.ezfftw</groupId>
+	<artifactId>ezfftw</artifactId>
+	<version>0.1.0</version>
 </dependency>
 ```
 
