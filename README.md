@@ -4,7 +4,7 @@ A wrapper for the FFTW library built on top of bytedecos JavaCPP preset that hid
 
 [![Build Status](https://travis-ci.org/hageldave/ezFFTW.svg?branch=master)](https://travis-ci.org/hageldave/ezFFTW)
 [![Coverage Status](https://coveralls.io/repos/github/hageldave/ezFFTW/badge.svg?branch=master)](https://coveralls.io/github/hageldave/ezFFTW?branch=master)
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.hageldave.ezfftw/ezfftw.svg)](http://search.maven.org/#artifactdetails|com.github.hageldave.ezfftw|ezfftw|0.0.9|jar)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.hageldave.ezfftw/ezfftw.svg)](http://search.maven.org/#artifactdetails|com.github.hageldave.ezfftw|ezfftw|0.1.0|jar)
 
 Maven Dependency (Central Repository):
 ```xml
