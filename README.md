@@ -11,7 +11,7 @@ Maven Dependency (Central Repository):
 <dependency>
 	<groupId>com.github.hageldave.ezfftw</groupId>
 	<artifactId>ezfftw</artifactId>
-	<version>0.1.1</version>
+	<version>0.1.2</version>
 </dependency>
 ```
 
