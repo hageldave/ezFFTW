@@ -4,7 +4,7 @@
 
 	<groupId>com.github.hageldave.ezfftw</groupId>
 	<artifactId>ezfftw</artifactId>
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.1.1</version>
 	<name>ezFFTW</name>
 	<url>https://github.com/hageldave/ezFFTW</url>
 	<description>
