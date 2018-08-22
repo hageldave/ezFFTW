@@ -19,6 +19,7 @@
 package hageldave.ezfftw.dp;
 
 import static hageldave.ezfftw.FFTW_Initializer.initFFTW;
+import static hageldave.ezfftw.FFTW_Initializer.PLANNER_LOCK;
 
 import java.util.Objects;
 
@@ -139,11 +140,13 @@ public class FFTW_Guru {
 			lastDim.n(1).is(stride).os(stride);
 			array.position(dimensions.length).put(lastDim);
 			/* make and execute plan */
-			plan = fftw3.fftw_plan_guru64_split_dft_r2c(
-					dimensions.length+1, dims,
-					0, null,
-					realIn.getPointer(), realOut.getPointer(), imagOut.getPointer(),
-					(int)fftw3.FFTW_ESTIMATE);
+			synchronized (PLANNER_LOCK) {
+				plan = fftw3.fftw_plan_guru64_split_dft_r2c(
+						dimensions.length+1, dims,
+						0, null,
+						realIn.getPointer(), realOut.getPointer(), imagOut.getPointer(),
+						(int)fftw3.FFTW_ESTIMATE);
+			}
 			fftw3.fftw_execute_split_dft_r2c(plan, realIn.getPointer(), realOut.getPointer(), imagOut.getPointer());
 			/* destroy plan after use */
 			fftw3.fftw_destroy_plan(plan);
@@ -258,11 +261,13 @@ public class FFTW_Guru {
 			lastDim.n(1).is(stride).os(stride);
 			array.position(dimensions.length).put(lastDim);
 			/* make and execute plan */
-			plan = fftw3.fftw_plan_guru64_split_dft(
-					dimensions.length+1, dims,
-					0, null,
-					realIn.getPointer(), imagIn.getPointer(), realOut.getPointer(), imagOut.getPointer(),
-					(int)fftw3.FFTW_ESTIMATE);
+			synchronized (PLANNER_LOCK) {
+				plan = fftw3.fftw_plan_guru64_split_dft(
+						dimensions.length+1, dims,
+						0, null,
+						realIn.getPointer(), imagIn.getPointer(), realOut.getPointer(), imagOut.getPointer(),
+						(int)fftw3.FFTW_ESTIMATE);
+			}
 			fftw3.fftw_execute_split_dft(plan, realIn.getPointer(), imagIn.getPointer(), realOut.getPointer(), imagOut.getPointer());
 			/* destroy plan after use */
 			fftw3.fftw_destroy_plan(plan);
@@ -364,11 +369,13 @@ public class FFTW_Guru {
 			lastDim.n(1).is(stride).os(stride);
 			array.position(dimensions.length).put(lastDim);
 			/* make and execute plan */
-			plan = fftw3.fftw_plan_guru64_split_dft_c2r(
-					dimensions.length+1, dims,
-					0, null,
-					realIn.getPointer(), imagIn.getPointer(), realOut.getPointer(),
-					(int)fftw3.FFTW_ESTIMATE);
+			synchronized (PLANNER_LOCK) {
+				plan = fftw3.fftw_plan_guru64_split_dft_c2r(
+						dimensions.length+1, dims,
+						0, null,
+						realIn.getPointer(), imagIn.getPointer(), realOut.getPointer(),
+						(int)fftw3.FFTW_ESTIMATE);
+			}
 			fftw3.fftw_execute_split_dft_c2r(plan, realIn.getPointer(), imagIn.getPointer(), realOut.getPointer());
 			/* destroy plan after use */
 			fftw3.fftw_destroy_plan(plan);

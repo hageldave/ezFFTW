@@ -26,6 +26,9 @@ import org.bytedeco.javacpp.fftw3.fftw_plan;
 /**
  * Class with sole purpose of loading the native libraries via
  * {@link #initFFTW()}.
+ * Also contains the {@link #PLANNER_LOCK} used for synchronizing 
+ * calls to FFTW planner routines.
+ * 
  * @author hageldave
  */
 public final class FFTW_Initializer {
@@ -48,5 +51,15 @@ public final class FFTW_Initializer {
 			}
 		}
 	}
+	
+	/**
+	 * Object used for synchronizing calls to planner routines of FFTW
+	 * since planning is not thread safe.
+	 * @see <a href="http://www.fftw.org/fftw3_doc/Thread-safety.html">
+	 * http://www.fftw.org/fftw3_doc/Thread-safety.html
+	 * </a>
+	 * @since 0.1.1
+	 */
+	public static final Object PLANNER_LOCK = new Object();
 
 }
