@@ -149,7 +149,9 @@ public class FFTW_Guru {
 			}
 			fftw3.fftw_execute_split_dft_r2c(plan, realIn.getPointer(), realOut.getPointer(), imagOut.getPointer());
 			/* destroy plan after use */
-			fftw3.fftw_destroy_plan(plan);
+			synchronized (PLANNER_LOCK) {
+				fftw3.fftw_destroy_plan(plan);
+			}
 		} finally {
 			/* close resources in reverse allocation order */
 			if(plan != null) plan.close();
@@ -270,7 +272,9 @@ public class FFTW_Guru {
 			}
 			fftw3.fftw_execute_split_dft(plan, realIn.getPointer(), imagIn.getPointer(), realOut.getPointer(), imagOut.getPointer());
 			/* destroy plan after use */
-			fftw3.fftw_destroy_plan(plan);
+			synchronized (PLANNER_LOCK) {
+				fftw3.fftw_destroy_plan(plan);
+			}
 		} finally {
 			/* close resources in reverse allocation order */
 			if(plan != null) plan.close();
@@ -378,7 +382,9 @@ public class FFTW_Guru {
 			}
 			fftw3.fftw_execute_split_dft_c2r(plan, realIn.getPointer(), imagIn.getPointer(), realOut.getPointer());
 			/* destroy plan after use */
-			fftw3.fftw_destroy_plan(plan);
+			synchronized (PLANNER_LOCK) {
+				fftw3.fftw_destroy_plan(plan);
+			}
 		} finally {
 			/* close resources in reverse allocation order */
 			if(plan != null) plan.close();

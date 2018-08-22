@@ -201,21 +201,20 @@ public class FFTTest {
 	public void concurrentInvocations() {
 		FFTW_Initializer.initFFTW();
 		final int numThreads = 32;
+		for(int j = 0; j < 500; j++){
 		final CountDownLatch latch = new CountDownLatch(numThreads);
 		LinkedList<Thread> threads = new LinkedList<>();
-		int[] tCount = new int[]{0};
 		for(int i=0; i<numThreads; i++){
 			Thread t = new Thread(()->{
 				try {
-					int size = 128;
+					int size = 1028;
 					double[][] arrays = new double[3][size];
 					latch.countDown();
 					latch.await();
 					FFT.fft(arrays[0], arrays[1], arrays[2], size);
 					FFT.ifft(arrays[1], arrays[2], arrays[0], size);
-					synchronized (tCount) {
-						System.out.format("Thread %d (%d): %f%n",Thread.currentThread().getId(), ++tCount[0], arrays[0][0]);
-					}
+					FFT.fft(arrays[0], arrays[1], arrays[2], size);
+					FFT.ifft(arrays[1], arrays[2], arrays[0], size);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -229,6 +228,7 @@ public class FFTTest {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+		}
 		}
 	}
 	
